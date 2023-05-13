@@ -1,23 +1,17 @@
 # Testing ansible
 ```
 ansible-galaxy install -r requirements.yml -p roles/galaxy/ --force
-ansible-playbook playbook.yaml # Initialize
-ansible-playbook -i inventory.yml -e @secrets.enc --ask-vault-pass playbooks/caddy.yaml  # Caddy
-ansible-playbook -i inventory.yml -e @secrets.enc --ask-vault-pass playbooks/docker.yaml # Docker Compose
+# All servers
+ansible-playbook all/playbook.yaml # Initialize
+# Privacy Frontends
+ansible-playbook -i inventory.yml -e @secrets.enc --ask-vault-pass privfrontends/playbook.yaml
 ```
-
 To add secrets: `ansible-vault edit secrets.enc`
-## Per-playbook info
-### /playbook.yaml
-Configures basic stuff, meant for every server.
-### /playbooks/docker.yaml
-Configures privacy frontends, meant for US, IN and Pizza1.
-### /playbooks/caddy.yaml
-Configures Caddy, meant for US, IN and Pizza1.
+
 ## Adding new services
 Adding new services is a bit janky, for I had to set it up with normal commands instead of the preferred community.docker collection (it doesn't support v2 which we use on most of our compose files)
 
-Firstly, add the thing to `docker_services` array/var in `/playbooks/docker.yaml`. This list **MUST** be maintaind in alphabetical order for ease of maintanence.
+Firstly, add the thing to `docker_services` array/var in `/privfrontends/playbook.yaml`. This list **MUST** be maintaind in alphabetical order for ease of maintanence.
 
 Then, create the `/compose/SERVICE_NAME` directory and add the compose file to the same. You can use the `{{inventory_hostname}}` variables where required.
 
