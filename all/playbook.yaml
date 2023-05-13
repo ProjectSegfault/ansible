@@ -1,0 +1,109 @@
+---
+- name: Install shit
+  hosts: all
+  tasks:
+  - name: Std Repo stuff
+    apt:
+      update_cache: true
+      name:
+        - vim
+        - curl
+        - wget
+        - sudo
+        - net-tools
+        - nmap
+        - python3-pip
+        - python3-passlib
+        - vnstat
+  - name: Enable VNStat service
+    service:
+      name: vnstat
+      enabled: yes
+      state: started
+
+- name: Add users
+  hosts: all
+  vars:
+    users:
+      - arya
+      - devrand
+      - midou
+  vars_prompt:
+    - name: password
+      prompt: What is password to be used for all accs? (initial if no password is already set)
+      encrypt: sha512_crypt
+      confirm: true
+      salt_size: 6
+
+  tasks:
+    - name: bashrc skel
+      template: 
+        src: templates/bashrc.j2
+        dest: /etc/skel/.bashrc
+    - name: profile skel
+      template: 
+        src: templates/profile.j2
+        dest: /etc/skel/.profile
+    - name: bash_aliases skel
+      template: 
+        src: templates/bash_aliases.j2
+        dest: /etc/skel/.bash_aliases
+    - name: prompt skel
+      template: 
+        src: templates/prompt.j2
+        dest: /etc/skel/.prompt
+    - name: bashrc root
+      template: 
+        src: templates/bashrc.j2
+        dest: /root/.bashrc
+    - name: profile root
+      template: 
+        src: templates/profile.j2
+        dest: /root/.profile
+    - name: bash_aliases root
+      template: 
+        src: templates/bash_aliases.j2
+        dest: /root/.bash_aliases
+    - name: prompt root
+      template: 
+        src: templates/prompt.j2
+        dest: /root/.prompt
+    - name: Add user
+      user:
+        name: "{{ item }}"
+        group: users
+        groups: users,sudo
+        password: "{{ password }}"
+        shell: /bin/bash
+        update_password: on_create # Add the same initial password for all users (can be overwritten by user)
+      with_items: 
+        - "{{ users }}"
+    - name: "Add authorized keys"
+      authorized_key:
+        user: "{{ item }}"
+        key: "{{ lookup('file', 'files/'+ item + '.pub') }}"
+      with_items:
+        - "{{ users }}"
+    - name: "Allow admin users to sudo without a password"
+      lineinfile:
+        dest: "/etc/sudoers" # path: in version 2.3
+        state: "present"
+        regexp: "^%sudo"
+        line: "%sudo ALL=(ALL) NOPASSWD: ALL"
+- name: Configure SSHD
+  hosts: all
+  tasks:
+    - name: sshd configuration file update
+      template: 
+        src: templates/sshd_config.j2
+        dest: /etc/ssh/sshd_config
+        backup: yes
+        owner: 0
+        group: 0
+        mode: 0644
+        validate: '/usr/sbin/sshd -T -f %s'
+      notify:
+        - restart sshd
+  handlers:
+    - name: restart sshd
+      service: name=sshd state=restarted

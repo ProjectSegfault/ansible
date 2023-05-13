@@ -1,0 +1,35 @@
+---
+- name: Copy docker-compose templates for the service
+  ansible.builtin.template:
+    src: ../compose/{{item}}/compose.yml.j2
+    dest: /opt/docker/{{item}}/compose.yml
+    backup: yes
+  register: check_status
+
+- name: check if extras file exists for the service
+  local_action: stat path=../compose/{{item}}/extras.conf.j2
+  register: file
+- name: Copy extras file
+  ansible.builtin.template:
+    src: ../compose/{{item}}/extras.conf.j2
+    dest: /opt/docker/{{item}}/extras.conf
+    backup: yes
+  when: file.stat.exists
+
+- name: "Update docker service image"
+  command:
+    chdir: "/opt/docker/{{ item }}"
+    cmd: docker compose pull
+  when: check_status is changed
+
+- name: "Stop docker service"
+  command:
+    chdir: "/opt/docker/{{ item }}"
+    cmd: docker compose down
+  when: check_status is changed
+
+- name: "Start docker service"
+  command:
+    chdir: "/opt/docker/{{ item }}"
+    cmd: docker compose up -d --build --remove-orphans
+  when: check_status is changed

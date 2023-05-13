@@ -1,0 +1,275 @@
+(tor) {
+        header {
+                -Strict-Transport-Security
+                -Referrer-Policy
+                -X-XSS-Protection
+                -Content-Security-Policy
+                # disable clients from sniffing the media type
+                X-Content-Type-Options nosniff
+                Permissions-Policy interest-cohort=()
+                # clickjacking protection
+                X-Frame-Options SAMEORIGIN
+                Onion-Location http://{args.0}.pjsfkvpxlinjamtawaksbnnaqs2fc2mtvmozrzckxh7f3kis6yea25ad.onion{path}
+                defer
+        }
+}
+(torloc) {
+        header Onion-Location http://{args.0}.pjsfkvpxlinjamtawaksbnnaqs2fc2mtvmozrzckxh7f3kis6yea25ad.onion{path}
+}
+(i2ploc) {
+        header X-I2P-Location http://{args.0}{path}
+}
+(acmedns) {
+	tls {
+        dns rfc2136 {
+                key_name "dynupd"
+                key_alg "hmac-sha256"
+                # declared in secrets.en: https://aryak.me/blog/01-knot
+                key "{{ rfc2136_key }}"
+                server "107.189.12.96:53"
+        }
+	}
+}
+(def) {
+        header {
+                # disable FLoC tracking
+                Permissions-Policy interest-cohort=()
+
+                # enable HSTS
+                Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+                # disable clients from sniffing the media type
+                X-Content-Type-Options nosniff
+
+                # clickjacking protection
+                X-Frame-Options SAMEORIGIN
+
+                # keep referrer data off of HTTP connections
+                Referrer-Policy no-referrer-when-downgrade
+
+                X-XSS-Protection "1; mode=block"
+                defer
+        }
+		{% if inventory_hostname == 'in' %}
+        import acmedns
+		{% endif %}
+}
+{{inventory_hostname}}.projectsegfau.lt {% if inventory_hostname == 'eu' %} pizza1.projectsegfau.lt {% endif %} {
+{% if inventory_hostname == 'eu' %}
+        redir https://wiki.projectsegfau.lt/index.php?title=Pizza1
+{% elif inventory_hostname == 'us' %}
+        redir https://wiki.projectsegfau.lt/index.php?title=US_Node
+{% elif inventory_hostname == 'in' %}
+        redir https://wiki.projectsegfau.lt/index.php?title=India_Node
+{% else %}
+{% endif %}
+}
+cdn.projectsegfau.lt cdn.{{inventory_hostname}}.projectsegfau.lt {
+        encode zstd gzip
+        root * /var/cdn
+        file_server {
+                browse
+        }
+}
+{% if inventory_hostname == 'eu' %}
+inv.bp.projectsegfau.lt {
+        reverse_proxy localhost:7573
+        header {
+                # disable FLoC tracking
+                Permissions-Policy interest-cohort=()
+
+                # enable HSTS
+                Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+                # disable clients from sniffing the media type
+                X-Content-Type-Options nosniff
+
+                # keep referrer data off of HTTP connections
+                Referrer-Policy no-referrer-when-downgrade
+
+                X-XSS-Protection "1; mode=block"
+                defer
+        }
+		import torloc invbp
+		import i2ploc pjsfi2szfkb4guqzmfmlyq4no46fayertjrwt4h2uughccrh2lvq.b32.i2p
+}
+proxy.lbry.projectsegfau.lt {
+        reverse_proxy localhost:3001
+        import def
+}
+{% else %}
+inv.{{inventory_hostname}}.projectsegfau.lt {
+        reverse_proxy localhost:7573
+        header {
+                # disable FLoC tracking
+                Permissions-Policy interest-cohort=()
+
+                # enable HSTS
+                Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+                # disable clients from sniffing the media type
+                X-Content-Type-Options nosniff
+
+                # keep referrer data off of HTTP connections
+                Referrer-Policy no-referrer-when-downgrade
+
+                X-XSS-Protection "1; mode=block"
+                defer
+        }
+		{% if inventory_hostname == 'in' %}
+        import acmedns
+		{% endif %}
+}
+piped.{{inventory_hostname}}.projectsegfau.lt pipedproxy.{{inventory_hostname}}.projectsegfau.lt pipedapi.{{inventory_hostname}}.projectsegfau.lt {
+        reverse_proxy :6970
+        header {
+                # disable FLoC tracking
+                Permissions-Policy interest-cohort=()
+
+                # enable HSTS
+                Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+                # disable clients from sniffing the media type
+                X-Content-Type-Options nosniff
+
+                # keep referrer data off of HTTP connections
+                Referrer-Policy no-referrer-when-downgrade
+
+                X-XSS-Protection "1; mode=block"
+                defer
+        }
+		{% if inventory_hostname == 'in' %}
+        import acmedns
+		{% endif %}
+}
+{% endif %}
+lbry.{{inventory_hostname}}.projectsegfau.lt lbry.projectsegfau.lt {
+        reverse_proxy :7269
+        import def
+		import torloc lbry
+        import i2ploc pjsf7uucpqf2crcmfo3nvwdmjhirxxjfyuvibdfp5x3af2ghqnaa.b32.i2p
+}
+gothub.{{inventory_hostname}}.projectsegfau.lt gothub.projectsegfau.lt {
+        reverse_proxy :1024
+        import def
+		import torloc gothub
+}
+overflow.{{inventory_hostname}}.projectsegfau.lt overflow.projectsegfau.lt {
+        reverse_proxy :8694
+        import def
+		import torloc overflow
+}
+teddit.{{inventory_hostname}}.projectsegfau.lt teddit.projectsegfau.lt {
+        reverse_proxy :9061
+        import def
+		import torloc teddit
+}
+rimgo.{{inventory_hostname}}.projectsegfau.lt rimgo.projectsegfau.lt {
+        reverse_proxy :9016
+        import def
+		import torloc rimgo
+}
+
+libreddit.{{inventory_hostname}}.projectsegfau.lt libreddit.projectsegfau.lt {
+        reverse_proxy :6464
+        import def
+		import torloc libreddit
+		import i2ploc pjsfkref7g66mji45kyccqnn5hmjtjp3cfodozabpyplj2rmv5sa.b32.i2p
+}
+
+nitter.{{inventory_hostname}}.projectsegfau.lt nitter.projectsegfau.lt {
+        import def
+        header {
+                X-Permitted-Cross-Domain-Policies none
+                Permissions-Policy "Permissions-Policy: accelerometer=(), ambient-light-sensor=(), autoplay=(self), battery=(), camera=(), cross-origin-isolated=(), display-capture=(), document-domain=(), encrypted-media=(), execution-while-not-rendered=(), execution-while-out-of-viewport=(), fullscreen=(self), geolocation=(), gyroscope=(), keyboard-map=(), magnetometer=(), microphone=(), midi=(), navigation-override=(), payment=(), picture-in-picture=(self), publickey-credentials-get=(), screen-wake-lock=(), sync-xhr=(), usb=(), web-share=(), xr-spatial-tracking=()"
+                header Content-Security-Policy "default-src 'none'; script-src 'self' 'unsafe-inline'; script-src-attr 'none'; img-src 'self'; style-src 'self' 'unsafe-inline'; style-src-elem 'self'; font-src 'self'; object-src 'none'; media-src 'self' blob:; worker-src 'self' blob:; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; connect-src 'self' https://*.twimg.com; manifest-src 'self'"
+        }
+        reverse_proxy :8387 {
+                transport http {
+                        compression off
+                }
+        }
+		import torloc nitter
+		import i2ploc pjsfs4ukb6prmfx3qx3a5ef2cpcupkvcrxdh72kqn2rxc2cw4nka.b32.i2p
+}
+bb.{{inventory_hostname}}.projectsegfau.lt bb.projectsegfau.lt {
+        import def
+		import torloc beatbump
+		import i2ploc pjsflmvtqax7ii44qy4ladap65c3kqspbs7h7krqy7x43uovklla.b32.i2p
+        reverse_proxy :3069
+}
+
+bw.{{inventory_hostname}}.projectsegfau.lt bw.projectsegfau.lt {
+        import def
+		import torloc breezewiki
+		import i2ploc pjsfk4xvekoc7wx4pteevp3q2wy7jmzlem7rvl74nx33zkdr4vyq.b32.i2p
+        reverse_proxy :10416
+}
+scribe.{{inventory_hostname}}.projectsegfau.lt scribe.projectsegfau.lt {
+        import def
+		import torloc scribe
+        import i2ploc pjsflkkkcn33ahmzmpyq6idy2knkzh4atp7zaetqfsnenpyori6a.b32.i2p
+        reverse_proxy :8006
+}
+{% if inventory_hostname == 'eu' %}
+{% else %}
+search.{{inventory_hostname}}.projectsegfau.lt {
+        import def
+        reverse_proxy :8081
+        @api {
+                path /config
+                path /healthz
+                path /stats/errors
+                path /stats/checker
+        }
+        @static {
+                path /static/*
+        }
+        @notstatic {
+                not path /static/*
+        }
+        @imageproxy {
+                path /image_proxy
+        }
+        @notimageproxy {
+                not path /image_proxy
+        }
+        header {
+                # Enable HTTP Strict Transport Security (HSTS) to force clients to always connect via HTTPS
+                Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+                # Enable cross-site filter (XSS) and tell browser to block detected attacks
+                X-XSS-Protection "1; mode=block"
+                # Prevent some browsers from MIME-sniffing a response away from the declared Content-Type
+                X-Content-Type-Options "nosniff"
+                # Disable some features
+                Permissions-Policy "accelerometer=(),ambient-light-sensor=(),autoplay=(),camera=(),encrypted-media=(),focus-without-user-activation=(),geolocation=(),gyroscope=(),magnetometer=(),microphone=(),midi=(),payment=(),picture-in-picture=(),speaker=(),sync-xhr=(),usb=(),vr=()"
+                # Disable some features (legacy)
+                Feature-Policy "accelerometer 'none';ambient-light-sensor 'none'; autoplay 'none';camera 'none';encrypted-media 'none';focus-without-user-activation 'none'; geolocation 'none';gyroscope 'none';magnetometer 'none';microphone 'none';midi 'none';payment 'none';picture-in-picture 'none'; speaker 'none';sync-xhr 'none';usb 'none';vr 'none'"
+                # Referer
+                Referrer-Policy "no-referrer"
+                # X-Robots-Tag
+                X-Robots-Tag "noindex, noarchive, nofollow"
+                # Remove Server header
+                -Server
+        }
+        header @api {
+                Access-Control-Allow-Methods "GET, OPTIONS"
+                Access-Control-Allow-Origin "*"
+        }
+        # Cache
+        header @static {
+                # Cache
+                Cache-Control "public, max-age=31536000"
+                defer
+        }
+        header @notstatic {
+                # No Cache
+                Cache-Control "no-cache, no-store"
+                Pragma "no-cache"
+        }
+        # CSP (see http://content-security-policy.com/ )
+        header @imageproxy {
+                Content-Security-Policy "default-src 'none'; img-src 'self' data:"
+        }
+        header @notimageproxy {
+                Content-Security-Policy "upgrade-insecure-requests; default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; form-action 'self' https://github.com/searxng/searxng/issues/new; font-src 'self'; frame-ancestors 'self'; base-uri 'self'; connect-src 'self' https://overpass-api.de; img-src 'self' data: https://*.tile.openstreetmap.org; frame-src https://www.youtube-nocookie.com https://player.vimeo.com https://www.dailymotion.com https://www.deezer.com https://www.mixcloud.com https://w.soundcloud.com https://embed.spotify.com"
+        }
+}
+{% endif %}
+include ./extras.caddy

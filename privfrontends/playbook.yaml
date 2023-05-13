@@ -1,0 +1,47 @@
+---
+- name: Setup Caddy
+  hosts: privfrontends
+  roles:
+    - role: caddy_ansible.caddy_ansible
+      caddy_systemd_capabilities_enabled: true
+      caddy_config: "{{ lookup('template', '../templates/Caddyfile.j2') }}"
+      caddy_user: "caddy"
+      caddy_home: "/var/lib/caddy"
+      # Static weekly builds of caddy with rfc2136 dns plugin
+      caddy_url_base: "https://cb.projectsegfau.lt/api/download"
+  tasks:
+    - name: Copy per-server caddy extras
+      ansible.builtin.copy:
+        src: "../{{ caddy_extras_config }}"
+        dest: /etc/caddy/extras.caddy
+- name: Setup docker compose for privacy frontends
+  hosts: all
+  vars:
+    docker_services:
+      - anonymousoverflow
+      - beatbump
+      - breezewiki
+      - gothub
+      - gothub-dev
+      - invidious
+      - librarian
+      - libreddit
+      - nitter
+      - rimgo
+      - scribe
+      - teddit
+      - watchtower
+    non_pizza_docker_services:
+      - piped
+      - searxng-docker
+  tasks:
+    #
+    # community.docker does not support compose 2.0 right now.
+    # https://github.com/ansible-collections/community.docker/issues/216
+    #
+    - name: Update docker compose files and restart those with changes
+      include_tasks: docker-tasks.yaml
+      with_items: "{{ docker_services }}"
+    - name: Update docker compose files and restart those with changes (Privacy Frontends but without Pizza1)
+      include_tasks: docker-tasks.yaml
+      with_items: "{{ non_pizza_docker_services }}"

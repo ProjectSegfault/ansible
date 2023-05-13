@@ -1,0 +1,15 @@
+{% if inventory_hostname == 'eu' %}
+Port 222
+{% else %}
+Port 22
+{% endif %}
+PermitRootLogin prohibit-password
+PasswordAuthentication no
+PermitEmptyPasswords no
+ChallengeResponseAuthentication no
+UsePAM no
+X11Forwarding no
+PrintMotd yes
+UseDNS no
+AcceptEnv LANG LC_*
+Subsystem	sftp	/usr/lib/openssh/sftp-server

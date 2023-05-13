@@ -1,0 +1,16 @@
+services:
+  libreddit:
+    image: libreddit/libreddit:latest
+    ports:
+      - 127.0.0.1:6464:8080
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "--tries=1", "http://localhost:8080/settings"]
+      interval: 5m
+      timeout: 3s
+    environment:
+      - FRONT_PAGE=popular
+      - COMMENT_SORT=new
+      - BLUR_NSFW=on
+      - USE_HLS=on
+      - AUTOPLAY_VIDEOS=off

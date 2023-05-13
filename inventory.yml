@@ -1,0 +1,29 @@
+all:
+  children:
+    soleil:
+      hosts:
+        core:
+          ansible_host: soleil.projectsegfau.lt
+          ansible_user: user
+          ansible_port: 2270
+          ansible_become: yes # Run everything as root
+    privfrontends:
+      hosts:
+        eu:
+          ansible_host: pizza1.projectsegfau.lt
+          ansible_user: arya
+          ansible_port: 222
+          ansible_become: yes # Run everything as root
+          caddy_extras_config: templates/1-extras.Caddyfile
+        us:
+          ansible_host: us.projectsegfau.lt
+          ansible_user: arya
+          ansible_port: 22
+          ansible_become: yes # Run everything as root
+          caddy_extras_config: templates/2-extras.Caddyfile
+        in:
+          ansible_host: in.projectsegfau.lt
+          ansible_user: root
+          ansible_port: 6922
+          caddy_extras_config: templates/3-extras.Caddyfile
+    

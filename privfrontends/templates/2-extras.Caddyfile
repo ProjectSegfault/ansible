@@ -1,0 +1,4 @@
+fb.us.projectsegfau.lt {
+	import def
+	reverse_proxy :8065
+}

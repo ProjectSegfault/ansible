@@ -1,0 +1,9 @@
+services:
+  breezewiki:
+    container_name: breezewiki
+    image: quay.io/pussthecatorg/breezewiki:latest
+    restart: unless-stopped
+    ports:
+      - "10416:10416"
+    volumes:
+      - "./config.ini:/app/config.ini"
