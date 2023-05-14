@@ -1,6 +1,6 @@
 ---
 - name: Copy docker-compose templates for the service
-  ansible.builtin.template:
+  template:
     src: ../compose/{{item}}/compose.yml.j2
     dest: /opt/docker/{{item}}/compose.yml
     backup: yes
@@ -10,7 +10,7 @@
   local_action: stat path=../compose/{{item}}/extras.conf.j2
   register: file
 - name: Copy extras file
-  ansible.builtin.template:
+  template:
     src: ../compose/{{item}}/extras.conf.j2
     dest: /opt/docker/{{item}}/extras.conf
     backup: yes

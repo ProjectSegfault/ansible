@@ -11,11 +11,11 @@
       caddy_url_base: "https://cb.projectsegfau.lt/api/download"
   tasks:
     - name: Copy per-server caddy extras
-      ansible.builtin.copy:
+      copy:
         src: "../{{ caddy_extras_config }}"
         dest: /etc/caddy/extras.caddy
 - name: Setup docker compose for privacy frontends
-  hosts: all
+  hosts: privfrontends
   vars:
     docker_services:
       - anonymousoverflow
