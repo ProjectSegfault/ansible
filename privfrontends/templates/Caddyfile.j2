@@ -54,14 +54,7 @@
 		{% endif %}
 }
 {{inventory_hostname}}.projectsegfau.lt {% if inventory_hostname == 'eu' %} pizza1.projectsegfau.lt {% endif %} {
-{% if inventory_hostname == 'eu' %}
-        redir https://wiki.projectsegfau.lt/index.php?title=Pizza1
-{% elif inventory_hostname == 'us' %}
-        redir https://wiki.projectsegfau.lt/index.php?title=US_Node
-{% elif inventory_hostname == 'in' %}
-        redir https://wiki.projectsegfau.lt/index.php?title=India_Node
-{% else %}
-{% endif %}
+        redir https://wiki.projectsegfau.lt/index.php?title={{wiki_page}}
 }
 cdn.projectsegfau.lt cdn.{{inventory_hostname}}.projectsegfau.lt {
         encode zstd gzip

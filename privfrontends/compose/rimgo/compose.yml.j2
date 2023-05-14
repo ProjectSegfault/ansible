@@ -10,16 +10,8 @@ services:
       - IMGUR_CLIENT_ID=546c25a59c58ad7
       - PRIVACY_POLICY=https://projectsegfau.lt/legal/privacy-policy
       - PRIVACY_MESSAGE=
-      {% if inventory_hostname == 'eu' %}
-      - PRIVACY_COUNTRY=Luxembourg
-      - PRIVACY_PROVIDER=BuyVM
-      {% else if inventory_hostname == 'us' %}
-      - PRIVACY_COUNTRY=USA
-      - PRIVACY_PROVIDER=Digital Ocean
-      {% else if inventory_hostname == 'in' %}
-      - PRIVACY_COUNTRY=India
-      - PRIVACY_PROVIDER=Bharti Airtel
-      {% endif %}
+      - PRIVACY_COUNTRY={{country}}
+      - PRIVACY_PROVIDER={{isp}}
       - PRIVACY_CLOUDFLARE=false
       - PRIVACY_NOT_COLLECTED=true
     restart: unless-stopped

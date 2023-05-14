@@ -14,16 +14,8 @@ services:
       - GOTHUB_USER_AGENT_LOGGED=false
       - GOTHUB_DIAGNOSTIC_INFO_LOGGED=false
       - GOTHUB_INSTANCE_PRIVACY_POLICY=https://projectsegfau.lt/legal/privacy-policy
-      {% if inventory_hostname == 'eu' %}
-      - GOTHUB_INSTANCE_COUNTRY=Luxembourg
-      - GOTHUB_INSTANCE_PROVIDER=BuyVM
-      {% else if inventory_hostname == 'us' %}
-      - GOTHUB_INSTANCE_COUNTRY=United States
-      - GOTHUB_INSTANCE_PROVIDER=Digital Ocean
-      {% else if inventory_hostname == 'in' %}
-      - GOTHUB_INSTANCE_COUNTRY=India
-      - GOTHUB_INSTANCE_PROVIDER=Bharti Airtel
-      {% endif %}
+      - GOTHUB_INSTANCE_COUNTRY={{country}}
+      - GOTHUB_INSTANCE_PROVIDER={{isp}}
       - GOTHUB_INSTANCE_CLOUDFLARE=false
     healthcheck:
       test: wget -nv --tries=1 --spider http://127.0.0.1:3000/api/v1/version || exit 1

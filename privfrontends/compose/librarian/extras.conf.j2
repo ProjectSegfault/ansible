@@ -59,16 +59,8 @@ INSTANCE_PRIVACY:
   DATA_COLLECTED_DEVICE: true
   DATA_COLLECTED_DIAGNOSTIC_ONLY: false
 
-  {% if inventory_hostname == 'eu' %}
-  INSTANCE_COUNTRY: "Luxembourg"
-  INSTANCE_PROVIDER: "BuyVM"
-  {% else if inventory_hostname == 'us' %}
-  INSTANCE_COUNTRY: "United States"
-  INSTANCE_PROVIDER: "Digital Ocean"
-  {% else if inventory_hostname == 'in' %}
-  INSTANCE_COUNTRY: "India"
-  INSTANCE_PROVIDER: "Bharti Airtel"
-  {% endif %}
+  INSTANCE_COUNTRY: "{{country}}"
+  INSTANCE_PROVIDER: "{{isp}}"
 
   # Cloudflare use is discouraged. You can set this to false if it is not proxied (gray cloud icon)
   INSTANCE_CLOUDFLARE: false

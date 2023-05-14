@@ -6,6 +6,7 @@ all:
           ansible_host: soleil.projectsegfau.lt
           ansible_user: user
           ansible_port: 2270
+          port: 22
           ansible_become: yes # Run everything as root
     privfrontends:
       hosts:
@@ -13,17 +14,29 @@ all:
           ansible_host: pizza1.projectsegfau.lt
           ansible_user: arya
           ansible_port: 222
+          port: 222
           ansible_become: yes # Run everything as root
           caddy_extras_config: templates/1-extras.Caddyfile
+          country: Luxembourg
+          isp: BuyVM
+          wiki_page: Pizza1
         us:
           ansible_host: us.projectsegfau.lt
           ansible_user: arya
           ansible_port: 22
+          port: 22
           ansible_become: yes # Run everything as root
           caddy_extras_config: templates/2-extras.Caddyfile
+          country: United States
+          isp: Digital Ocean
+          wiki_page: US_Node
         in:
           ansible_host: in.projectsegfau.lt
           ansible_user: root
           ansible_port: 6922
+          port: 22
           caddy_extras_config: templates/3-extras.Caddyfile
+          country: India
+          isp: Bharti Airtel
+          wiki_page: India_Node
     

@@ -1,8 +1,4 @@
-{% if inventory_hostname == 'eu' %}
-Port 222
-{% else %}
-Port 22
-{% endif %}
+Port {{port}}
 PermitRootLogin prohibit-password
 PasswordAuthentication no
 PermitEmptyPasswords no
