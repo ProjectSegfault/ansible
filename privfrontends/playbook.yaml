@@ -45,3 +45,17 @@
     - name: Update docker compose files and restart those with changes (Privacy Frontends but without Pizza1)
       include_tasks: docker-tasks.yaml
       with_items: "{{ non_pizza_docker_services }}"
+
+- name: Setup cron jobs
+  hosts: privfrontends
+  tasks:
+    - name: Restart invidious every hour
+      cron:
+        name: "hourly invidious restart"
+        special_time: hourly
+        job: "docker restart invidious-invidious-1 && curl https://healthchecks.projectsegfau.lt/ping/{{invidious_hc_uuid}}"
+    - name: Restart teddit every hour
+      cron:
+        name: "hourly teddit restart"
+        special_time: hourly
+        job: "docker restart teddit && curl https://healthchecks.projectsegfau.lt/ping/{{teddit_hc_uuid}}"
