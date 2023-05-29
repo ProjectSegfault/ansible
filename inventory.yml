@@ -20,6 +20,7 @@ all:
           country: Luxembourg
           isp: BuyVM
           wiki_page: Pizza1
+          watchtower_mtrx_username: watchtower-pizza
         us:
           ansible_host: us.projectsegfau.lt
           ansible_user: arya
@@ -30,6 +31,7 @@ all:
           country: United States
           isp: Digital Ocean
           wiki_page: US_Node
+          watchtower_mtrx_username: watchtower-us
         in:
           ansible_host: in.projectsegfau.lt
           ansible_user: root
@@ -39,4 +41,4 @@ all:
           country: India
           isp: Bharti Airtel
           wiki_page: India_Node
-    
+          watchtower_mtrx_username: watchtower-in

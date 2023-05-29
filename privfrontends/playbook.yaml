@@ -4,7 +4,7 @@
   roles:
     - role: caddy_ansible.caddy_ansible
       caddy_systemd_capabilities_enabled: true
-      caddy_config: "{{ lookup('template', '../templates/Caddyfile.j2') }}"
+      caddy_config: "{{ lookup('template', './templates/Caddyfile.j2') }}"
       caddy_user: "caddy"
       caddy_home: "/var/lib/caddy"
       # Static weekly builds of caddy with rfc2136 dns plugin
@@ -12,8 +12,10 @@
   tasks:
     - name: Copy per-server caddy extras
       copy:
-        src: "../{{ caddy_extras_config }}"
-        dest: /etc/caddy/extras.caddy
+        src: "./templates/{{ inventory_hostname }}/"
+        dest: /etc/caddy/
+        remote_src: true
+        directory_mode: true
 - name: Setup docker compose for privacy frontends
   hosts: privfrontends
   vars:

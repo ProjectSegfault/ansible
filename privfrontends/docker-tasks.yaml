@@ -1,17 +1,17 @@
 ---
 - name: Copy docker-compose templates for the service
   template:
-    src: ../compose/{{item}}/compose.yml.j2
+    src: ./compose/{{item}}/compose.yml.j2
     dest: /opt/docker/{{item}}/compose.yml
     backup: yes
   register: check_status
 
 - name: check if extras file exists for the service
-  local_action: stat path=../compose/{{item}}/extras.conf.j2
+  local_action: stat path=./compose/{{item}}/extras.conf.j2
   register: file
 - name: Copy extras file
   template:
-    src: ../compose/{{item}}/extras.conf.j2
+    src: ./compose/{{item}}/extras.conf.j2
     dest: /opt/docker/{{item}}/extras.conf
     backup: yes
   when: file.stat.exists

@@ -24,7 +24,6 @@
         dns rfc2136 {
                 key_name "dynupd"
                 key_alg "hmac-sha256"
-                # declared in secrets.en: https://aryak.me/blog/01-knot
                 key "{{ rfc2136_key }}"
                 server "107.189.12.96:53"
         }
@@ -43,17 +42,24 @@
                 # clickjacking protection
                 X-Frame-Options SAMEORIGIN
 
-                # keep referrer data off of HTTP connections
-                Referrer-Policy no-referrer-when-downgrade
-
                 X-XSS-Protection "1; mode=block"
                 defer
+        }
+		log {
+            output discard
+            format filter {
+                wrap console
+                fields {
+                   request>remote_ip replace REDACTED
+                   request>headers>X-Forwarded-For replace REDACTED
+                }
+            }
         }
 		{% if inventory_hostname == 'in' %}
         import acmedns
 		{% endif %}
 }
-{{inventory_hostname}}.projectsegfau.lt {% if inventory_hostname == 'eu' %} pizza1.projectsegfau.lt {% endif %} {
+:80 {{inventory_hostname}}.projectsegfau.lt {% if inventory_hostname == 'eu' %} pizza1.projectsegfau.lt {% endif %} {
         redir https://wiki.projectsegfau.lt/index.php?title={{wiki_page}}
 }
 cdn.projectsegfau.lt cdn.{{inventory_hostname}}.projectsegfau.lt {
@@ -81,6 +87,46 @@ inv.bp.projectsegfau.lt {
                 X-XSS-Protection "1; mode=block"
                 defer
         }
+		log {
+            output discard
+            format filter {
+                wrap console
+                fields {
+                   request>remote_ip replace REDACTED
+                   request>headers>X-Forwarded-For replace REDACTED
+                }
+            }
+        }
+		import torloc invbp
+		import i2ploc pjsfi2szfkb4guqzmfmlyq4no46fayertjrwt4h2uughccrh2lvq.b32.i2p
+}
+i.bp.psf.lt {
+        reverse_proxy localhost:7573
+        header {
+                # disable FLoC tracking
+                Permissions-Policy interest-cohort=()
+				-Content-Security-Policy
+                # enable HSTS
+                Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+                # disable clients from sniffing the media type
+                X-Content-Type-Options nosniff
+
+                # keep referrer data off of HTTP connections
+                Referrer-Policy no-referrer-when-downgrade
+
+                X-XSS-Protection "1; mode=block"
+                defer
+        }
+		log {
+            output discard
+            format filter {
+                wrap console
+                fields {
+                   request>remote_ip replace REDACTED
+                   request>headers>X-Forwarded-For replace REDACTED
+                }
+            }
+        }
 		import torloc invbp
 		import i2ploc pjsfi2szfkb4guqzmfmlyq4no46fayertjrwt4h2uughccrh2lvq.b32.i2p
 }
@@ -106,6 +152,47 @@ inv.{{inventory_hostname}}.projectsegfau.lt {
                 X-XSS-Protection "1; mode=block"
                 defer
         }
+		log {
+            output discard
+            format filter {
+                wrap console
+                fields {
+                   request>remote_ip replace REDACTED
+                   request>headers>X-Forwarded-For replace REDACTED
+                }
+            }
+        }
+		{% if inventory_hostname == 'in' %}
+        import acmedns
+		{% endif %}
+}
+i.{{inventory_hostname}}.psf.lt {
+        reverse_proxy localhost:7573
+        header {
+                # disable FLoC tracking
+                Permissions-Policy interest-cohort=()
+				-Content-Security-Policy
+                # enable HSTS
+                Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+                # disable clients from sniffing the media type
+                X-Content-Type-Options nosniff
+
+                # keep referrer data off of HTTP connections
+                Referrer-Policy no-referrer-when-downgrade
+
+                X-XSS-Protection "1; mode=block"
+                defer
+        }
+		log {
+            output discard
+            format filter {
+                wrap console
+                fields {
+                   request>remote_ip replace REDACTED
+                   request>headers>X-Forwarded-For replace REDACTED
+                }
+            }
+        }
 		{% if inventory_hostname == 'in' %}
         import acmedns
 		{% endif %}
@@ -127,9 +214,49 @@ piped.{{inventory_hostname}}.projectsegfau.lt pipedproxy.{{inventory_hostname}}.
                 X-XSS-Protection "1; mode=block"
                 defer
         }
+		log {
+            output discard
+            format filter {
+                wrap console
+                fields {
+                   request>remote_ip replace REDACTED
+                   request>headers>X-Forwarded-For replace REDACTED
+                }
+            }
+        }
 		{% if inventory_hostname == 'in' %}
         import acmedns
 		{% endif %}
+}
+pi.{{inventory_hostname}}.psf.lt {
+        reverse_proxy :6970 {
+                header_up Host "piped.{{inventory_hostname}}.projectsegfau.lt"
+        }
+        header {
+                # disable FLoC tracking
+                Permissions-Policy interest-cohort=()
+
+                # enable HSTS
+                Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+                # disable clients from sniffing the media type
+                X-Content-Type-Options nosniff
+
+                # keep referrer data off of HTTP connections
+                Referrer-Policy no-referrer-when-downgrade
+
+                X-XSS-Protection "1; mode=block"
+                defer
+        }
+		log {
+            output discard
+            format filter {
+                wrap console
+                fields {
+                   request>remote_ip replace REDACTED
+                   request>headers>X-Forwarded-For replace REDACTED
+                }
+            }
+        }
 }
 {% endif %}
 lbry.{{inventory_hostname}}.projectsegfau.lt lbry.projectsegfau.lt {
@@ -138,35 +265,35 @@ lbry.{{inventory_hostname}}.projectsegfau.lt lbry.projectsegfau.lt {
 		import torloc lbry
         import i2ploc pjsf7uucpqf2crcmfo3nvwdmjhirxxjfyuvibdfp5x3af2ghqnaa.b32.i2p
 }
-gothub.{{inventory_hostname}}.projectsegfau.lt gothub.projectsegfau.lt {
+gothub.{{inventory_hostname}}.projectsegfau.lt gothub.projectsegfau.lt gh.psf.lt gh.{{inventory_hostname}}.psf.lt {
         reverse_proxy :1024
         import def
 		import torloc gothub
 }
-overflow.{{inventory_hostname}}.projectsegfau.lt overflow.projectsegfau.lt {
+overflow.{{inventory_hostname}}.projectsegfau.lt overflow.projectsegfau.lt o.psf.lt o.{{inventory_hostname}}.psf.lt {
         reverse_proxy :8694
         import def
 		import torloc overflow
 }
-teddit.{{inventory_hostname}}.projectsegfau.lt teddit.projectsegfau.lt {
+teddit.{{inventory_hostname}}.projectsegfau.lt teddit.projectsegfau.lt t.psf.lt t.{{inventory_hostname}}.psf.lt {
         reverse_proxy :9061
         import def
 		import torloc teddit
 }
-rimgo.{{inventory_hostname}}.projectsegfau.lt rimgo.projectsegfau.lt {
+rimgo.{{inventory_hostname}}.projectsegfau.lt rimgo.projectsegfau.lt rg.psf.lt rg.{{inventory_hostname}}.psf.lt {
         reverse_proxy :9016
         import def
 		import torloc rimgo
 }
 
-libreddit.{{inventory_hostname}}.projectsegfau.lt libreddit.projectsegfau.lt {
+libreddit.{{inventory_hostname}}.projectsegfau.lt libreddit.projectsegfau.lt lr.psf.lt lr.{{inventory_hostname}}.psf.lt {
         reverse_proxy :6464
         import def
 		import torloc libreddit
 		import i2ploc pjsfkref7g66mji45kyccqnn5hmjtjp3cfodozabpyplj2rmv5sa.b32.i2p
 }
 
-nitter.{{inventory_hostname}}.projectsegfau.lt nitter.projectsegfau.lt {
+nitter.{{inventory_hostname}}.projectsegfau.lt nitter.projectsegfau.lt n.psf.lt n.{{inventory_hostname}}.psf.lt {
         import def
         header {
                 X-Permitted-Cross-Domain-Policies none
@@ -188,13 +315,13 @@ bb.{{inventory_hostname}}.projectsegfau.lt bb.projectsegfau.lt {
         reverse_proxy :3069
 }
 
-bw.{{inventory_hostname}}.projectsegfau.lt bw.projectsegfau.lt {
+bw.{{inventory_hostname}}.projectsegfau.lt bw.projectsegfau.lt bw.psf.lt bw.{{inventory_hostname}}.psf.lt {
         import def
 		import torloc breezewiki
 		import i2ploc pjsfk4xvekoc7wx4pteevp3q2wy7jmzlem7rvl74nx33zkdr4vyq.b32.i2p
         reverse_proxy :10416
 }
-scribe.{{inventory_hostname}}.projectsegfau.lt scribe.projectsegfau.lt {
+scribe.{{inventory_hostname}}.projectsegfau.lt scribe.projectsegfau.lt sc.psf.lt sc.{{inventory_hostname}}.psf.lt {
         import def
 		import torloc scribe
         import i2ploc pjsflkkkcn33ahmzmpyq6idy2knkzh4atp7zaetqfsnenpyori6a.b32.i2p
@@ -202,7 +329,7 @@ scribe.{{inventory_hostname}}.projectsegfau.lt scribe.projectsegfau.lt {
 }
 {% if inventory_hostname == 'eu' %}
 {% else %}
-search.{{inventory_hostname}}.projectsegfau.lt {
+search.{{inventory_hostname}}.projectsegfau.lt s.psf.lt s.{{inventory_hostname}}.psf.lt {
         import def
         reverse_proxy :8081
         @api {
@@ -265,4 +392,4 @@ search.{{inventory_hostname}}.projectsegfau.lt {
         }
 }
 {% endif %}
-include ./extras.caddy
+include ./*.Caddyfile

@@ -1,0 +1,30 @@
+stats.eu.projectsegfau.lt {
+        import auth
+        reverse_proxy localhost:9100
+        import def
+}
+aryak.me {
+        reverse_proxy https://prox-arya.p.projectsegfau.lt {
+                header_up Host prox-arya.p.projectsegfau.lt
+        }
+}
+arya.projectsegfau.lt {
+	redir https://aryak.me{uri}
+}
+## OLD URL REDIRECTS
+invidious.mutahar.rocks {
+        redir https://inv.bp.projectsegfau.lt{uri} permanent
+}
+ferrit.projectsegfau.lt snooddit.projectsegfau.lt libreddit.mutahar.rocks {
+        redir https://libreddit.projectsegfau.lt{uri} permanent
+}
+lbry.mutahar.rocks {
+        redir https://lbry.projectsegfau.lt{uri} permanent
+}
+nitter.mutahar.rocks {
+        redir https://nitter.projectsegfau.lt{uri} permanent
+}
+#redir inv.bp.mutahar.rocks inv.bp.projectsegfau.lt permanent
+#redir libreddit.mutahar.rocks libreddit.projectsegfau.lt permanent
+#redir lbry.mutahar.rocks lbry.projectsegfau.lt permanent
+#redir nitter.mutahar.rocks nitter.projectsegfau.lt permanent

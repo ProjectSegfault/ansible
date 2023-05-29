@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+  anonymousoverflow:
+    image: codeberg.org/aryak/anonymousoverflow-docker-builds:latest
+    environment:
+      - APP_URL=https://overflow.projectsegfau.lt
+      - JWT_SIGNING_SECRET={{anonymousoverflow_signing_secret}}
+    ports:
+      - '8694:8080'
+    restart: 'always'

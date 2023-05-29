@@ -1,0 +1,15 @@
+version: 2
+services:
+  watchtower:
+    image: containrrr/watchtower
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - TZ=Europe/Paris
+      - WATCHTOWER_CLEANUP=false
+      - DOCKER_API_VERSION=1.42
+      - WATCHTOWER_INCLUDE_STOPPED=false
+      - WATCHTOWER_POLL_INTERVAL=3600
+      - WATCHTOWER_MONITOR_ONLY=false
+      - WATCHTOWER_NOTIFICATION_URL=matrix://{{watchtower_mtrx_username}}:{{watchtower_mtrx_pass}}@matrix.projectsegfau.lt/
+    restart: unless-stopped
