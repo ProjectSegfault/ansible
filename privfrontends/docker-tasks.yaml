@@ -1,4 +1,8 @@
 ---
+- name: Create directory for service
+  file:
+    path: /opt/docker/{{item}}
+    state: directory
 - name: Copy docker-compose templates for the service
   template:
     src: ./compose/{{item}}/compose.yml.j2
@@ -20,16 +24,16 @@
   command:
     chdir: "/opt/docker/{{ item }}"
     cmd: docker compose pull
-  when: check_status is changed
+  when: check_status.changed
 
 - name: "Stop docker service"
   command:
     chdir: "/opt/docker/{{ item }}"
     cmd: docker compose down
-  when: check_status is changed
+  when: check_status.changed
 
 - name: "Start docker service"
   command:
     chdir: "/opt/docker/{{ item }}"
     cmd: docker compose up -d --build --remove-orphans
-  when: check_status is changed
+  when: check_status.changed

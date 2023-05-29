@@ -134,6 +134,10 @@ proxy.lbry.projectsegfau.lt {
         reverse_proxy localhost:3001
         import def
 }
+gothub.dev.projectsegfau.lt gh.dev.psf.lt {
+		reverse_proxy localhost:1025
+		import def
+}
 {% else %}
 inv.{{inventory_hostname}}.projectsegfau.lt {
         reverse_proxy localhost:7573
@@ -260,7 +264,7 @@ pi.{{inventory_hostname}}.psf.lt {
 }
 {% endif %}
 lbry.{{inventory_hostname}}.projectsegfau.lt lbry.projectsegfau.lt {
-        reverse_proxy :7269
+        reverse_proxy :3550
         import def
 		import torloc lbry
         import i2ploc pjsf7uucpqf2crcmfo3nvwdmjhirxxjfyuvibdfp5x3af2ghqnaa.b32.i2p
@@ -392,4 +396,4 @@ search.{{inventory_hostname}}.projectsegfau.lt s.psf.lt s.{{inventory_hostname}}
         }
 }
 {% endif %}
-include ./*.Caddyfile
+import ./*.Caddyfile

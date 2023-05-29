@@ -2,11 +2,12 @@
 - name: Setup Caddy
   hosts: privfrontends
   roles:
-    - role: caddy_ansible.caddy_ansible
+    - role: caddy-ansible
       caddy_systemd_capabilities_enabled: true
       caddy_config: "{{ lookup('template', './templates/Caddyfile.j2') }}"
       caddy_user: "caddy"
       caddy_home: "/var/lib/caddy"
+      caddy_packages: ["github.com/caddy-dns/rfc2136@master"]
       # Static weekly builds of caddy with rfc2136 dns plugin
       caddy_url_base: "https://cb.projectsegfau.lt/api/download"
   tasks:
@@ -14,18 +15,22 @@
       copy:
         src: "./templates/{{ inventory_hostname }}/"
         dest: /etc/caddy/
-        remote_src: true
         directory_mode: true
+    - name: Restart
+      service:
+        name: caddy
+        enabled: yes
+        state: restarted
 - name: Setup docker compose for privacy frontends
   hosts: privfrontends
   vars:
     docker_services:
       - anonymousoverflow
-      - beatbump
+        #- beatbump
       - breezewiki
       - gothub
       - gothub-dev
-      - invidious
+        #- invidious
       - librarian
       - libreddit
       - nitter
@@ -34,8 +39,8 @@
       - teddit
       - watchtower
     non_pizza_docker_services:
-      - piped
-      - searxng-docker
+      #- piped
+      - searxng
   tasks:
     #
     # community.docker does not support compose 2.0 right now.
