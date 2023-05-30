@@ -1,6 +1,9 @@
 bitpuit.in.projectsegfau.lt {
         respond "Go fuck yourself devrand"
 }
+dd.psf.lt {
+	reverse_proxy :8008
+}
 # PERSONAL
 https://m.in.projectsegfau.lt:8448 m.in.projectsegfau.lt {
         import def
