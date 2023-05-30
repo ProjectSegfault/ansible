@@ -4,8 +4,32 @@ all:
       hosts:
         core:
           ansible_host: soleil.projectsegfau.lt
-          ansible_user: user
-          ansible_port: 2270
+          ansible_user: core
+          ansible_port: 2271
+          port: 22
+          ansible_become: yes # Run everything as root
+        docker:
+          ansible_host: soleil.projectsegfau.lt
+          ansible_user: docker
+          ansible_port: 2271
+          port: 22
+          ansible_become: yes # Run everything as root
+        lxc:
+          ansible_host: soleil.projectsegfau.lt
+          ansible_user: lxc
+          ansible_port: 2271
+          port: 22
+          ansible_become: yes # Run everything as root
+        db:
+          ansible_host: soleil.projectsegfau.lt
+          ansible_user: db
+          ansible_port: 2271
+          port: 22
+          ansible_become: yes # Run everything as root
+        backwards:
+          ansible_host: soleil.projectsegfau.lt
+          ansible_user: backwards
+          ansible_port: 2271
           port: 22
           ansible_become: yes # Run everything as root
     privfrontends:

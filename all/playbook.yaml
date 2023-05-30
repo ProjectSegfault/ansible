@@ -15,9 +15,15 @@
         - python3-pip
         - python3-passlib
         - vnstat
+        - chrony
   - name: Enable VNStat service
     service:
       name: vnstat
+      enabled: yes
+      state: started
+  - name: Enable Chrony (NTP) service
+    service:
+      name: chrony
       enabled: yes
       state: started
 
