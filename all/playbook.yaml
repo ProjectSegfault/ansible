@@ -96,6 +96,15 @@
         state: "present"
         regexp: "^%sudo"
         line: "%sudo ALL=(ALL) NOPASSWD: ALL"
+- name: Add extra authorized_key for soleil
+  hosts: soleil
+  tasks:
+    - name: Add extra authorized_key for soleil
+      authorized_key:
+        user: "{{item}}"
+        key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCn7RsO05kXSKBBopwzAri/MfhRwA+iuB1X96jQl0rhYvGmYVZLi0CPyXzE2laL5tRiyXYsIgHTVCfsn+CF+ilFXBa+xLcJ9Yau/SjtnZASixljeZuy0o3aTdl/IqcOcLVCdDaatuzOXFTjZCE+r67FqxFcaw9lzWi7QjtE1j8ar5+qo278XWWltYogxccHXBXqDr2chz95Ye0lAEIWp0LOgkSYjVNNKaAc7Y6kwr7SlwKMdlfbY6WPOyRQX5l1rnpU6Cw4mRf+l06+drpkGFIll3dulm0CNIoXYVy3W5Hr+C0Z6FT0bqZP1NuG1bDWTlwbMD3jIfBqhTI3V7oL5EvHCh3KsHfE7bS97F7MoeNx1xZrj2zIbkakdsxvm5oXra2RXpLbQXEzZDntGYoPaJT70yvnBSpxNDtzhUzZKwlTZIGN3LU/9USfmVTphZAR7l/BmT+j64eUZevuy3ht6iQQigkmi6KwXySXlUuUq2pXwTA/Dq1er3NclwTwT+v1QJ8= user@CoreVM"
+      with_items:
+        - "{{users}}"
 - name: Configure SSHD
   hosts: all
   tasks:
