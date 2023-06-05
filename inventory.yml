@@ -46,7 +46,7 @@ all:
           wiki_page: Pizza1
           watchtower_mtrx_username: watchtower-pizza
         us:
-          ansible_host: us.projectsegfau.lt
+          ansible_host: 100.64.0.3
           ansible_user: arya
           ansible_port: 22
           port: 22

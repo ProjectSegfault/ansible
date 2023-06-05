@@ -98,6 +98,11 @@
         line: "%sudo ALL=(ALL) NOPASSWD: ALL"
 - name: Add extra authorized_key for soleil
   hosts: soleil
+  vars:
+    users:
+      - arya
+      - devrand
+      - midou
   tasks:
     - name: Add extra authorized_key for soleil
       authorized_key:
