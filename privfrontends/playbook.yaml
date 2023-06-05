@@ -11,16 +11,24 @@
       # Static weekly builds of caddy with rfc2136 dns plugin
       caddy_url_base: "https://cb.projectsegfau.lt/api/download"
   tasks:
+    # This is run again so config still updates even if i dont run the role which isnt needed most of the time
+    - name: Copy Caddyfile
+      template:
+        src: ./templates/Caddyfile.j2
+        dest: /etc/caddy/Caddyfile
+      tags: caddy-non-update
     - name: Copy per-server caddy extras
       copy:
         src: "./templates/{{ inventory_hostname }}/"
         dest: /etc/caddy/
         directory_mode: true
-    - name: Restart
+      tags: caddy-non-update
+    - name: Reload Caddy
       service:
         name: caddy
         enabled: yes
-        state: restarted
+        state: reloaded
+      tags: caddy-non-update
 - name: Setup docker compose for privacy frontends
   hosts: privfrontends
   vars:
@@ -37,6 +45,7 @@
       - rimgo
       - scribe
       - teddit
+      - simplytranslate
       - watchtower
     non_pizza_docker_services:
       #- piped
@@ -49,9 +58,11 @@
     - name: Update docker compose files and restart those with changes
       include_tasks: docker-tasks.yaml
       with_items: "{{ docker_services }}"
+      tags: docker
     - name: Update docker compose files and restart those with changes (Privacy Frontends but without Pizza1)
       include_tasks: docker-tasks.yaml
       with_items: "{{ non_pizza_docker_services }}"
+      tags: docker
 
 - name: Setup cron jobs
   hosts: privfrontends
@@ -61,8 +72,10 @@
         name: "hourly invidious restart"
         special_time: hourly
         job: "docker restart invidious-invidious-1 && curl https://healthchecks.projectsegfau.lt/ping/{{invidious_hc_uuid}}"
+      tags: cron
     - name: Restart teddit every hour
       cron:
         name: "hourly teddit restart"
         special_time: hourly
         job: "docker restart teddit && curl https://healthchecks.projectsegfau.lt/ping/{{teddit_hc_uuid}}"
+      tags: cron

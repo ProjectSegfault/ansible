@@ -3,37 +3,46 @@
   file:
     path: /opt/docker/{{item}}
     state: directory
+  tags: docker
+
 - name: Copy docker-compose templates for the service
   template:
     src: ./compose/{{item}}/compose.yml.j2
     dest: /opt/docker/{{item}}/compose.yml
     backup: yes
   register: check_status
+  tags: docker
 
 - name: check if extras file exists for the service
   local_action: stat path=./compose/{{item}}/extras.conf.j2
   register: file
+  tags: docker
+
 - name: Copy extras file
   template:
     src: ./compose/{{item}}/extras.conf.j2
     dest: /opt/docker/{{item}}/extras.conf
     backup: yes
   when: file.stat.exists
+  tags: docker
 
 - name: "Update docker service image"
   command:
     chdir: "/opt/docker/{{ item }}"
     cmd: docker compose pull
   when: check_status.changed
+  tags: docker
 
 - name: "Stop docker service"
   command:
     chdir: "/opt/docker/{{ item }}"
     cmd: docker compose down
   when: check_status.changed
+  tags: docker
 
 - name: "Start docker service"
   command:
     chdir: "/opt/docker/{{ item }}"
     cmd: docker compose up -d --build --remove-orphans
   when: check_status.changed
+  tags: docker
