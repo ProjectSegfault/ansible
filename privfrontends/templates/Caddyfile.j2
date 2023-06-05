@@ -331,6 +331,10 @@ scribe.{{inventory_hostname}}.projectsegfau.lt scribe.projectsegfau.lt sc.psf.lt
         import i2ploc pjsflkkkcn33ahmzmpyq6idy2knkzh4atp7zaetqfsnenpyori6a.b32.i2p
         reverse_proxy :8006
 }
+translate.{{inventory_hostname}}.projectsegfau.lt translate.projectsegfau.lt tl.psf.lt tl.{{inventory_hostname}}.psf.lt {
+	import def
+	reverse_proxy :5046
+}
 {% if inventory_hostname == 'eu' %}
 {% else %}
 search.{{inventory_hostname}}.projectsegfau.lt s.psf.lt s.{{inventory_hostname}}.psf.lt {
