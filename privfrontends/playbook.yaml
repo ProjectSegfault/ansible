@@ -44,8 +44,8 @@
       - nitter
       - rimgo
       - scribe
-      - teddit
       - simplytranslate
+      - teddit
       - watchtower
     non_pizza_docker_services:
       #- piped

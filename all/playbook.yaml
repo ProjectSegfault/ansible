@@ -26,7 +26,15 @@
       name: chrony
       enabled: yes
       state: started
-
+- name: Sysctl
+  hosts: all
+  tasks:
+    - name: disable dmesg logging to console
+      sysctl:
+        name: kernel.printk
+        value: '3 4 1 3'
+        state: present
+        sysctl_set: yes
 - name: Add users
   hosts: all
   vars:
