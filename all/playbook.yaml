@@ -40,6 +40,7 @@
   vars:
     users:
       - arya
+      - mrlerien
       - devrand
       - midou
   vars_prompt:
@@ -109,6 +110,7 @@
   vars:
     users:
       - arya
+      - mrlerien
       - devrand
       - midou
   tasks:
