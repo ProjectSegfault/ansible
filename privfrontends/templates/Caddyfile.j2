@@ -335,6 +335,13 @@ translate.{{inventory_hostname}}.projectsegfau.lt translate.projectsegfau.lt tl.
 	import def
 	reverse_proxy :5046
 }
+safetwitch.{{inventory_hostname}}.projectsegfau.lt safetwitch.projectsegfau.lt tw.psf.lt tw.{{inventory_hostname}}.psf.lt {
+	import def
+	reverse_proxy :5070
+}
+api.safetwitch.{{inventory_hostname}}.projectsegfau.lt {
+	reverse_proxy :5071
+}
 {% if inventory_hostname == 'eu' %}
 {% else %}
 search.{{inventory_hostname}}.projectsegfau.lt s.psf.lt s.{{inventory_hostname}}.psf.lt {

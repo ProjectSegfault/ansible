@@ -43,7 +43,7 @@ all:
           caddy_extras_config: templates/1-extras.Caddyfile
           country: Luxembourg
           isp: BuyVM
-          wiki_page: Pizza1
+          wiki_page: Pizza-1
           watchtower_mtrx_username: watchtower-pizza
         us:
           ansible_host: 100.64.0.3

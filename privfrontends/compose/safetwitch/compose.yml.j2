@@ -1,0 +1,17 @@
+version: "3.9"
+services:
+  frontend:
+    image: codeberg.org/dragongoose/safetwitch
+    ports:
+      - "5070:80"
+    environment:
+      - SAFETWITCH_BACKEND_DOMAIN=api.safetwitch.{{inventory_hostname}}.projectsegfau.lt
+      - SAFETWITCH_INSTANCE_DOMAIN=safetwitch.projectsegfau.lt
+      - SAFETWITCH_HTTPS=true
+  backend:
+    image: codeberg.org/dragongoose/safetwitch-backend
+    ports:
+      - "5071:7000"
+    environment:
+      - PORT=7000
+      - URL=https://api.safetwitch.{{inventory_hostname}}.projectsegfau.lt

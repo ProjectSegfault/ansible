@@ -15,6 +15,10 @@ http://translate.pjsfkvpxlinjamtawaksbnnaqs2fc2mtvmozrzckxh7f3kis6yea25ad.onion 
 	reverse_proxy localhost:5046
 	import tor translate
 }
+http://safetwitch.pjsfkvpxlinjamtawaksbnnaqs2fc2mtvmozrzckxh7f3kis6yea25ad.onion {
+	reverse_proxy localhost:5047
+	import tor safetwitch
+}
 http://nitter.pjsfkvpxlinjamtawaksbnnaqs2fc2mtvmozrzckxh7f3kis6yea25ad.onion http://pjsfs4ukb6prmfx3qx3a5ef2cpcupkvcrxdh72kqn2rxc2cw4nka.b32.i2p {
 	reverse_proxy localhost:8387
 	import tor nitter
