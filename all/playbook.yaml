@@ -43,6 +43,7 @@
       - mrlerien
       - devrand
       - midou
+      - ansiblerunner
   vars_prompt:
     - name: password
       prompt: What is password to be used for all accs? (initial if no password is already set)
