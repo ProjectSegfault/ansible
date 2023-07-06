@@ -8,6 +8,7 @@ services:
       - SAFETWITCH_BACKEND_DOMAIN=api.safetwitch.{{inventory_hostname}}.projectsegfau.lt
       - SAFETWITCH_INSTANCE_DOMAIN=safetwitch.projectsegfau.lt
       - SAFETWITCH_HTTPS=true
+	restart: always
   backend:
     image: codeberg.org/dragongoose/safetwitch-backend
     ports:
@@ -15,3 +16,4 @@ services:
     environment:
       - PORT=7000
       - URL=https://api.safetwitch.{{inventory_hostname}}.projectsegfau.lt
+	restart: always
