@@ -4,31 +4,31 @@ all:
       hosts:
         core:
           ansible_host: core.vpn.projectsegfau.lt
-          ansible_user: arya
+          ansible_user: ansiblerunner
           ansible_port: 22
           port: 22
           ansible_become: yes # Run everything as root
         docker:
           ansible_host: docker.vpn.projectsegfau.lt
-          ansible_user: arya
+          ansible_user: ansiblerunner
           ansible_port: 22
           port: 22
           ansible_become: yes # Run everything as root
         lxc:
           ansible_host: lxc.vpn.projectsegfau.lt
-          ansible_user: arya
+          ansible_user: ansiblerunner
           ansible_port: 22
           port: 22
           ansible_become: yes # Run everything as root
         db:
           ansible_host: db.vpn.projectsegfau.lt
-          ansible_user: arya
+          ansible_user: ansiblerunner
           ansible_port: 22
           port: 22
           ansible_become: yes # Run everything as root
         backwards:
           ansible_host: backwards.vpn.projectsegfau.lt
-          ansible_user: arya
+          ansible_user: ansiblerunner
           ansible_port: 22
           port: 22
           ansible_become: yes # Run everything as root
@@ -36,7 +36,7 @@ all:
       hosts:
         eu:
           ansible_host: pizza1.vpn.projectsegfau.lt
-          ansible_user: arya
+          ansible_user: ansiblerunner
           ansible_port: 222
           port: 222
           ansible_become: yes # Run everything as root
@@ -47,7 +47,7 @@ all:
           watchtower_mtrx_username: watchtower-pizza
         us:
           ansible_host: us.vpn.projectsegfau.lt
-          ansible_user: arya
+          ansible_user: ansiblerunner
           ansible_port: 22
           port: 22
           ansible_become: yes # Run everything as root
@@ -58,9 +58,10 @@ all:
           watchtower_mtrx_username: watchtower-us
         in:
           ansible_host: in.vpn.projectsegfau.lt
-          ansible_user: root
+          ansible_user: ansiblerunner
           ansible_port: 22
           port: 22
+          ansible_become: yes # Run everything as root
           caddy_extras_config: templates/3-extras.Caddyfile
           country: India
           isp: Bharti Airtel
@@ -70,7 +71,7 @@ all:
       hosts:
         status:
           ansible_host: status.projectsegfau.lt
-          ansible_user: arya
+          ansible_user: ansiblerunner
           ansible_port: 22
           port: 22
           ansible_become: yes # Run everything as root
