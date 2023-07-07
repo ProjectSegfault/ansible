@@ -346,7 +346,7 @@ hyperpipe.{{inventory_hostname}}.projectsegfau.lt hyperpipe.projectsegfau.lt hp.
 	import def
 	reverse_proxy :8843
 }
-api.hyperpipebackend.{{inventory_hostname}}.projectsegfau.lt {
+hyperpipebackend.{{inventory_hostname}}.projectsegfau.lt {
 	reverse_proxy :3536
 }
 {% if inventory_hostname == 'eu' %}
