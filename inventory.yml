@@ -7,31 +7,31 @@ all:
           ansible_user: ansiblerunner
           ansible_port: 22
           port: 22
-          ansible_become: yes # Run everything as root
+          ansible_become: true # Run everything as root
         docker:
           ansible_host: docker.vpn.projectsegfau.lt
           ansible_user: ansiblerunner
           ansible_port: 22
           port: 22
-          ansible_become: yes # Run everything as root
+          ansible_become: true # Run everything as root
         lxc:
           ansible_host: lxc.vpn.projectsegfau.lt
           ansible_user: ansiblerunner
           ansible_port: 22
           port: 22
-          ansible_become: yes # Run everything as root
+          ansible_become: true # Run everything as root
         db:
           ansible_host: db.vpn.projectsegfau.lt
           ansible_user: ansiblerunner
           ansible_port: 22
           port: 22
-          ansible_become: yes # Run everything as root
+          ansible_become: true # Run everything as root
         backwards:
           ansible_host: backwards.vpn.projectsegfau.lt
           ansible_user: ansiblerunner
           ansible_port: 22
           port: 22
-          ansible_become: yes # Run everything as root
+          ansible_become: true # Run everything as root
     privfrontends:
       hosts:
         eu:
@@ -39,7 +39,7 @@ all:
           ansible_user: ansiblerunner
           ansible_port: 222
           port: 222
-          ansible_become: yes # Run everything as root
+          ansible_become: true # Run everything as root
           caddy_extras_config: templates/1-extras.Caddyfile
           country: Luxembourg
           isp: BuyVM
@@ -50,7 +50,7 @@ all:
           ansible_user: ansiblerunner
           ansible_port: 22
           port: 22
-          ansible_become: yes # Run everything as root
+          ansible_become: true # Run everything as root
           caddy_extras_config: templates/2-extras.Caddyfile
           country: United States
           isp: Digital Ocean
@@ -61,7 +61,7 @@ all:
           ansible_user: ansiblerunner
           ansible_port: 22
           port: 22
-          ansible_become: yes # Run everything as root
+          ansible_become: true # Run everything as root
           caddy_extras_config: templates/3-extras.Caddyfile
           country: India
           isp: Bharti Airtel
@@ -74,4 +74,4 @@ all:
           ansible_user: ansiblerunner
           ansible_port: 22
           port: 22
-          ansible_become: yes # Run everything as root
+          ansible_become: true # Run everything as root
