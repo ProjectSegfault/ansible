@@ -342,6 +342,13 @@ safetwitch.{{inventory_hostname}}.projectsegfau.lt safetwitch.projectsegfau.lt t
 api.safetwitch.{{inventory_hostname}}.projectsegfau.lt {
 	reverse_proxy :5071
 }
+hyperpipe.{{inventory_hostname}}.projectsegfau.lt hyperpipe.projectsegfau.lt hp.psf.lt hp.{{inventory_hostname}}.psf.lt {
+	import def
+	reverse_proxy :8843
+}
+api.hyperpipebackend.{{inventory_hostname}}.projectsegfau.lt {
+	reverse_proxy :3536
+}
 {% if inventory_hostname == 'eu' %}
 {% else %}
 search.{{inventory_hostname}}.projectsegfau.lt s.psf.lt s.{{inventory_hostname}}.psf.lt {

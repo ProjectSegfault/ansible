@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+  hyperpipe-frontend:
+    image: codeberg.org/hyperpipe/hyperpipe:latest
+    container_name: hyperpipe-frontend
+    restart: unless-stopped
+    entrypoint: sh -c 'find /usr/share/nginx/html -type f -exec sed -i s/pipedapi.kavin.rocks/pipedapi.{{ inventory_hostname }}.projectsegfau.lt/g {} \; -exec sed -i s/hyperpipeapi.onrender.com/hyperpipebackend.{{ inventory_hostname }}.projectsegfau.lt/g {} \; && /docker-entrypoint.sh && nginx -g "daemon off;"'
+    ports:
+      - '8843:80'
+  hyperpipe-backend:
+    image: codeberg.org/hyperpipe/hyperpipe-backend:latest
+    container_name: hyperpipe-backend
+    environment:
+      - HYP_PROXY=pipedproxy.{{ inventory_hostname }}.projectsegfau.lt
+    restart: unless-stopped
+    ports:
+      - '3536:3000'

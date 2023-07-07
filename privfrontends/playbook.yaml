@@ -60,6 +60,7 @@
   vars:
     non_pizza_docker_services:
       - searxng
+      - hyperpipe
   tasks:
     # community.docker does not support compose 2.0 right now.
     # https://github.com/ansible-collections/community.docker/issues/216
