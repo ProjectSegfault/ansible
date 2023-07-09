@@ -1,15 +1,6 @@
 ---
 - name: Setup Caddy
   hosts: privfrontends
-  roles:
-    - role: caddy-ansible
-      caddy_systemd_capabilities_enabled: true
-      caddy_config: "{{ lookup('template', './templates/Caddyfile.j2') }}"
-      caddy_user: "caddy"
-      caddy_home: "/var/lib/caddy"
-      caddy_packages: ["github.com/caddy-dns/rfc2136@master"]
-      # Static weekly builds of caddy with rfc2136 dns plugin
-      caddy_url_base: "https://cb.projectsegfau.lt/api/download"
   tasks:
     # This is run again so config still updates even if i dont run the role which isnt needed most of the time
     - name: Copy Caddyfile
