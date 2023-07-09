@@ -5,7 +5,7 @@ services:
     image: codeberg.org/hyperpipe/hyperpipe:latest
     container_name: hyperpipe-frontend
     restart: unless-stopped
-    entrypoint: sh -c 'find /usr/share/nginx/html -type f -exec sed -i s/pipedapi.kavin.rocks/pipedapi.{{ inventory_hostname }}.projectsegfau.lt/g {} \; -exec sed -i s/hyperpipeapi.onrender.com/hyperpipebackend.{{ inventory_hostname }}.projectsegfau.lt/g {} \; && /docker-entrypoint.sh && nginx -g "daemon off;"'
+    entrypoint: sh -c 'find /usr/share/nginx/html -type f -exec sed -i s/pipedapi.kavin.rocks/{% if inventory_hostname == 'eu' %}api.piped.projectsegfau.lt{%else%}pipedapi.{{inventory_hostname}}.projectsegfau.lt{%endif%}/g {} \; -exec sed -i s/hyperpipeapi.onrender.com/hyperpipebackend.{{ inventory_hostname }}.projectsegfau.lt/g {} \; && /docker-entrypoint.sh && nginx -g "daemon off;"'
     ports:
       - '8843:80'
   hyperpipe-backend:
