@@ -12,7 +12,7 @@ services:
     image: codeberg.org/hyperpipe/hyperpipe-backend:latest
     container_name: hyperpipe-backend
     environment:
-      - HYP_PROXY=pipedproxy.{{ inventory_hostname }}.projectsegfau.lt
+      - HYP_PROXY={% if inventory_hostname == 'eu' %}proxy.piped.projectsegfau.lt{%else%}pipedproxy.{{inventory_hostname}}.projectsegfau.lt{%endif%}
     restart: unless-stopped
     ports:
       - '3536:3000'
