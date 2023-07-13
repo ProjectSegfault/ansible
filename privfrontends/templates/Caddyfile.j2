@@ -6,7 +6,8 @@
                 -Content-Security-Policy
                 # disable clients from sniffing the media type
                 X-Content-Type-Options nosniff
-                Permissions-Policy interest-cohort=()
+				Permissions-Policy "accelerometer=(), ambient-light-sensor=(), autoplay=(), battery=(), camera=(), clipboard-read=(), display-capture=(), document-domain=(), encrypted-media=(), fullscreen=(), geolocation=(), gyroscope=(), hid=(), idle-detection=(), interest-cohort=(), magnetometer=(), microphone=(), midi=(), payment=(), picture-in-picture=(), screen-wake-lock=(), serial=(), usb=(), sync-xhr=(), xr-spatial-tracking=()";
+
                 # clickjacking protection
                 X-Frame-Options SAMEORIGIN
                 Onion-Location http://{args.0}.pjsfkvpxlinjamtawaksbnnaqs2fc2mtvmozrzckxh7f3kis6yea25ad.onion{path}
