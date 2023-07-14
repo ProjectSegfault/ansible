@@ -4,7 +4,7 @@
   hosts: pubnix
   tasks:
     - name: Do the thing
-      ansible.builtin.command: xcaddy build --with github.com/jung-kurt/caddy-cgi=/root/caddy/caddy-cgi --output /usr/local/bin/caddy
+      ansible.builtin.command: xcaddy build --with github.com/aksdb/caddy-cgi/v2@master --output /usr/local/bin/caddy
       register: out
       changed_when: out.rc != 0
     - name: Print output of thing
