@@ -1,0 +1,9 @@
+---
+- name: Docker Prunes (Daily Cron)
+  hosts: docker,backwards,eu,us,in,status
+  tasks:
+    - name: Do thing
+      community.docker.docker_prune:
+        containers: true
+        images: true
+        networks: true

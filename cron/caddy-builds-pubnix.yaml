@@ -1,0 +1,12 @@
+# IMPORTANT: Inventory file for pubnix is stored in semaphore, not inventory.yml
+---
+- name: Caddy Builds on Pubnix (Weekly Cron)
+  hosts: pubnix
+  tasks:
+    - name: Do the thing
+      ansible.builtin.command: xcaddy build github.com/jung-kurt/caddy-cgi=/root/caddy/caddy-cgi --output /usr/local/bin/caddy
+      register: out
+      changed_when: out.rc != 0
+    - name: Print output of thing
+      ansible.builtin.debug:
+        var: out.stderr_lines
