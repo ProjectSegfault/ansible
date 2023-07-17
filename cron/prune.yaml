@@ -7,3 +7,4 @@
         containers: true
         images: true
         networks: true
+        timeout: 1000
