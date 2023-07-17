@@ -8,6 +8,8 @@ all:
           ansible_port: 22
           port: 22
           ansible_become: true # Run everything as root
+          wiki_page: Soleil_Levant
+          server_prefix: eu
         docker:
           ansible_host: docker.vpn.projectsegfau.lt
           ansible_user: ansiblerunner
@@ -17,6 +19,7 @@ all:
           country: France
           isp: Orange S.A.
           wiki_page: Soleil_Levant
+          server_prefix: eu
           ansible_become: true # Run everything as root
         lxc:
           ansible_host: lxc.vpn.projectsegfau.lt
@@ -44,6 +47,7 @@ all:
           ansible_port: 222
           port: 222
           docker_dir: /opt/docker-privfrontends
+          server_prefix: eu
           ansible_become: true # Run everything as root
           caddy_extras_config: templates/1-extras.Caddyfile
           country: Luxembourg
@@ -61,6 +65,7 @@ all:
           country: United States
           isp: Digital Ocean
           wiki_page: US_Node
+          server_prefix: us
           watchtower_mtrx_username: watchtower-us
         in:
           ansible_host: in.vpn.projectsegfau.lt
@@ -69,6 +74,7 @@ all:
           port: 22
           ansible_become: true # Run everything as root
           docker_dir: /opt/docker-privfrontends
+          server_prefix: in
           caddy_extras_config: templates/3-extras.Caddyfile
           country: India
           isp: Bharti Airtel
