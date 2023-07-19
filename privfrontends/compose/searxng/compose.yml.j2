@@ -24,7 +24,7 @@ services:
     networks:
       - searxng
     ports:
-     - "127.0.0.1:8081:8080"
+     - "8081:8080"
     volumes:
       - ./searxng:/etc/searxng:rw
       - ./extras.conf:/etc/searxng/settings.yml:rw
