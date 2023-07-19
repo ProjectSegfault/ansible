@@ -36,7 +36,7 @@
     - name: Update docker compose files and restart those with changes
       ansible.builtin.include_tasks: docker-tasks.yaml
       with_items: "{{ docker_services }}"
-      tags: docker
+      tags: docker,pizza
 - name: Setup docker compose for privacy frontends (soleil+normal)
   hosts: in,us,docker
   vars:
@@ -57,7 +57,7 @@
     - name: Update docker compose files and restart those with changes (Privacy Frontends but without Pizza1)
       ansible.builtin.include_tasks: docker-tasks.yaml
       with_items: "{{ non_pizza_docker_services }}"
-      tags: docker
+      tags: docker,soleil
 
 - name: Setup cron jobs
   hosts: privfrontends
