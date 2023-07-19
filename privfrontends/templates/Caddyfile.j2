@@ -246,7 +246,7 @@ search.{{ server_prefix }}.projectsegfau.lt search.projectsegfau.lt s.psf.lt s.{
                 Content-Security-Policy "upgrade-insecure-requests; default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; form-action 'self' https://github.com/searxng/searxng/issues/new; font-src 'self'; frame-ancestors 'self'; base-uri 'self'; connect-src 'self' https://overpass-api.de; img-src 'self' data: https://*.tile.openstreetmap.org; frame-src https://www.youtube-nocookie.com https://player.vimeo.com https://www.dailymotion.com https://www.deezer.com https://www.mixcloud.com https://w.soundcloud.com https://embed.spotify.com"
         }
 }
-piped.{{ server_prefix }}.projectsegfau.lt pipedproxy.{{ server_prefix }}.projectsegfau.lt pipedapi.{{ server_prefix }}.projectsegfau.lt {
+{% if server_prefix == 'eu' %}piped.projectsegfau.lt proxy.piped.projectsegfau.lt api.piped.projectsegfau.lt {%else%} piped.{{ server_prefix }}.projectsegfau.lt pipedproxy.{{ server_prefix }}.projectsegfau.lt pipedapi.{{ server_prefix }}.projectsegfau.lt {%endif%} {
         reverse_proxy {% if inventory_hostname == 'core' %}192.168.5.2{% endif %}:6970
         header {
                 # disable FLoC tracking
@@ -277,9 +277,9 @@ piped.{{ server_prefix }}.projectsegfau.lt pipedproxy.{{ server_prefix }}.projec
         import acmedns
 		{% endif %}
 }
-pi.{{ server_prefix }}.psf.lt {
+pi.{{ server_prefix }}.psf.lt pi.psf.lt {
         reverse_proxy {% if inventory_hostname == 'core' %}192.168.5.2{% endif %}:6970 {
-                header_up Host "piped.{{ server_prefix }}.projectsegfau.lt"
+                header_up Host "{% if server_prefix == 'eu' %}piped.projectsegfau.lt{%else%}piped.{{ server_prefix }}.projectsegfau.lt{%endif%}"
         }
         header {
                 # disable FLoC tracking

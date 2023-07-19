@@ -5,7 +5,7 @@ services:
     ports:
       - "5070:80"
     environment:
-      - SAFETWITCH_BACKEND_DOMAIN=api.safetwitch.{{inventory_hostname}}.projectsegfau.lt
+      - SAFETWITCH_BACKEND_DOMAIN=api.safetwitch.{{server_prefix}}.projectsegfau.lt
       - SAFETWITCH_INSTANCE_DOMAIN=safetwitch.projectsegfau.lt
       - SAFETWITCH_HTTPS=true
     restart: always
@@ -15,5 +15,5 @@ services:
       - "5071:7000"
     environment:
       - PORT=7000
-      - URL=https://api.safetwitch.{{inventory_hostname}}.projectsegfau.lt
+      - URL=https://api.safetwitch.{{server_prefix}}.projectsegfau.lt
     restart: always

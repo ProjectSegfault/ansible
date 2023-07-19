@@ -29,7 +29,7 @@ services:
       - ./searxng:/etc/searxng:rw
       - ./extras.conf:/etc/searxng/settings.yml:rw
     environment:
-      - SEARXNG_BASE_URL=https://search.{{inventory_hostname}}.projectsegfau.lt/
+      - SEARXNG_BASE_URL=https://{% if server_prefix == 'eu' %}search.projectsegfau.lt{%else%}search.{{inventory_hostname}}.projectsegfau.lt{%endif%}/
     cap_drop:
       - ALL
     cap_add:
