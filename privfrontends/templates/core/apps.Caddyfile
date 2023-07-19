@@ -275,7 +275,7 @@ kbin.projectsegfau.lt, kb.psf.lt {
 	import def
 }
 gothub.dev.projectsegfau.lt gh.dev.psf.lt {
-		reverse_proxy localhost:1025
+		reverse_proxy 192.168.5.2:1025
 		import def
 }
 ak.psf.lt {
