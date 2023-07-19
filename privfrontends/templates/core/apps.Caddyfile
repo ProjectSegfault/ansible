@@ -91,6 +91,7 @@ psf.lt {
 }
 ssync.projectsegfau.lt {
 	reverse_proxy 192.168.5.2:3333
+	import def
 }
 
 www.projectsegfau.lt www.psf.lt {
@@ -108,6 +109,7 @@ matrix.projectsegfau.lt {
 	reverse_proxy /_synapse/* 192.168.5.2:81 {
 		header_up Host "matrix.projectsegfau.lt"
 	}
+	import def
 	#reverse_proxy /_synapse/client/* 192.168.5.2:81 {
 	#        header_up Host "matrix.projectsegfau.lt"
 	#}
