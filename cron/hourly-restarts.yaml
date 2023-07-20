@@ -16,7 +16,7 @@
     services:
       - breezewiki
       - anonymousoverflow-anonymousoverflow-1
-      - simplytranslate
+      - simplytranslate-simplytranslate-1
       - scribe
   tasks:
     - name: Do thing
