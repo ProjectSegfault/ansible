@@ -65,14 +65,17 @@ prometheus.projectsegfau.lt {
 # Midou PersoVM
 matrix.midou.dev {
 	reverse_proxy /_matrix/* 192.168.5.6:8008
+	import def
 }
 
 file.midou.dev {
 	reverse_proxy 192.168.5.6:8080
+	import def
 }
 
 c.midou.dev {
 	reverse_proxy 192.168.5.6:8978
+	import def
 }
 
 # Headscale (tailscale control server)
