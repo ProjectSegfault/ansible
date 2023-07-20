@@ -1,0 +1,38 @@
+---
+- name: Hourly Restarts (ALL NODES)
+  hosts: docker,privfrontends
+  vars:
+    services:
+      - invidious-invidious-1
+  tasks:
+    - name: Do thing
+      ansible.builtin.command: docker restart {{item}}
+      register: out
+      changed_when: out.rc != 0
+      with_items: services
+- name: Hourly Restarts (SOLEIL+REST)
+  hosts: docker,us,in
+  vars:
+    services:
+      - breezewiki
+      - anonymousoverflow-anonymousoverflow-1
+      - simplytranslate
+      - scribe
+  tasks:
+    - name: Do thing
+      ansible.builtin.command: docker restart {{item}}
+      register: out
+      changed_when: out.rc != 0
+      with_items: services
+- name: Hourly Restarts (PIZZA+REST)
+  hosts: privfrontends
+  vars:
+    services:
+      - libreddit-libreddit-1
+      - teddit
+  tasks:
+    - name: Do thing
+      ansible.builtin.command: docker restart {{item}}
+      register: out
+      changed_when: out.rc != 0
+      with_items: services
