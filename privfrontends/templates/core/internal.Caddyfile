@@ -80,12 +80,12 @@ c.midou.dev {
 
 # Headscale (tailscale control server)
 hs.projectsegfau.lt {
-        reverse_proxy /web* https://192.168.5.5:9443 {
+	reverse_proxy /web* https://192.168.5.5:9443 {
 		transport http {
 			tls_insecure_skip_verify
 		}
 	}
-        reverse_proxy * 192.168.5.5:8089
+	reverse_proxy * 192.168.5.5:8089
 }
 
 # Caddy daily build (for ansible)
@@ -100,5 +100,5 @@ docs.gothub.app {
 }
 # OLD URLs
 http://mutahar.rocks, http://*.mutahar.rocks {
-        redir https://projectsegfau.lt
+	redir https://projectsegfau.lt
 }

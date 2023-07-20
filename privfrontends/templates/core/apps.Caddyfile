@@ -22,23 +22,23 @@ social.projectsegfau.lt {
 # And https://poa.st/notice/AWDToOiKAl4BPhdEB6
 # And https://gleasonator.com/notice/AW3PsTi4WCWEUbN0uO
 media.social.projectsegfau.lt {
-        handle /media/* {
-                reverse_proxy 192.168.5.2:4011 {
-                        transport http {
-                                response_header_timeout 10s
-                                read_timeout 15s
-                        }
-                }
-        }
+	handle /media/* {
+		reverse_proxy 192.168.5.2:4011 {
+			transport http {
+				response_header_timeout 10s
+				read_timeout 15s
+			}
+		}
+	}
 
-    handle /proxy/* {
-                reverse_proxy 192.168.5.2:4011 {
-                        transport http {
-                                response_header_timeout 10s
-                                read_timeout 15s
-                        }
-                }
-        }
+	handle /proxy/* {
+		reverse_proxy 192.168.5.2:4011 {
+			transport http {
+				response_header_timeout 10s
+				read_timeout 15s
+			}
+		}
+	}
 }
 
 # Cinny
@@ -275,8 +275,8 @@ kbin.projectsegfau.lt, kb.psf.lt {
 	import def
 }
 gothub.dev.projectsegfau.lt gh.dev.psf.lt {
-		reverse_proxy 192.168.5.2:1025
-		import def
+	reverse_proxy 192.168.5.2:1025
+	import def
 }
 ak.psf.lt {
 	redir https://social.projectsegfau.lt{uri}

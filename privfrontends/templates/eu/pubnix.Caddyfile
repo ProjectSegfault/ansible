@@ -4,12 +4,12 @@
 	import acmedns
 }
 *.p.psf.lt {
-        @host header_regexp host Host ^([a-zA-Z0-9]+\-)?([A-Za-z0-9]+)\.p\.psf\.lt
-        handle @host {
+	@host header_regexp host Host ^([a-zA-Z0-9]+\-)?([A-Za-z0-9]+)\.p\.psf\.lt
+	handle @host {
 		reverse_proxy 10.7.0.2:80 {
 			header_up Host "{re.host.1}{re.host.2}.p.projectsegfau.lt"
-                }
-        }
+		}
+	}
 	import acmedns
 }
 # Redirect base subdomain to the pubnix homepage

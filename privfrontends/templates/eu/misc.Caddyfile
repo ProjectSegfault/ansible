@@ -1,71 +1,71 @@
 stats.eu.projectsegfau.lt {
-		basicauth * {
-			admin $2a$14$4R5m1Kl74xwVp8MsR.jFeOpa6ssXwHN7ANwJi300zIrienTG44Abi
-		}
-        reverse_proxy localhost:9100
-        import def
+	basicauth * {
+		admin $2a$14$4R5m1Kl74xwVp8MsR.jFeOpa6ssXwHN7ANwJi300zIrienTG44Abi
+	}
+	reverse_proxy localhost:9100
+	import def
 }
 inv.bp.projectsegfau.lt, i.bp.psf.lt {
-        reverse_proxy localhost:7573
-        header {
-                # disable FLoC tracking
-				Permissions-Policy "accelerometer=(), ambient-light-sensor=(), autoplay=(), battery=(), camera=(), clipboard-read=(), display-capture=(), document-domain=(), encrypted-media=(), fullscreen=(), geolocation=(), gyroscope=(), hid=(), idle-detection=(), interest-cohort=(), magnetometer=(), microphone=(), midi=(), payment=(), picture-in-picture=(), screen-wake-lock=(), serial=(), usb=(), sync-xhr=(), xr-spatial-tracking=()";
+	reverse_proxy localhost:7573
+	header {
+		# disable FLoC tracking
+		Permissions-Policy "accelerometer=(), ambient-light-sensor=(), autoplay=(), battery=(), camera=(), clipboard-read=(), display-capture=(), document-domain=(), encrypted-media=(), fullscreen=(), geolocation=(), gyroscope=(), hid=(), idle-detection=(), interest-cohort=(), magnetometer=(), microphone=(), midi=(), payment=(), picture-in-picture=(), screen-wake-lock=(), serial=(), usb=(), sync-xhr=(), xr-spatial-tracking=()";
 
-                # enable HSTS
-                Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
-                # disable clients from sniffing the media type
-                X-Content-Type-Options nosniff
-				-Content-Security-Policy
+		# enable HSTS
+		Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+		# disable clients from sniffing the media type
+		X-Content-Type-Options nosniff
+		-Content-Security-Policy
 
-                # keep referrer data off of HTTP connections
-                Referrer-Policy no-referrer-when-downgrade
+		# keep referrer data off of HTTP connections
+		Referrer-Policy no-referrer-when-downgrade
 
-                X-XSS-Protection "1; mode=block"
-                defer
-        }
-		log {
-            output discard
-            format filter {
-                wrap console
-                fields {
-                   request>remote_ip replace REDACTED
-                   request>headers>X-Forwarded-For replace REDACTED
-                }
-            }
-        }
-		import torloc invbp
-		import i2ploc pjsfi2szfkb4guqzmfmlyq4no46fayertjrwt4h2uughccrh2lvq.b32.i2p
+		X-XSS-Protection "1; mode=block"
+		defer
+	}
+	log {
+		output discard
+		format filter {
+			wrap console
+			fields {
+				request>remote_ip replace REDACTED
+				request>headers>X-Forwarded-For replace REDACTED
+			}
+		}
+	}
+	import torloc invbp
+	import i2ploc pjsfi2szfkb4guqzmfmlyq4no46fayertjrwt4h2uughccrh2lvq.b32.i2p
 }
 proxy.lbry.projectsegfau.lt {
-        reverse_proxy localhost:3001
-        import def
+	reverse_proxy localhost:3001
+	import def
 }
 aryak.me {
-        reverse_proxy https://prox-arya.p.projectsegfau.lt {
-                header_up Host prox-arya.p.projectsegfau.lt
-        }
+	reverse_proxy https://prox-arya.p.projectsegfau.lt {
+		header_up Host prox-arya.p.projectsegfau.lt
+	}
 }
 arya.projectsegfau.lt {
 	redir https://aryak.me{uri}
 }
 ## OLD URL REDIRECTS
 bb.us.projectsegfau.lt bb.in.projectsegfau.lt bb.eu.projectsegfau.lt bb.projectsegfau.lt {
-        import def
-		import torloc beatbump
-		import i2ploc pjsflmvtqax7ii44qy4ladap65c3kqspbs7h7krqy7x43uovklla.b32.i2p
-		redir https://hyperpipe.projectsegfau.lt{uri}
+	import def
+	import torloc beatbump
+	import i2ploc pjsflmvtqax7ii44qy4ladap65c3kqspbs7h7krqy7x43uovklla.b32.i2p
+	redir https://hyperpipe.projectsegfau.lt{uri}
 }
 invidious.mutahar.rocks {
-        redir https://inv.bp.projectsegfau.lt{uri} permanent
+	redir https://inv.bp.projectsegfau.lt{uri} permanent
 }
 ferrit.projectsegfau.lt snooddit.projectsegfau.lt libreddit.mutahar.rocks {
-        redir https://libreddit.projectsegfau.lt{uri} permanent
+	redir https://libreddit.projectsegfau.lt{uri} permanent
 }
 lbry.mutahar.rocks {
-        redir https://lbry.projectsegfau.lt{uri} permanent
+	redir https://lbry.projectsegfau.lt{uri} permanent
 }
 nitter.mutahar.rocks {
-        redir https://nitter.projectsegfau.lt{uri} permanent
+	redir https://nitter.projectsegfau.lt{uri} permanent
 }
 #redir inv.bp.mutahar.rocks inv.bp.projectsegfau.lt permanent
 #redir libreddit.mutahar.rocks libreddit.projectsegfau.lt permanent
