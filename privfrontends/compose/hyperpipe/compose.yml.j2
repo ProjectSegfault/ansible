@@ -5,14 +5,14 @@ services:
     image: codeberg.org/hyperpipe/hyperpipe:latest
     container_name: hyperpipe-frontend
     restart: unless-stopped
-    entrypoint: sh -c 'find /usr/share/nginx/html -type f -exec sed -i s/pipedapi.kavin.rocks/{% if inventory_hostname == 'eu' %}api.piped.projectsegfau.lt{%else%}pipedapi.{{inventory_hostname}}.projectsegfau.lt{%endif%}/g {} \; -exec sed -i s/hyperpipeapi.onrender.com/hyperpipebackend.{{ inventory_hostname }}.projectsegfau.lt/g {} \; && /docker-entrypoint.sh && nginx -g "daemon off;"'
+    entrypoint: sh -c 'find /usr/share/nginx/html -type f -exec sed -i s/pipedapi.kavin.rocks/{% if server_prefix == 'eu' %}api.piped.projectsegfau.lt{%else%}pipedapi.{{server_prefix}}.projectsegfau.lt{%endif%}/g {} \; -exec sed -i s/hyperpipeapi.onrender.com/hyperpipebackend.{{ server_prefix }}.projectsegfau.lt/g {} \; && /docker-entrypoint.sh && nginx -g "daemon off;"'
     ports:
       - '8843:80'
   hyperpipe-backend:
     image: codeberg.org/hyperpipe/hyperpipe-backend:latest
     container_name: hyperpipe-backend
     environment:
-      - HYP_PROXY={% if inventory_hostname == 'eu' %}proxy.piped.projectsegfau.lt{%else%}pipedproxy.{{inventory_hostname}}.projectsegfau.lt{%endif%}
+      - HYP_PROXY={% if server_prefix == 'eu' %}proxy.piped.projectsegfau.lt{%else%}pipedproxy.{{server_prefix}}.projectsegfau.lt{%endif%}
 
     restart: unless-stopped
     ports:

@@ -33,7 +33,7 @@
 (def) {
         header {
                 # disable FLoC tracking
-                Permissions-Policy interest-cohort=()
+				Permissions-Policy "accelerometer=(), ambient-light-sensor=(), autoplay=(), battery=(), camera=(), clipboard-read=(), display-capture=(), document-domain=(), encrypted-media=(), fullscreen=(), geolocation=(), gyroscope=(), hid=(), idle-detection=(), interest-cohort=(), magnetometer=(), microphone=(), midi=(), payment=(), picture-in-picture=(), screen-wake-lock=(), serial=(), usb=(), sync-xhr=(), xr-spatial-tracking=()";
 
                 # enable HSTS
                 Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
@@ -60,245 +60,25 @@
         import acmedns
 		{% endif %}
 }
-:80 {{inventory_hostname}}.projectsegfau.lt {% if inventory_hostname == 'eu' %} pizza1.projectsegfau.lt {% endif %} {
-        redir https://wiki.projectsegfau.lt/index.php?title={{wiki_page}}
+:80 {{ inventory_hostname }}.projectsegfau.lt {% if inventory_hostname == 'eu' %} pizza1.projectsegfau.lt {% endif %} {% if inventory_hostname == 'core' %} soleil.projectsegfau.lt {% endif %} {
+        redir https://wiki.projectsegfau.lt/index.php?title={{ wiki_page }}
 }
-cdn.projectsegfau.lt cdn.{{inventory_hostname}}.projectsegfau.lt {
+# PIZZA + US + IN
+{% if inventory_hostname == 'eu' or inventory_hostname == 'us' or inventory_hostname == 'in' %}
+cdn.projectsegfau.lt cdn.{{ server_prefix }}.projectsegfau.lt {
         encode zstd gzip
         root * /var/cdn
         file_server {
                 browse
         }
 }
-{% if inventory_hostname == 'eu' %}
-inv.bp.projectsegfau.lt {
-        reverse_proxy localhost:7573
-        header {
-                # disable FLoC tracking
-                Permissions-Policy interest-cohort=()
-
-                # enable HSTS
-                Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
-                # disable clients from sniffing the media type
-                X-Content-Type-Options nosniff
-
-                # keep referrer data off of HTTP connections
-                Referrer-Policy no-referrer-when-downgrade
-
-                X-XSS-Protection "1; mode=block"
-                defer
-        }
-		log {
-            output discard
-            format filter {
-                wrap console
-                fields {
-                   request>remote_ip replace REDACTED
-                   request>headers>X-Forwarded-For replace REDACTED
-                }
-            }
-        }
-		import torloc invbp
-		import i2ploc pjsfi2szfkb4guqzmfmlyq4no46fayertjrwt4h2uughccrh2lvq.b32.i2p
-}
-i.bp.psf.lt {
-        reverse_proxy localhost:7573
-        header {
-                # disable FLoC tracking
-                Permissions-Policy interest-cohort=()
-				-Content-Security-Policy
-                # enable HSTS
-                Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
-                # disable clients from sniffing the media type
-                X-Content-Type-Options nosniff
-
-                # keep referrer data off of HTTP connections
-                Referrer-Policy no-referrer-when-downgrade
-
-                X-XSS-Protection "1; mode=block"
-                defer
-        }
-		log {
-            output discard
-            format filter {
-                wrap console
-                fields {
-                   request>remote_ip replace REDACTED
-                   request>headers>X-Forwarded-For replace REDACTED
-                }
-            }
-        }
-		import torloc invbp
-		import i2ploc pjsfi2szfkb4guqzmfmlyq4no46fayertjrwt4h2uughccrh2lvq.b32.i2p
-}
-proxy.lbry.projectsegfau.lt {
-        reverse_proxy localhost:3001
-        import def
-}
-gothub.dev.projectsegfau.lt gh.dev.psf.lt {
-		reverse_proxy localhost:1025
-		import def
-}
-{% else %}
-inv.{{inventory_hostname}}.projectsegfau.lt {
-        reverse_proxy localhost:7573
-        header {
-                # disable FLoC tracking
-                Permissions-Policy interest-cohort=()
-
-                # enable HSTS
-                Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
-                # disable clients from sniffing the media type
-                X-Content-Type-Options nosniff
-
-                # keep referrer data off of HTTP connections
-                Referrer-Policy no-referrer-when-downgrade
-
-                X-XSS-Protection "1; mode=block"
-                defer
-        }
-		log {
-            output discard
-            format filter {
-                wrap console
-                fields {
-                   request>remote_ip replace REDACTED
-                   request>headers>X-Forwarded-For replace REDACTED
-                }
-            }
-        }
-		{% if inventory_hostname == 'in' %}
-        import acmedns
-		{% endif %}
-}
-i.{{inventory_hostname}}.psf.lt {
-        reverse_proxy localhost:7573
-        header {
-                # disable FLoC tracking
-                Permissions-Policy interest-cohort=()
-				-Content-Security-Policy
-                # enable HSTS
-                Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
-                # disable clients from sniffing the media type
-                X-Content-Type-Options nosniff
-
-                # keep referrer data off of HTTP connections
-                Referrer-Policy no-referrer-when-downgrade
-
-                X-XSS-Protection "1; mode=block"
-                defer
-        }
-		log {
-            output discard
-            format filter {
-                wrap console
-                fields {
-                   request>remote_ip replace REDACTED
-                   request>headers>X-Forwarded-For replace REDACTED
-                }
-            }
-        }
-		{% if inventory_hostname == 'in' %}
-        import acmedns
-		{% endif %}
-}
-piped.{{inventory_hostname}}.projectsegfau.lt pipedproxy.{{inventory_hostname}}.projectsegfau.lt pipedapi.{{inventory_hostname}}.projectsegfau.lt {
-        reverse_proxy :6970
-        header {
-                # disable FLoC tracking
-                Permissions-Policy interest-cohort=()
-
-                # enable HSTS
-                Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
-                # disable clients from sniffing the media type
-                X-Content-Type-Options nosniff
-
-                # keep referrer data off of HTTP connections
-                Referrer-Policy no-referrer-when-downgrade
-
-                X-XSS-Protection "1; mode=block"
-                defer
-        }
-		log {
-            output discard
-            format filter {
-                wrap console
-                fields {
-                   request>remote_ip replace REDACTED
-                   request>headers>X-Forwarded-For replace REDACTED
-                }
-            }
-        }
-		{% if inventory_hostname == 'in' %}
-        import acmedns
-		{% endif %}
-}
-pi.{{inventory_hostname}}.psf.lt {
-        reverse_proxy :6970 {
-                header_up Host "piped.{{inventory_hostname}}.projectsegfau.lt"
-        }
-        header {
-                # disable FLoC tracking
-                Permissions-Policy interest-cohort=()
-
-                # enable HSTS
-                Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
-                # disable clients from sniffing the media type
-                X-Content-Type-Options nosniff
-
-                # keep referrer data off of HTTP connections
-                Referrer-Policy no-referrer-when-downgrade
-
-                X-XSS-Protection "1; mode=block"
-                defer
-        }
-		log {
-            output discard
-            format filter {
-                wrap console
-                fields {
-                   request>remote_ip replace REDACTED
-                   request>headers>X-Forwarded-For replace REDACTED
-                }
-            }
-        }
-}
-{% endif %}
-lbry.{{inventory_hostname}}.projectsegfau.lt lbry.projectsegfau.lt {
+lbry.{{ server_prefix }}.projectsegfau.lt lbry.projectsegfau.lt {
         reverse_proxy :3550
         import def
 		import torloc lbry
         import i2ploc pjsf7uucpqf2crcmfo3nvwdmjhirxxjfyuvibdfp5x3af2ghqnaa.b32.i2p
 }
-gothub.{{inventory_hostname}}.projectsegfau.lt gothub.projectsegfau.lt gh.psf.lt gh.{{inventory_hostname}}.psf.lt {
-        reverse_proxy :1024
-        import def
-		import torloc gothub
-}
-overflow.{{inventory_hostname}}.projectsegfau.lt overflow.projectsegfau.lt o.psf.lt o.{{inventory_hostname}}.psf.lt {
-        reverse_proxy :8694
-        import def
-		import torloc overflow
-}
-teddit.{{inventory_hostname}}.projectsegfau.lt teddit.projectsegfau.lt t.psf.lt t.{{inventory_hostname}}.psf.lt {
-        reverse_proxy :9061
-        import def
-		import torloc teddit
-}
-rimgo.{{inventory_hostname}}.projectsegfau.lt rimgo.projectsegfau.lt rg.psf.lt rg.{{inventory_hostname}}.psf.lt {
-        reverse_proxy :9016
-        import def
-		import torloc rimgo
-}
-
-libreddit.{{inventory_hostname}}.projectsegfau.lt libreddit.projectsegfau.lt lr.psf.lt lr.{{inventory_hostname}}.psf.lt {
-        reverse_proxy :6464
-        import def
-		import torloc libreddit
-		import i2ploc pjsfkref7g66mji45kyccqnn5hmjtjp3cfodozabpyplj2rmv5sa.b32.i2p
-}
-
-nitter.{{inventory_hostname}}.projectsegfau.lt nitter.projectsegfau.lt n.psf.lt n.{{inventory_hostname}}.psf.lt {
+nitter.{{ server_prefix }}.projectsegfau.lt nitter.projectsegfau.lt n.psf.lt n.{{ server_prefix }}.psf.lt {
         import def
         header {
                 X-Permitted-Cross-Domain-Policies none
@@ -313,48 +93,100 @@ nitter.{{inventory_hostname}}.projectsegfau.lt nitter.projectsegfau.lt n.psf.lt 
 		import torloc nitter
 		import i2ploc pjsfs4ukb6prmfx3qx3a5ef2cpcupkvcrxdh72kqn2rxc2cw4nka.b32.i2p
 }
-bb.{{inventory_hostname}}.projectsegfau.lt bb.projectsegfau.lt {
+libreddit.{{ server_prefix }}.projectsegfau.lt libreddit.projectsegfau.lt lr.psf.lt lr.{{ server_prefix }}.psf.lt {
+        reverse_proxy :6464
         import def
-		import torloc beatbump
-		import i2ploc pjsflmvtqax7ii44qy4ladap65c3kqspbs7h7krqy7x43uovklla.b32.i2p
-		redir https://hyperpipe.projectsegfau.lt{uri}
+		import torloc libreddit
+		import i2ploc pjsfkref7g66mji45kyccqnn5hmjtjp3cfodozabpyplj2rmv5sa.b32.i2p
 }
+teddit.{{ server_prefix }}.projectsegfau.lt teddit.projectsegfau.lt t.psf.lt t.{{ server_prefix }}.psf.lt {
+        reverse_proxy :9061
+        import def
+		import torloc teddit
+}
+{% endif %}
+# SOLEIL + US + IN 
+{% if inventory_hostname == 'core' or inventory_hostname == 'us' or inventory_hostname == 'in' %}
+inv.{{ server_prefix }}.projectsegfau.lt inv.projectsegfau.lt invidious.projectsegfau.lt i.{{ server_prefix }}.psf.lt i.psf.lt {
+        reverse_proxy {% if inventory_hostname == 'core' %}192.168.5.2{% endif %}:7573
+        header {
+                # disable FLoC tracking
+				Permissions-Policy "accelerometer=(), ambient-light-sensor=(), autoplay=(), battery=(), camera=(), clipboard-read=(), display-capture=(), document-domain=(), encrypted-media=(), fullscreen=(), geolocation=(), gyroscope=(), hid=(), idle-detection=(), interest-cohort=(), magnetometer=(), microphone=(), midi=(), payment=(), picture-in-picture=(), screen-wake-lock=(), serial=(), usb=(), sync-xhr=(), xr-spatial-tracking=()";
 
-bw.{{inventory_hostname}}.projectsegfau.lt bw.projectsegfau.lt bw.psf.lt bw.{{inventory_hostname}}.psf.lt {
+                # enable HSTS
+                Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+                # disable clients from sniffing the media type
+                X-Content-Type-Options nosniff
+
+                # keep referrer data off of HTTP connections
+                Referrer-Policy no-referrer-when-downgrade
+				-Content-Security-Policy
+
+                X-XSS-Protection "1; mode=block"
+                defer
+        }
+		log {
+            output discard
+            format filter {
+                wrap console
+                fields {
+                   request>remote_ip replace REDACTED
+                   request>headers>X-Forwarded-For replace REDACTED
+                }
+            }
+        }
+		{% if server_prefix == 'in' %}
+        import acmedns
+		{% endif %}
+}
+gothub.{{ server_prefix }}.projectsegfau.lt gothub.projectsegfau.lt gh.psf.lt gh.{{ server_prefix }}.psf.lt {
+        reverse_proxy {% if inventory_hostname == 'core' %}192.168.5.2{% endif %}:1024
+        import def
+		import torloc gothub
+}
+overflow.{{ server_prefix }}.projectsegfau.lt overflow.projectsegfau.lt o.psf.lt o.{{ server_prefix }}.psf.lt {
+        reverse_proxy {% if inventory_hostname == 'core' %}192.168.5.2{% endif %}:8694
+        import def
+		import torloc overflow
+}
+rimgo.{{ server_prefix }}.projectsegfau.lt rimgo.projectsegfau.lt rg.psf.lt rg.{{ server_prefix }}.psf.lt {
+        reverse_proxy {% if inventory_hostname == 'core' %}192.168.5.2{% endif %}:9016
+        import def
+		import torloc rimgo
+}
+bw.{{ server_prefix }}.projectsegfau.lt bw.projectsegfau.lt bw.psf.lt bw.{{ server_prefix }}.psf.lt {
         import def
 		import torloc breezewiki
 		import i2ploc pjsfk4xvekoc7wx4pteevp3q2wy7jmzlem7rvl74nx33zkdr4vyq.b32.i2p
-        reverse_proxy :10416
+        reverse_proxy {% if inventory_hostname == 'core' %}192.168.5.2{% endif %}:10416
 }
-scribe.{{inventory_hostname}}.projectsegfau.lt scribe.projectsegfau.lt sc.psf.lt sc.{{inventory_hostname}}.psf.lt {
+scribe.{{ server_prefix }}.projectsegfau.lt scribe.projectsegfau.lt sc.psf.lt sc.{{ server_prefix }}.psf.lt {
         import def
 		import torloc scribe
         import i2ploc pjsflkkkcn33ahmzmpyq6idy2knkzh4atp7zaetqfsnenpyori6a.b32.i2p
-        reverse_proxy :8006
+        reverse_proxy {% if inventory_hostname == 'core' %}192.168.5.2{% endif %}:8006
 }
-translate.{{inventory_hostname}}.projectsegfau.lt translate.projectsegfau.lt tl.psf.lt tl.{{inventory_hostname}}.psf.lt {
+translate.{{ server_prefix }}.projectsegfau.lt translate.projectsegfau.lt tl.psf.lt tl.{{ server_prefix }}.psf.lt {
 	import def
-	reverse_proxy :5046
+	reverse_proxy {% if inventory_hostname == 'core' %}192.168.5.2{% endif %}:5046
 }
-safetwitch.{{inventory_hostname}}.projectsegfau.lt safetwitch.projectsegfau.lt tw.psf.lt tw.{{inventory_hostname}}.psf.lt {
+safetwitch.{{ server_prefix }}.projectsegfau.lt safetwitch.projectsegfau.lt tw.psf.lt tw.{{ server_prefix }}.psf.lt {
 	import def
-	reverse_proxy :5070
+	reverse_proxy {% if inventory_hostname == 'core' %}192.168.5.2{% endif %}:5070
 }
-api.safetwitch.{{inventory_hostname}}.projectsegfau.lt {
-	reverse_proxy :5071
+api.safetwitch.{{ server_prefix }}.projectsegfau.lt {
+	reverse_proxy {% if inventory_hostname == 'core' %}192.168.5.2{% endif %}:5071
 }
-hyperpipe.{{inventory_hostname}}.projectsegfau.lt hyperpipe.projectsegfau.lt hp.psf.lt hp.{{inventory_hostname}}.psf.lt {
+hyperpipe.{{ server_prefix }}.projectsegfau.lt hyperpipe.projectsegfau.lt hp.psf.lt hp.{{ server_prefix }}.psf.lt {
 	import def
-	reverse_proxy :8843
+	reverse_proxy {% if inventory_hostname == 'core' %}192.168.5.2{% endif %}:8843
 }
-hyperpipebackend.{{inventory_hostname}}.projectsegfau.lt {
-	reverse_proxy :3536
+hyperpipebackend.{{ server_prefix }}.projectsegfau.lt {
+	reverse_proxy {% if inventory_hostname == 'core' %}192.168.5.2{% endif %}:3536
 }
-{% if inventory_hostname == 'eu' %}
-{% else %}
-search.{{inventory_hostname}}.projectsegfau.lt s.psf.lt s.{{inventory_hostname}}.psf.lt {
+search.{{ server_prefix }}.projectsegfau.lt search.projectsegfau.lt s.psf.lt s.{{ server_prefix }}.psf.lt {
         import def
-        reverse_proxy :8081
+        reverse_proxy {% if inventory_hostname == 'core' %}192.168.5.2{% endif %}:8081
         @api {
                 path /config
                 path /healthz
@@ -414,5 +246,67 @@ search.{{inventory_hostname}}.projectsegfau.lt s.psf.lt s.{{inventory_hostname}}
                 Content-Security-Policy "upgrade-insecure-requests; default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; form-action 'self' https://github.com/searxng/searxng/issues/new; font-src 'self'; frame-ancestors 'self'; base-uri 'self'; connect-src 'self' https://overpass-api.de; img-src 'self' data: https://*.tile.openstreetmap.org; frame-src https://www.youtube-nocookie.com https://player.vimeo.com https://www.dailymotion.com https://www.deezer.com https://www.mixcloud.com https://w.soundcloud.com https://embed.spotify.com"
         }
 }
+{% if server_prefix == 'eu' %}piped.projectsegfau.lt proxy.piped.projectsegfau.lt api.piped.projectsegfau.lt {%else%} piped.{{ server_prefix }}.projectsegfau.lt pipedproxy.{{ server_prefix }}.projectsegfau.lt pipedapi.{{ server_prefix }}.projectsegfau.lt {%endif%} {
+        reverse_proxy {% if inventory_hostname == 'core' %}192.168.5.2{% endif %}:6970
+        header {
+                # disable FLoC tracking
+				Permissions-Policy "accelerometer=(), ambient-light-sensor=(), autoplay=(), battery=(), camera=(), clipboard-read=(), display-capture=(), document-domain=(), encrypted-media=(), fullscreen=(), geolocation=(), gyroscope=(), hid=(), idle-detection=(), interest-cohort=(), magnetometer=(), microphone=(), midi=(), payment=(), picture-in-picture=(), screen-wake-lock=(), serial=(), usb=(), sync-xhr=(), xr-spatial-tracking=()";
+
+                # enable HSTS
+                Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+                # disable clients from sniffing the media type
+                X-Content-Type-Options nosniff
+
+                # keep referrer data off of HTTP connections
+                Referrer-Policy no-referrer-when-downgrade
+
+                X-XSS-Protection "1; mode=block"
+                defer
+        }
+		log {
+            output discard
+            format filter {
+                wrap console
+                fields {
+                   request>remote_ip replace REDACTED
+                   request>headers>X-Forwarded-For replace REDACTED
+                }
+            }
+        }
+		{% if server_prefix == 'in' %}
+        import acmedns
+		{% endif %}
+}
+pi.{{ server_prefix }}.psf.lt pi.psf.lt {
+        reverse_proxy {% if inventory_hostname == 'core' %}192.168.5.2{% endif %}:6970 {
+                header_up Host "{% if server_prefix == 'eu' %}piped.projectsegfau.lt{%else%}piped.{{ server_prefix }}.projectsegfau.lt{%endif%}"
+        }
+        header {
+                # disable FLoC tracking
+				Permissions-Policy "accelerometer=(), ambient-light-sensor=(), autoplay=(), battery=(), camera=(), clipboard-read=(), display-capture=(), document-domain=(), encrypted-media=(), fullscreen=(), geolocation=(), gyroscope=(), hid=(), idle-detection=(), interest-cohort=(), magnetometer=(), microphone=(), midi=(), payment=(), picture-in-picture=(), screen-wake-lock=(), serial=(), usb=(), sync-xhr=(), xr-spatial-tracking=()";
+
+                # enable HSTS
+                Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+                # disable clients from sniffing the media type
+                X-Content-Type-Options nosniff
+
+                # keep referrer data off of HTTP connections
+                Referrer-Policy no-referrer-when-downgrade
+
+                X-XSS-Protection "1; mode=block"
+                defer
+        }
+		log {
+            output discard
+            format filter {
+                wrap console
+                fields {
+                   request>remote_ip replace REDACTED
+                   request>headers>X-Forwarded-For replace REDACTED
+                }
+            }
+        }
+}
 {% endif %}
+
 import ./*.Caddyfile

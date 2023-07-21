@@ -3,7 +3,7 @@ services:
   simplytranslate:
     image: quay.io/pussthecatorg/simplytranslate:latest
     ports:
-      - "127.0.0.1:5046:5000"
+      - "5046:5000"
     volumes:
       - "./extras.conf:/etc/simplytranslate/web.conf" 
     restart: always

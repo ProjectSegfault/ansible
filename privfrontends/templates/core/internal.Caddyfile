@@ -1,0 +1,104 @@
+# ---Internal Caddyfile---
+
+# Authentik
+sekuritee.projectsegfau.lt {
+	reverse_proxy https://192.168.5.2:7443 {
+		transport http {
+			tls_insecure_skip_verify
+		}
+		header_up X-Real-IP {remote_host}
+	}
+	import def
+}
+# Grafana
+grafana.projectsegfau.lt {
+	reverse_proxy 192.168.5.2:3169
+	handle_path /api/live {
+		reverse_proxy 192.168.5.2:3169
+	}
+	import def
+}
+
+# MailU
+mail.projectsegfau.lt {
+	log {
+		output file /var/log/caddy/mail.projectsegfau.lt.log {
+			roll_disabled
+			roll_size 512M
+			roll_uncompressed
+			roll_local_time
+			roll_keep 3
+			roll_keep_for 48h
+		}
+	}
+	import def
+	reverse_proxy 192.168.5.5:8082
+}
+
+# Plausible
+analytics.projectsegfau.lt {
+	reverse_proxy 192.168.5.2:8001
+	import def
+}
+
+# Website dev
+web.dev.projectsegfau.lt {
+	reverse_proxy 192.168.5.2:1339
+	import def
+}
+
+blog.projectsegfau.lt {
+	reverse_proxy 192.168.5.2:2368 {
+		header_up X-Forwarded-Proto https
+		header_up X-Real-IP {remote_host}
+	}
+	import def
+}
+prometheus.projectsegfau.lt {
+	reverse_proxy 192.168.5.2:9090
+	basicauth /* {
+		admin $2a$14$1asDwG2gbyJ3.SungtdOyeqBlW1IiKQ//qI3ienQCTldaosx1qzSC
+	}
+	import def
+}
+
+# Midou PersoVM
+matrix.midou.dev {
+	reverse_proxy /_matrix/* 192.168.5.6:8008
+	import def
+}
+
+file.midou.dev {
+	reverse_proxy 192.168.5.6:8080
+	import def
+}
+
+c.midou.dev {
+	reverse_proxy 192.168.5.6:8978
+	import def
+}
+
+# Headscale (tailscale control server)
+hs.projectsegfau.lt {
+	reverse_proxy /web* https://192.168.5.5:9443 {
+		transport http {
+			tls_insecure_skip_verify
+		}
+	}
+	reverse_proxy * 192.168.5.5:8089
+}
+
+# Caddy daily build (for ansible)
+cb.projectsegfau.lt {
+	root * /var/www/caddy-build
+	file_server browse
+	encode gzip
+}
+# GotHub
+docs.gothub.app {
+	redir https://gothub.app/docs{uri}
+}
+# OLD URLs
+http://mutahar.rocks, http://*.mutahar.rocks {
+	redir https://projectsegfau.lt
+}
