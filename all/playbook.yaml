@@ -15,6 +15,8 @@
           - python3-passlib
           - vnstat
           - chrony
+          - gdu
+          - btop
     - name: Enable VNStat service
       ansible.builtin.service:
         name: vnstat
@@ -142,18 +144,3 @@
         name: sshd
         enabled: true
         state: restarted
-- name: Install gdu
-  hosts: all
-  tasks:
-    - name: Check if gdu is installed
-      stat:
-        path: "/usr/bin/gdu"
-        register: file_data
-    - name: If gdu is not installed
-      ansible.builtin.apt:
-        name: gdu
-        update_cache: true
-      when: not file_data.stat.exists
-    - name: If gdu is installed
-      debug:
-        msg: "gdu is already installed!"
