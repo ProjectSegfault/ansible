@@ -121,7 +121,7 @@
     - name: Add extra authorized_key for soleil
       ansible.posix.authorized_key:
         user: "{{ item }}"
-        key: corevm_ssh_key
+        key: "{{ corevm_ssh_key }}"
       with_items:
         - "{{ users }}"
 - name: Configure SSHD
