@@ -78,6 +78,11 @@ c.midou.dev {
 	import def
 }
 
+rss.midou.dev {
+	reverse_proxy 192.168.5.6:3002
+	import def
+}
+
 # Headscale (tailscale control server)
 hs.projectsegfau.lt {
 	reverse_proxy /web* https://192.168.5.5:9443 {
