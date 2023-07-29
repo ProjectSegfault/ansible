@@ -265,14 +265,10 @@ auth.p.projectsegfau.lt {
 }
 # kbin
 kbin.projectsegfau.lt, kb.psf.lt {
-	reverse_proxy kbin.projectsegfau.lt:443 {
-		transport http {
-			tls_insecure_skip_verify
-		}
-		header_up X-Real-IP {remote_host}
-	}
-	#reverse_proxy 192.168.5.2:8643
-	import def
+        reverse_proxy 192.168.5.2:80 {
+                header_up X-Real-IP {remote_host}
+        }
+        import def
 }
 gothub.dev.projectsegfau.lt gh.dev.psf.lt {
 	reverse_proxy 192.168.5.2:1025
