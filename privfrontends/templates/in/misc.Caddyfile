@@ -4,7 +4,7 @@ bitpuit.in.projectsegfau.lt {
 dd.psf.lt {
 	reverse_proxy :8008
 }
-libretranslate.in.projectsegfau.lt {
+libretranslate.projectsegfau.lt lt.psf.lt libretranslate.in.projectsegfau.lt {
 	reverse_proxy :5000
 }
 # PERSONAL
