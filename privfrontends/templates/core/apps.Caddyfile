@@ -270,6 +270,9 @@ kbin.projectsegfau.lt, kb.psf.lt {
         }
         import def
 }
+libretranslate.projectsegfau.lt lt.psf.lt libretranslate.in.projectsegfau.lt {
+	reverse_proxy 192.168.5.2:5005
+}
 gothub.dev.projectsegfau.lt gh.dev.psf.lt {
 	reverse_proxy 192.168.5.2:1025
 	import def

@@ -4,9 +4,6 @@ bitpuit.in.projectsegfau.lt {
 dd.psf.lt {
 	reverse_proxy :8008
 }
-libretranslate.projectsegfau.lt lt.psf.lt libretranslate.in.projectsegfau.lt {
-	reverse_proxy :5000
-}
 # PERSONAL
 https://m.in.projectsegfau.lt:8448 m.in.projectsegfau.lt {
 	import def
