@@ -58,19 +58,3 @@
       ansible.builtin.include_tasks: docker-tasks.yaml
       with_items: "{{ non_pizza_docker_services }}"
       tags: docker,soleil
-
-- name: Setup cron jobs
-  hosts: privfrontends
-  tasks:
-    - name: Restart invidious every hour
-      ansible.builtin.cron:
-        name: "hourly invidious restart"
-        special_time: hourly
-        job: "docker restart invidious-invidious-1 && curl https://healthchecks.projectsegfau.lt/ping/{{ invidious_hc_uuid }}"
-      tags: cron
-    - name: Restart teddit every hour
-      ansible.builtin.cron:
-        name: "hourly teddit restart"
-        special_time: hourly
-        job: "docker restart teddit && curl https://healthchecks.projectsegfau.lt/ping/{{ teddit_hc_uuid }}"
-      tags: cron
