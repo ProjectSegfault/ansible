@@ -252,7 +252,7 @@ xmpp-web.projectsegfau.lt, x.psf.lt {
 healthchecks.projectsegfau.lt, hc.psf.lt {
 	import def
 	reverse_proxy 192.168.5.2:8450
-	impor torloc healthchecks
+	import torloc healthchecks
 }
 # Pubthentik
 auth.p.projectsegfau.lt {
