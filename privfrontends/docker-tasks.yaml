@@ -1,12 +1,12 @@
 ---
-- name: Create directory for service
+- name: Create directory for {{item}}
   ansible.builtin.file:
     path: "{{ docker_dir }}/{{ item }}"
     state: directory
     mode: "0755"
   tags: docker,soleil,pizza
 
-- name: Copy docker-compose templates for the service
+- name: Copy docker-compose templates for the {{item}}
   ansible.builtin.template:
     src: "./compose/{{ item }}/compose.yml.j2"
     dest: "{{ docker_dir }}/{{ item }}/compose.yml"
@@ -15,7 +15,7 @@
   register: check_status
   tags: docker,soleil,pizza
 
-- name: Check if extras file exists for the service
+- name: Check if extras file exists for the {{item}}
   delegate_to: localhost
   ansible.builtin.stat:
     path: ./compose/{{ item }}/extras.conf.j2
@@ -31,7 +31,7 @@
   when: file.stat.exists
   tags: docker,soleil,pizza
 
-- name: "Update docker service image"
+- name: "Update docker {{item}} image"
   ansible.builtin.command:
     chdir: "{{ docker_dir }}/{{ item }}"
     cmd: docker compose pull
@@ -40,7 +40,7 @@
   changed_when: updateout.rc != 0
   tags: docker,soleil,pizza
 
-- name: "Stop docker service"
+- name: "Stop docker {{item}}"
   ansible.builtin.command:
     chdir: "{{ docker_dir }}/{{ item }}"
     cmd: docker compose down
@@ -49,7 +49,7 @@
   changed_when: stopout.rc != 0
   tags: docker,soleil,pizza
 
-- name: "Start docker service"
+- name: "Start docker {{item}}"
   ansible.builtin.command:
     chdir: "{{ docker_dir }}/{{ item }}"
     cmd: docker compose up -d --build --remove-orphans

@@ -252,6 +252,7 @@ xmpp-web.projectsegfau.lt, x.psf.lt {
 healthchecks.projectsegfau.lt, hc.psf.lt {
 	import def
 	reverse_proxy 192.168.5.2:8450
+	impor torloc healthchecks
 }
 # Pubthentik
 auth.p.projectsegfau.lt {
@@ -276,6 +277,7 @@ libretranslate.projectsegfau.lt lt.psf.lt libretranslate.in.projectsegfau.lt {
 gothub.dev.projectsegfau.lt gh.dev.psf.lt {
 	reverse_proxy 192.168.5.2:1025
 	import def
+	import torloc gothub.dev
 }
 ak.psf.lt {
 	redir https://social.projectsegfau.lt{uri}

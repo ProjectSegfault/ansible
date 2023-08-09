@@ -10,15 +10,15 @@
 
                 # clickjacking protection
                 X-Frame-Options SAMEORIGIN
-                Onion-Location http://{args.0}.pjsfkvpxlinjamtawaksbnnaqs2fc2mtvmozrzckxh7f3kis6yea25ad.onion{path}
+                Onion-Location http://{args[0]}.pjsfkvpxlinjamtawaksbnnaqs2fc2mtvmozrzckxh7f3kis6yea25ad.onion{path}
                 defer
         }
 }
 (torloc) {
-        header Onion-Location http://{args.0}.pjsfkvpxlinjamtawaksbnnaqs2fc2mtvmozrzckxh7f3kis6yea25ad.onion{path}
+        header Onion-Location http://{args[0]}.pjsfkvpxlinjamtawaksbnnaqs2fc2mtvmozrzckxh7f3kis6yea25ad.onion{path}
 }
 (i2ploc) {
-        header X-I2P-Location http://{args.0}{path}
+        header X-I2P-Location http://{args[0]}{path}
 }
 (acmedns) {
 	tls {
@@ -135,6 +135,7 @@ inv.{{ server_prefix }}.projectsegfau.lt inv.projectsegfau.lt invidious.projects
                 }
             }
         }
+		import torloc inv
 		{% if server_prefix == 'in' %}
         import acmedns
 		{% endif %}
@@ -169,10 +170,12 @@ scribe.{{ server_prefix }}.projectsegfau.lt scribe.projectsegfau.lt sc.psf.lt sc
 translate.{{ server_prefix }}.projectsegfau.lt translate.projectsegfau.lt tl.psf.lt tl.{{ server_prefix }}.psf.lt {
 	import def
 	reverse_proxy {% if inventory_hostname == 'core' %}192.168.5.2{% endif %}:5046
+	import torloc translate
 }
 safetwitch.{{ server_prefix }}.projectsegfau.lt safetwitch.projectsegfau.lt tw.psf.lt tw.{{ server_prefix }}.psf.lt {
 	import def
 	reverse_proxy {% if inventory_hostname == 'core' %}192.168.5.2{% endif %}:5070
+	import torloc safetwitch
 }
 api.safetwitch.{{ server_prefix }}.projectsegfau.lt {
 	reverse_proxy {% if inventory_hostname == 'core' %}192.168.5.2{% endif %}:5071
@@ -186,6 +189,7 @@ hyperpipebackend.{{ server_prefix }}.projectsegfau.lt {
 }
 search.{{ server_prefix }}.projectsegfau.lt search.projectsegfau.lt s.psf.lt s.{{ server_prefix }}.psf.lt {
         import def
+		import torloc search
         reverse_proxy {% if inventory_hostname == 'core' %}192.168.5.2{% endif %}:8081
         @api {
                 path /config

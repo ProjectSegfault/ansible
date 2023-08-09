@@ -9,6 +9,7 @@
 		reverse_proxy 10.7.0.2:80 {
 			header_up Host "{re.host.1}{re.host.2}.p.projectsegfau.lt"
 		}
+		import torloc {re.host.1}{re.host.2}.p
 	}
 	import acmedns
 }
@@ -25,7 +26,7 @@ cockpit.p.projectsegfau.lt {
 		}
 	}
 	import def
-	import torloc cockpit.p
+	import torloc cockpit
 }
 
 # PublAPI
@@ -33,14 +34,8 @@ publapi.p.projectsegfau.lt {
 	reverse_proxy 10.7.0.2:3000
 	import def
 }
-grafana.p.projectsegfau.lt {
-	reverse_proxy 10.7.0.2:6943 {
-		header_up X-Real-IP {remote_host}
-	}
-	import def
-}
 geminiproxy.projectsegfau.lt geminiproxy.p.projectsegfau.lt gp.p.psf.lt {
 	reverse_proxy 10.7.0.2:8000
 	import def
-	import torloc geminiproxy.p
+	import torloc geminiproxy
 }
