@@ -60,7 +60,7 @@
         import acmedns
 		{% endif %}
 }
-:80 {{ inventory_hostname }}.projectsegfau.lt {% if inventory_hostname == 'eu' %} pizza1.projectsegfau.lt {% endif %} {% if inventory_hostname == 'core' %} soleil.projectsegfau.lt {% endif %} {
+{{ inventory_hostname }}.projectsegfau.lt {% if inventory_hostname == 'eu' %} pizza1.projectsegfau.lt {% endif %} {% if inventory_hostname == 'core' %} soleil.projectsegfau.lt {% endif %} {
         redir https://wiki.projectsegfau.lt/index.php?title={{ wiki_page }}
 }
 # PIZZA + US + IN
