@@ -56,6 +56,11 @@
                 }
             }
         }
+		@badbots {
+        	header "User-Agent" "Go-http-client/2.0"
+		}
+        respond @badbots "Access to this route denied" 403
+        
 		{% if inventory_hostname == 'in' %}
         import acmedns
 		{% endif %}
@@ -135,6 +140,10 @@ inv.{{ server_prefix }}.projectsegfau.lt inv.projectsegfau.lt invidious.projects
                 }
             }
         }
+		@badbots {
+        	header "User-Agent" "Go-http-client/2.0"
+		}
+        respond @badbots "Access to this route denied" 403
 		import torloc inv
 		{% if server_prefix == 'in' %}
         import acmedns
@@ -277,6 +286,10 @@ search.{{ server_prefix }}.projectsegfau.lt search.projectsegfau.lt s.psf.lt s.{
                 }
             }
         }
+		@badbots {
+        	header "User-Agent" "Go-http-client/2.0"
+		}
+        respond @badbots "Access to this route denied" 403
 		{% if server_prefix == 'in' %}
         import acmedns
 		{% endif %}
@@ -310,6 +323,10 @@ pi.{{ server_prefix }}.psf.lt pi.psf.lt {
                 }
             }
         }
+		@badbots {
+        	header "User-Agent" "Go-http-client/2.0"
+		}
+        respond @badbots "Access to this route denied" 403
 }
 {% endif %}
 
