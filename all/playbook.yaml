@@ -5,6 +5,7 @@
       ansible.builtin.apt:
         update_cache: true
         name:
+          - htop
           - vim
           - curl
           - wget
@@ -17,6 +18,8 @@
           - chrony
           - gdu
           - btop
+          - iperf3
+          - neofetch
     - name: Enable VNStat service
       ansible.builtin.service:
         name: vnstat
