@@ -5,6 +5,10 @@ stats.eu.projectsegfau.lt {
 	reverse_proxy localhost:9100
 	import def
 }
+sl.projectsegfau.lt {
+	reverse_proxy :7777
+	import def
+}
 inv.bp.projectsegfau.lt, i.bp.psf.lt {
 	reverse_proxy localhost:7573
 	header {

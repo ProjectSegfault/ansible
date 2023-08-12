@@ -140,10 +140,10 @@
         mode: "0644"
         validate: "/usr/sbin/sshd -T -f %s"
       notify:
-        - restart sshd
+        - Restart sshd
   handlers:
     - name: Restart sshd
       ansible.builtin.service:
-        name: sshd
+        name: ssh
         enabled: true
         state: restarted
