@@ -56,10 +56,6 @@
                 }
             }
         }
-		@badbots {
-        	header "User-Agent" "Go-http-client/2.0"
-		}
-        respond @badbots "Access to this route denied" 403
         
 		{% if inventory_hostname == 'in' %}
         import acmedns
