@@ -77,11 +77,3 @@ all:
           isp: Bharti Airtel
           wiki_page: India_Node
           watchtower_mtrx_username: watchtower-in
-    others:
-      hosts:
-        status:
-          ansible_host: status.projectsegfau.lt
-          ansible_user: ansiblerunner
-          ansible_port: 22
-          port: 22
-          ansible_become: true # Run everything as root
