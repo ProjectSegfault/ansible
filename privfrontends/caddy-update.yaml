@@ -1,6 +1,6 @@
 ---
 - name: Setup Caddy
-  hosts: privfrontends
+  hosts: core,privfrontends
   roles:
     - role: caddy-ansible
       caddy_systemd_capabilities_enabled: true
