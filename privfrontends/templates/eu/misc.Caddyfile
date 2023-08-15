@@ -27,16 +27,6 @@ inv.bp.projectsegfau.lt, i.bp.psf.lt {
 		X-XSS-Protection "1; mode=block"
 		defer
 	}
-	log {
-		output discard
-		format filter {
-			wrap console
-			fields {
-				request>remote_ip replace REDACTED
-				request>headers>X-Forwarded-For replace REDACTED
-			}
-		}
-	}
 	import torloc invbp
 	import i2ploc pjsfi2szfkb4guqzmfmlyq4no46fayertjrwt4h2uughccrh2lvq.b32.i2p
 }

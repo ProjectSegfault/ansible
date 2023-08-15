@@ -21,16 +21,6 @@ grafana.projectsegfau.lt {
 
 # MailU
 mail.projectsegfau.lt {
-	log {
-		output file /var/log/caddy/mail.projectsegfau.lt.log {
-			roll_disabled
-			roll_size 512M
-			roll_uncompressed
-			roll_local_time
-			roll_keep 3
-			roll_keep_for 48h
-		}
-	}
 	import def
 	reverse_proxy 192.168.5.5:8082
 }

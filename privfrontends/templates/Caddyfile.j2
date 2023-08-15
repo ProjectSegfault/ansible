@@ -1,3 +1,9 @@
+{
+	log {
+		output discard
+	}
+}
+
 (tor) {
         header {
                 -Strict-Transport-Security
@@ -45,16 +51,6 @@
 
                 X-XSS-Protection "1; mode=block"
                 defer
-        }
-		log {
-            output discard
-            format filter {
-                wrap console
-                fields {
-                   request>remote_ip replace REDACTED
-                   request>headers>X-Forwarded-For replace REDACTED
-                }
-            }
         }
         
 		{% if inventory_hostname == 'in' %}
@@ -125,16 +121,6 @@ inv.{{ server_prefix }}.projectsegfau.lt inv.projectsegfau.lt invidious.projects
 
                 X-XSS-Protection "1; mode=block"
                 defer
-        }
-		log {
-            output discard
-            format filter {
-                wrap console
-                fields {
-                   request>remote_ip replace REDACTED
-                   request>headers>X-Forwarded-For replace REDACTED
-                }
-            }
         }
 		@badbots {
         	header "User-Agent" "Go-http-client/2.0"
@@ -272,16 +258,6 @@ search.{{ server_prefix }}.projectsegfau.lt search.projectsegfau.lt s.psf.lt s.{
                 X-XSS-Protection "1; mode=block"
                 defer
         }
-		log {
-            output discard
-            format filter {
-                wrap console
-                fields {
-                   request>remote_ip replace REDACTED
-                   request>headers>X-Forwarded-For replace REDACTED
-                }
-            }
-        }
 		@badbots {
         	header "User-Agent" "Go-http-client/2.0"
 		}
@@ -308,16 +284,6 @@ pi.{{ server_prefix }}.psf.lt pi.psf.lt {
 
                 X-XSS-Protection "1; mode=block"
                 defer
-        }
-		log {
-            output discard
-            format filter {
-                wrap console
-                fields {
-                   request>remote_ip replace REDACTED
-                   request>headers>X-Forwarded-For replace REDACTED
-                }
-            }
         }
 		@badbots {
         	header "User-Agent" "Go-http-client/2.0"
