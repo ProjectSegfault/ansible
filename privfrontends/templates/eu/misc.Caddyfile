@@ -1,10 +1,3 @@
-stats.eu.projectsegfau.lt {
-	basicauth * {
-		admin $2a$14$4R5m1Kl74xwVp8MsR.jFeOpa6ssXwHN7ANwJi300zIrienTG44Abi
-	}
-	reverse_proxy localhost:9100
-	import def
-}
 sl.projectsegfau.lt {
 	reverse_proxy :7777
 	import def

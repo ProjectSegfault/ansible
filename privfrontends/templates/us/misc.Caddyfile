@@ -1,7 +1,0 @@
-stats.us.projectsegfau.lt {
-	basicauth * {
-		admin $2a$14$XhZ/Akcdk60yjMTKgYClr.sog.2B6WyECyc98lUJZp3diflifCR9O
-	}
-	reverse_proxy http://127.0.0.1:9100
-	import def
-}
