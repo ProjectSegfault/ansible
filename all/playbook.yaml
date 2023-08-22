@@ -20,6 +20,8 @@
           - btop
           - iperf3
           - neofetch
+          - tmux
+          - prometheus-node-exporter
     - name: Enable VNStat service
       ansible.builtin.service:
         name: vnstat
@@ -28,6 +30,11 @@
     - name: Enable Chrony (NTP) service
       ansible.builtin.service:
         name: chrony
+        enabled: true
+        state: started
+    - name: Enable Prometheus Node Exporter service
+      ansible.builtin.service:
+        name: prometheus-node-exporter
         enabled: true
         state: started
 - name: Sysctl
