@@ -1,4 +1,4 @@
-sl.projectsegfau.lt {
+sl.projectsegfau.lt sl.psf.lt {
 	reverse_proxy :7777
 	import def
 }
