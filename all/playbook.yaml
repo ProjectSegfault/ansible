@@ -22,6 +22,7 @@
           - neofetch
           - tmux
           - prometheus-node-exporter
+          - goaccess
     - name: Enable VNStat service
       ansible.builtin.service:
         name: vnstat
