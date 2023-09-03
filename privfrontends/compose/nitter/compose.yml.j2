@@ -8,7 +8,6 @@ services:
       - "8387:8080"
     volumes:
       - ./extras.conf:/src/nitter.conf:ro
-	  # Guest accounts is stored on local system and IS NOT MEANT TO BE SHARED
       - ./guest_accounts.json:/src/guest_accounts.json:ro
     depends_on:
       - nitter-redis
