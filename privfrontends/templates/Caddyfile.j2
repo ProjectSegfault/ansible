@@ -84,7 +84,7 @@ nitter.{{ server_prefix }}.projectsegfau.lt nitter.projectsegfau.lt n.psf.lt n.{
 		import banips
 
 	@rlignore {
-		not path /css/* /js/* /fonts/* /browserconfig.xml /android-chrome* /favicon* /logo* /lp.svg /robots.txt /safari* /site.webmanifest
+		not path /css/* /js/* /fonts/* /browserconfig.xml /android-chrome* /favicon* /logo* /lp.svg /robots.txt /safari* /site.webmanifest /pic/*
 	}
         rate_limit @rlignore {remote.ip} 2r/s 60000 500
         rate_limit @rlignore {remote.ip} 30r/m 300000 500
