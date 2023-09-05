@@ -10,14 +10,6 @@ sekuritee.projectsegfau.lt {
 	}
 	import def
 }
-# Grafana
-grafana.projectsegfau.lt {
-	reverse_proxy 192.168.5.2:3169
-	handle_path /api/live {
-		reverse_proxy 192.168.5.2:3169
-	}
-	import def
-}
 
 # MailU
 mail.projectsegfau.lt {
@@ -41,13 +33,6 @@ blog.projectsegfau.lt {
 	reverse_proxy 192.168.5.2:2368 {
 		header_up X-Forwarded-Proto https
 		header_up X-Real-IP {remote_host}
-	}
-	import def
-}
-prometheus.projectsegfau.lt {
-	reverse_proxy 192.168.5.2:9090
-	basicauth /* {
-		admin $2a$14$1asDwG2gbyJ3.SungtdOyeqBlW1IiKQ//qI3ienQCTldaosx1qzSC
 	}
 	import def
 }
