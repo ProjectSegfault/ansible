@@ -190,7 +190,7 @@ mau.projectsegfau.lt {
 
 # MediaWiki
 wiki.projectsegfau.lt w.psf.lt {
-	reverse_proxy 192.168.5.3:8000 {
+	reverse_proxy 192.168.5.2:8000 {
 		header_up X-Real-IP {remote_host}
 	}
 	import def
