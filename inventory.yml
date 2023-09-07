@@ -21,12 +21,6 @@ all:
           wiki_page: Soleil_Levant
           server_prefix: eu
           ansible_become: true # Run everything as root
-        lxc:
-          ansible_host: lxc.vpn.projectsegfau.lt
-          ansible_user: ansiblerunner
-          ansible_port: 22
-          port: 22
-          ansible_become: true # Run everything as root
         db:
           ansible_host: db.vpn.projectsegfau.lt
           ansible_user: ansiblerunner
