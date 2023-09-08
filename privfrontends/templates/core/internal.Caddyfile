@@ -59,9 +59,19 @@ rss.midou.dev {
 }
 
 sub.midou.dev {
-		reverse_proxy 192.168.5.6:8480
+	reverse_proxy 192.168.5.6:8480
+	import def
+}
+
+qb.midou.dev {
+		reverse_proxy 192.168.5.6:8182
 		import def
-	}
+}
+
+slsk.midou.dev {
+	reverse_proxy 192.168.5.6:8283
+	import def
+}
 
 # Headscale (tailscale control server)
 hs.projectsegfau.lt {
