@@ -1,6 +1,6 @@
 ---
 - name: Docker Prunes (Daily Cron)
-  hosts: docker,backwards,eu,us,in
+  hosts: privfrontends
   tasks:
     - name: Do thing
       community.docker.docker_prune:

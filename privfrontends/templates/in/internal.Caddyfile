@@ -1,0 +1,95 @@
+# ---Internal Caddyfile---
+
+# MailU
+mail.projectsegfau.lt {
+	import def
+	reverse_proxy :8082
+}
+
+# Plausible
+analytics.projectsegfau.lt {
+	reverse_proxy :8001
+	import def
+}
+
+# Website dev
+web.dev.projectsegfau.lt {
+	reverse_proxy :1339
+	import def
+}
+
+blog.projectsegfau.lt {
+	reverse_proxy :2368 {
+		header_up X-Forwarded-Proto https
+		header_up X-Real-IP {remote_host}
+	}
+	import def
+}
+
+# Headscale (tailscale control server)
+hs.projectsegfau.lt {
+	reverse_proxy /web* https://:9443 {
+		transport http {
+			tls_insecure_skip_verify
+		}
+	}
+	reverse_proxy * :8089
+}
+
+# Caddy daily build (for ansible)
+cb.projectsegfau.lt {
+	root * /var/www/caddy-build
+	file_server browse
+	encode gzip
+}
+
+# GotHub
+docs.gothub.app {
+	redir https://gothub.app/docs{uri}
+}
+# OLD URLs
+http://mutahar.rocks, http://*.mutahar.rocks {
+	redir https://projectsegfau.lt
+}
+
+synapseadmin.vpn.projectsegfau.lt s.v.psf.lt {
+        import acmedns
+	reverse_proxy :8420
+}
+
+bitpuit.vpn.projectsegfau.lt b.v.psf.lt {
+        import acmedns
+	reverse_proxy https://192.168.1.2:8006 {
+		transport http {
+			tls_insecure_skip_verify
+		}
+	}
+	import def
+}
+
+bitpuit2.vpn.projectsegfau.lt b2.v.psf.lt {
+        import acmedns
+	reverse_proxy https://192.168.1.58:8006 {
+		transport http {
+			tls_insecure_skip_verify
+		}
+	}
+	import def
+}
+
+ansible.vpn.projectsegfau.lt a.v.psf.lt {
+	import acmedns
+	reverse_proxy :3527
+}
+grafana.vpn.projectsegfau.lt g.v.psf.lt {
+	import acmedns
+	reverse_proxy :3170
+}
+prometheus.vpn.projectsegfau.lt {
+	import acmedns
+	reverse_proxy :9090
+}
+rabbitmq.vpn.projectsegfau.lt rq.v.psf.lt {
+	import acmedns
+	reverse_proxy 192.168.1.5:15672
+}

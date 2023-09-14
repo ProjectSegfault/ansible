@@ -4,7 +4,7 @@
     path: "{{ docker_dir }}/{{ item }}"
     state: directory
     mode: "0755"
-  tags: docker,soleil,pizza
+  tags: docker,pizza
 
 - name: Copy docker-compose templates for the {{item}}
   ansible.builtin.template:
@@ -13,14 +13,14 @@
     backup: true
     mode: preserve
   register: check_status
-  tags: docker,soleil,pizza
+  tags: docker,pizza
 
 - name: Check if extras file exists for the {{item}}
   delegate_to: localhost
   ansible.builtin.stat:
     path: ./compose/{{ item }}/extras.conf.j2
   register: file
-  tags: docker,soleil,pizza
+  tags: docker,pizza
 
 - name: Copy extras file
   ansible.builtin.template:
@@ -29,7 +29,7 @@
     backup: true
     mode: preserve
   when: file.stat.exists
-  tags: docker,soleil,pizza
+  tags: docker,pizza
 
 - name: "Update docker {{item}} image"
   ansible.builtin.command:
@@ -38,7 +38,7 @@
   when: check_status.changed
   register: updateout
   changed_when: updateout.rc != 0
-  tags: docker,soleil,pizza
+  tags: docker,pizza
 
 - name: "Stop docker {{item}}"
   ansible.builtin.command:
@@ -47,7 +47,7 @@
   when: check_status.changed
   register: stopout
   changed_when: stopout.rc != 0
-  tags: docker,soleil,pizza
+  tags: docker,pizza
 
 - name: "Start docker {{item}}"
   ansible.builtin.command:
@@ -56,4 +56,4 @@
   when: check_status.changed
   register: startout
   changed_when: startout.rc != 0
-  tags: docker,soleil,pizza
+  tags: docker,pizza

@@ -1,38 +1,5 @@
 all:
   children:
-    soleil:
-      hosts:
-        core:
-          ansible_host: core.vpn.projectsegfau.lt
-          ansible_user: ansiblerunner
-          ansible_port: 22
-          port: 22
-          ansible_become: true # Run everything as root
-          wiki_page: Soleil_Levant
-          server_prefix: eu
-        docker:
-          ansible_host: docker.vpn.projectsegfau.lt
-          ansible_user: ansiblerunner
-          ansible_port: 22
-          port: 22
-          docker_dir: /opt/docker-privfrontends
-          country: France
-          isp: Orange S.A.
-          wiki_page: Soleil_Levant
-          server_prefix: eu
-          ansible_become: true # Run everything as root
-        db:
-          ansible_host: db.vpn.projectsegfau.lt
-          ansible_user: ansiblerunner
-          ansible_port: 22
-          port: 22
-          ansible_become: true # Run everything as root
-        backwards:
-          ansible_host: backwards.vpn.projectsegfau.lt
-          ansible_user: ansiblerunner
-          ansible_port: 22
-          port: 22
-          ansible_become: true # Run everything as root
     privfrontends:
       hosts:
         eu:

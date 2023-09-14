@@ -61,11 +61,9 @@
 
 import ./*.Caddyfile
 
-{{ inventory_hostname }}.projectsegfau.lt {% if inventory_hostname == 'eu' %} pizza1.projectsegfau.lt {% endif %} {% if inventory_hostname == 'core' %} soleil.projectsegfau.lt {% endif %} {
+{{ inventory_hostname }}.projectsegfau.lt {% if inventory_hostname == 'eu' %} pizza1.projectsegfau.lt {% endif %} {
         redir https://wiki.projectsegfau.lt/index.php?title={{ wiki_page }}
 }
-# PIZZA + US + IN
-{% if inventory_hostname == 'eu' or inventory_hostname == 'us' or inventory_hostname == 'in' %}
 cdn.projectsegfau.lt cdn.{{ server_prefix }}.projectsegfau.lt {
         encode zstd gzip
         root * /var/cdn
@@ -117,11 +115,8 @@ teddit.{{ server_prefix }}.projectsegfau.lt teddit.projectsegfau.lt t.psf.lt t.{
         import def
 		import torloc teddit
 }
-{% endif %}
-# SOLEIL + US + IN 
-{% if inventory_hostname == 'core' or inventory_hostname == 'us' or inventory_hostname == 'in' %}
 inv.{{ server_prefix }}.projectsegfau.lt inv.projectsegfau.lt invidious.projectsegfau.lt i.{{ server_prefix }}.psf.lt i.psf.lt {
-        reverse_proxy {% if inventory_hostname == 'core' %}192.168.5.2{% endif %}:7573
+        reverse_proxy :7573
         header {
                 # disable FLoC tracking
 				Permissions-Policy "accelerometer=(), ambient-light-sensor=(), autoplay=(), battery=(), camera=(), clipboard-read=(), display-capture=(), document-domain=(), encrypted-media=(), fullscreen=(), geolocation=(), gyroscope=(), hid=(), idle-detection=(), interest-cohort=(), magnetometer=(), microphone=(), midi=(), payment=(), picture-in-picture=(), screen-wake-lock=(), serial=(), usb=(), sync-xhr=(), xr-spatial-tracking=()";
@@ -148,17 +143,17 @@ inv.{{ server_prefix }}.projectsegfau.lt inv.projectsegfau.lt invidious.projects
 		{% endif %}
 }
 gothub.{{ server_prefix }}.projectsegfau.lt gothub.projectsegfau.lt gh.psf.lt gh.{{ server_prefix }}.psf.lt {
-        reverse_proxy {% if inventory_hostname == 'core' %}192.168.5.2{% endif %}:1024
+        reverse_proxy :1024
         import def
 		import torloc gothub
 }
 overflow.{{ server_prefix }}.projectsegfau.lt overflow.projectsegfau.lt o.psf.lt o.{{ server_prefix }}.psf.lt {
-        reverse_proxy {% if inventory_hostname == 'core' %}192.168.5.2{% endif %}:8694
+        reverse_proxy :8694
         import def
 		import torloc overflow
 }
 rimgo.{{ server_prefix }}.projectsegfau.lt rimgo.projectsegfau.lt rg.psf.lt rg.{{ server_prefix }}.psf.lt {
-        reverse_proxy {% if inventory_hostname == 'core' %}192.168.5.2{% endif %}:9016
+        reverse_proxy :9016
         import def
 		import torloc rimgo
 }
@@ -166,38 +161,38 @@ bw.{{ server_prefix }}.projectsegfau.lt bw.projectsegfau.lt bw.psf.lt bw.{{ serv
         import def
 		import torloc breezewiki
 		import i2ploc pjsfk4xvekoc7wx4pteevp3q2wy7jmzlem7rvl74nx33zkdr4vyq.b32.i2p
-        reverse_proxy {% if inventory_hostname == 'core' %}192.168.5.2{% endif %}:10416
+        reverse_proxy :10416
 }
 scribe.{{ server_prefix }}.projectsegfau.lt scribe.projectsegfau.lt sc.psf.lt sc.{{ server_prefix }}.psf.lt {
         import def
 		import torloc scribe
         import i2ploc pjsflkkkcn33ahmzmpyq6idy2knkzh4atp7zaetqfsnenpyori6a.b32.i2p
-        reverse_proxy {% if inventory_hostname == 'core' %}192.168.5.2{% endif %}:8006
+        reverse_proxy :8006
 }
 translate.{{ server_prefix }}.projectsegfau.lt translate.projectsegfau.lt tl.psf.lt tl.{{ server_prefix }}.psf.lt {
 	import def
-	reverse_proxy {% if inventory_hostname == 'core' %}192.168.5.2{% endif %}:5046
+	reverse_proxy :5046
 	import torloc translate
 }
 safetwitch.{{ server_prefix }}.projectsegfau.lt safetwitch.projectsegfau.lt tw.psf.lt tw.{{ server_prefix }}.psf.lt {
 	import def
-	reverse_proxy {% if inventory_hostname == 'core' %}192.168.5.2{% endif %}:5070
+	reverse_proxy :5070
 	import torloc safetwitch
 }
 api.safetwitch.{{ server_prefix }}.projectsegfau.lt {
-	reverse_proxy {% if inventory_hostname == 'core' %}192.168.5.2{% endif %}:5071
+	reverse_proxy :5071
 }
 hyperpipe.{{ server_prefix }}.projectsegfau.lt hyperpipe.projectsegfau.lt hp.psf.lt hp.{{ server_prefix }}.psf.lt {
 	import def
-	reverse_proxy {% if inventory_hostname == 'core' %}192.168.5.2{% endif %}:8843
+	reverse_proxy :8843
 }
 hyperpipebackend.{{ server_prefix }}.projectsegfau.lt {
-	reverse_proxy {% if inventory_hostname == 'core' %}192.168.5.2{% endif %}:3536
+	reverse_proxy :3536
 }
 search.{{ server_prefix }}.projectsegfau.lt search.projectsegfau.lt s.psf.lt s.{{ server_prefix }}.psf.lt {
         import def
 		import torloc search
-        reverse_proxy {% if inventory_hostname == 'core' %}192.168.5.2{% endif %}:8081
+        reverse_proxy :8081
         @api {
                 path /config
                 path /healthz
@@ -258,7 +253,7 @@ search.{{ server_prefix }}.projectsegfau.lt search.projectsegfau.lt s.psf.lt s.{
         }
 }
 {% if server_prefix == 'eu' %}piped.projectsegfau.lt proxy.piped.projectsegfau.lt api.piped.projectsegfau.lt {%else%} piped.{{ server_prefix }}.projectsegfau.lt pipedproxy.{{ server_prefix }}.projectsegfau.lt pipedapi.{{ server_prefix }}.projectsegfau.lt {%endif%} {
-        reverse_proxy {% if inventory_hostname == 'core' %}192.168.5.2{% endif %}:6970
+        reverse_proxy :6970
         header {
                 # disable FLoC tracking
 				Permissions-Policy "accelerometer=(), ambient-light-sensor=(), autoplay=(), battery=(), camera=(), clipboard-read=(), display-capture=(), document-domain=(), encrypted-media=(), fullscreen=(), geolocation=(), gyroscope=(), hid=(), idle-detection=(), interest-cohort=(), magnetometer=(), microphone=(), midi=(), payment=(), picture-in-picture=(), screen-wake-lock=(), serial=(), usb=(), sync-xhr=(), xr-spatial-tracking=()";
@@ -283,7 +278,7 @@ search.{{ server_prefix }}.projectsegfau.lt search.projectsegfau.lt s.psf.lt s.{
 		{% endif %}
 }
 pi.{{ server_prefix }}.psf.lt pi.psf.lt {
-        reverse_proxy {% if inventory_hostname == 'core' %}192.168.5.2{% endif %}:6970 {
+        reverse_proxy :6970 {
                 header_up Host "{% if server_prefix == 'eu' %}piped.projectsegfau.lt{%else%}piped.{{ server_prefix }}.projectsegfau.lt{%endif%}"
         }
         header {
@@ -306,4 +301,3 @@ pi.{{ server_prefix }}.psf.lt pi.psf.lt {
 		}
         respond @badbots "Access to this route denied" 403
 }
-{% endif %}

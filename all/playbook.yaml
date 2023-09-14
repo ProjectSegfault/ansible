@@ -120,21 +120,6 @@
         state: "present"
         regexp: "^%sudo"
         line: "%sudo ALL=(ALL) NOPASSWD: ALL"
-- name: Add extra authorized_key for soleil
-  hosts: soleil
-  vars:
-    users:
-      - arya
-      - mrlerien
-      - devrand
-      - midou
-  tasks:
-    - name: Add extra authorized_key for soleil
-      ansible.posix.authorized_key:
-        user: "{{ item }}"
-        key: "{{ corevm_ssh_key }}"
-      with_items:
-        - "{{ users }}"
 - name: Configure SSHD
   hosts: all
   tasks:

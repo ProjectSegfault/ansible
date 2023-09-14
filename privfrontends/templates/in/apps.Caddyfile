@@ -7,7 +7,7 @@ social.projectsegfau.lt {
 
 	# this is explicitly IPv4 since Pleroma.Web.Endpoint binds on IPv4 only
 	# and `localhost.` resolves to [::0] on some systems: see issue #930
-	reverse_proxy 192.168.5.2:4011
+	reverse_proxy 192.168.1.5:4011
 
 	handle /media/* {
 		redir https://media.social.projectsegfau.lt{uri} permanent
@@ -23,7 +23,7 @@ social.projectsegfau.lt {
 # And https://gleasonator.com/notice/AW3PsTi4WCWEUbN0uO
 media.social.projectsegfau.lt {
 	handle /media/* {
-		reverse_proxy 192.168.5.2:4011 {
+		reverse_proxy 192.168.1.5:4011 {
 			transport http {
 				response_header_timeout 10s
 				read_timeout 15s
@@ -32,7 +32,7 @@ media.social.projectsegfau.lt {
 	}
 
 	handle /proxy/* {
-		reverse_proxy 192.168.5.2:4011 {
+		reverse_proxy 192.168.1.5:4011 {
 			transport http {
 				response_header_timeout 10s
 				read_timeout 15s
@@ -43,29 +43,29 @@ media.social.projectsegfau.lt {
 
 # Cinny
 cinny.projectsegfau.lt cy.psf.lt {
-	reverse_proxy 192.168.5.2:3069
+	reverse_proxy :3069
 	import def
 }
 
 # Website 
 projectsegfau.lt {
-	reverse_proxy 192.168.5.2:1337
+	reverse_proxy :1337
 	import def
-	reverse_proxy /_matrix/* 192.168.5.2:8449 {
+	reverse_proxy /_matrix/* 192.168.1.5:8449 {
 		header_up Host "matrix.projectsegfau.lt"
 	}
-	reverse_proxy /_matrix/client/* 192.168.5.2:81 {
+	reverse_proxy /_matrix/client/* 192.168.1.5:81 {
 		header_up Host "matrix.projectsegfau.lt"
 	}
-	reverse_proxy /_synapse/* 192.168.5.2:81 {
+	reverse_proxy /_synapse/* 192.168.1.5:81 {
 		header_up Host "matrix.projectsegfau.lt"
 	}
-	reverse_proxy /.well-known/acme-challenge/* 192.168.5.5:5380
-	reverse_proxy /converse 192.168.5.5:5280
-	reverse_proxy /converseemojis.js 192.168.5.5:5280
-	reverse_proxy /converse/* 192.168.5.5:5280
-	reverse_proxy /bosh 192.168.5.5:5280
-	reverse_proxy /ws 192.168.5.5:5280
+	reverse_proxy /.well-known/acme-challenge/* 192.168.1.5:5380
+	reverse_proxy /converse 192.168.1.5:5280
+	reverse_proxy /converseemojis.js 192.168.1.5:5280
+	reverse_proxy /converse/* 192.168.1.5:5280
+	reverse_proxy /bosh 192.168.1.5:5280
+	reverse_proxy /ws 192.168.1.5:5280
 	header /.well-known/matrix/* Content-Type application/json
 	header /.well-known/matrix/* Access-Control-Allow-Origin *
 	handle_path /.well-known/* {
@@ -79,18 +79,19 @@ projectsegfau.lt {
 	import torloc www
 }
 psf.lt {
-	reverse_proxy 192.168.5.2:1337
+	reverse_proxy :1337
 	import def
 	import torloc www
-	header /.well-known/matrix/* Content-Type application/json
-	header /.well-known/matrix/* Access-Control-Allow-Origin *
-	handle_path /.well-known/* {
-		root * /var/www/psf-well-known
-		file_server
-	}
+import acmedns
+        header /.well-known/matrix/* Content-Type application/json
+        header /.well-known/matrix/* Access-Control-Allow-Origin *
+        handle_path /.well-known/* {
+                root * /var/www/psf-well-known
+                file_server
+        }
 }
 ssync.projectsegfau.lt {
-	reverse_proxy 192.168.5.2:3333
+	reverse_proxy 192.168.1.5:3333
 	import def
 }
 
@@ -100,17 +101,17 @@ www.projectsegfau.lt www.psf.lt {
 }
 
 matrix.projectsegfau.lt {
-	reverse_proxy /_matrix/* 192.168.5.2:8449 {
+	reverse_proxy /_matrix/* 192.168.1.5:8449 {
 		header_up Host "matrix.projectsegfau.lt"
 	}
-	reverse_proxy /_matrix/client/* 192.168.5.2:81 {
+	reverse_proxy /_matrix/client/* 192.168.1.5:81 {
 		header_up Host "matrix.projectsegfau.lt"
 	}
-	reverse_proxy /_synapse/* 192.168.5.2:81 {
+	reverse_proxy /_synapse/* 192.168.1.5:81 {
 		header_up Host "matrix.projectsegfau.lt"
 	}
 	import def
-	#reverse_proxy /_synapse/client/* 192.168.5.2:81 {
+	#reverse_proxy /_synapse/client/* 192.168.1.5:81 {
 	#        header_up Host "matrix.projectsegfau.lt"
 	#}
 	handle_path / {
@@ -118,21 +119,15 @@ matrix.projectsegfau.lt {
 	}
 }
 
-# Directus
-cms.projectsegfau.lt {
-	reverse_proxy 192.168.5.2:9456
-	import def
-}
-
 # Element
 chat.projectsegfau.lt el.psf.lt {
-	reverse_proxy 192.168.5.2:3070
+	reverse_proxy :3070
 	import def
 }
 
 # Gitea
 git.projectsegfau.lt {
-	reverse_proxy 192.168.5.5:3444
+	reverse_proxy :3444
 	respond /metrics 403
 	import def
 	request_body {
@@ -144,7 +139,7 @@ git.projectsegfau.lt {
 	import torloc git
 }
 git.psf.lt {
-	reverse_proxy 192.168.5.5:3444 {
+	reverse_proxy :3444 {
 		header_up Host "git.projectsegfau.lt"
 	}
 	respond /metrics 403
@@ -159,7 +154,7 @@ git.psf.lt {
 }
 # HedgeDoc
 doc.projectsegfau.lt {
-	reverse_proxy 192.168.5.2:2069 {
+	reverse_proxy :2069 {
 		header_up X-Real-IP {remote_host}
 	}
 	import def
@@ -167,30 +162,30 @@ doc.projectsegfau.lt {
 
 # Hydrogen
 h2.projectsegfau.lt, hydrogen.projectsegfau.lt, h2.psf.lt {
-	reverse_proxy 192.168.5.2:3071
+	reverse_proxy :3071
 	import def
 }
 
 # Jitsi
 jitsi.projectsegfau.lt {
-	reverse_proxy 192.168.5.5:8000 {
+	reverse_proxy :8000 {
 		header_up X-Real-IP {remote_host}
 	}
 }
 # Excalidraw backend for jitsi
 excalidraw.projectsegfau.lt {
-	reverse_proxy 192.168.5.5:8694
+	reverse_proxy :8694
 }
 
 # Maubot
 mau.projectsegfau.lt {
-	reverse_proxy 192.168.5.2:29316
+	reverse_proxy :29316
 	import def
 }
 
 # MediaWiki
 wiki.projectsegfau.lt w.psf.lt {
-	reverse_proxy 192.168.5.2:8000 {
+	reverse_proxy 10.0.3.39:80 {
 		header_up X-Real-IP {remote_host}
 	}
 	import def
@@ -200,18 +195,18 @@ wiki.projectsegfau.lt w.psf.lt {
 
 # Vikunja
 todo.projectsegfau.lt vi.psf.lt {
-	reverse_proxy 192.168.5.2:3456
+	reverse_proxy :3456
 	import def
 	import torloc todo
 }
 
 # Vaultwarden
 pass.projectsegfau.lt vw.psf.lt {
-	reverse_proxy 192.168.5.2:6980 {
+	reverse_proxy :6980 {
 		header_up X-Real-IP {remote_host}
 	}
 	import def
-	reverse_proxy /notifications/hub 192.168.5.2:3012 {
+	reverse_proxy /notifications/hub :3012 {
 		header_up X-Real-IP {remote_host}
 	}
 	import torloc pass
@@ -219,10 +214,10 @@ pass.projectsegfau.lt vw.psf.lt {
 
 # XMPP
 xmpp.projectsegfau.lt, conference.projectsegfau.lt, proxy.projectsegfau.lt, pubsub.projectsegfau.lt, upload.projectsegfau.lt {
-	reverse_proxy 192.168.5.5:5280 {
+	reverse_proxy 192.168.1.5:5280 {
 		header_up X-Real-IP {remote_host}
 	}
-	reverse_proxy /.well-known/acme-challenge/* 192.168.5.5:5380
+	reverse_proxy /.well-known/acme-challenge/* 192.168.1.5:5380
 	@register {
 		path /new/
 		path /change_password/
@@ -247,16 +242,16 @@ xmpp.projectsegfau.lt, conference.projectsegfau.lt, proxy.projectsegfau.lt, pubs
 }
 xmpp-web.projectsegfau.lt, x.psf.lt {
 	import def
-	reverse_proxy 192.168.5.2:3072
+	reverse_proxy :3072
 }
 healthchecks.projectsegfau.lt, hc.psf.lt {
 	import def
-	reverse_proxy 192.168.5.2:8450
+	reverse_proxy :8450
 	import torloc healthchecks
 }
 # Pubthentik
 auth.p.projectsegfau.lt {
-	reverse_proxy 192.168.5.2:7444 {
+	reverse_proxy :7444 {
 		transport http {
 			tls_insecure_skip_verify
 		}
@@ -266,17 +261,13 @@ auth.p.projectsegfau.lt {
 }
 # kbin
 kbin.projectsegfau.lt, kb.psf.lt {
-        reverse_proxy 192.168.5.2:80 {
+        reverse_proxy 192.168.1.5:8014 {
                 header_up X-Real-IP {remote_host}
         }
         import def
 }
-libretranslate.projectsegfau.lt lt.psf.lt {
-	reverse_proxy 192.168.5.2:5005
-	import def
-}
 gothub.dev.projectsegfau.lt gh.dev.psf.lt {
-	reverse_proxy 192.168.5.2:1025
+	reverse_proxy :1025
 	import def
 	import torloc gothub.dev
 }

@@ -1,6 +1,3 @@
-dd.psf.lt {
-	reverse_proxy :8008
-}
 # PERSONAL
 https://m.in.projectsegfau.lt:8448 m.in.projectsegfau.lt {
 	import def
@@ -17,20 +14,4 @@ tnfiles.perso.in.projectsegfau.lt {
 		browse
 	}
 	root * /zfspool/files/tn-sw
-}
-discourse.tildevarsh.in {
-	reverse_proxy https://192.168.1.21:443 {
-		transport http {
-			tls_insecure_skip_verify
-		}
-		header_up X-Real-IP {remote_host}
-	}
-}
-jf.perso.in.projectsegfau.lt {
-	reverse_proxy 192.168.1.20:8096
-	import def
-}
-nc.perso.in.projectsegfau.lt {
-	reverse_proxy 192.168.1.20:80
-	import def
 }
