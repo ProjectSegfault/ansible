@@ -168,7 +168,7 @@ h2.projectsegfau.lt, hydrogen.projectsegfau.lt, h2.psf.lt {
 
 # Jitsi
 jitsi.projectsegfau.lt {
-	reverse_proxy 192.168.1.5:8000 {
+	reverse_proxy 192.168.1.64:8000 {
 		header_up X-Real-IP {remote_host}
 	}
 }
