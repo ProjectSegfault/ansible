@@ -266,6 +266,81 @@ kbin.projectsegfau.lt, kb.psf.lt {
         }
         import def
 }
+
+ piped.projectsegfau.lt proxy.piped.projectsegfau.lt api.piped.projectsegfau.lt  {
+        reverse_proxy 192.168.1.64:6970
+        header {
+                # disable FLoC tracking
+				Permissions-Policy "accelerometer=(), ambient-light-sensor=(), autoplay=(), battery=(), camera=(), clipboard-read=(), display-capture=(), document-domain=(), encrypted-media=(), fullscreen=(), geolocation=(), gyroscope=(), hid=(), idle-detection=(), interest-cohort=(), magnetometer=(), microphone=(), midi=(), payment=(), picture-in-picture=(), screen-wake-lock=(), serial=(), usb=(), sync-xhr=(), xr-spatial-tracking=()";
+
+                # enable HSTS
+                Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+                # disable clients from sniffing the media type
+                X-Content-Type-Options nosniff
+
+                # keep referrer data off of HTTP connections
+                Referrer-Policy no-referrer-when-downgrade
+
+                X-XSS-Protection "1; mode=block"
+                defer
+        }
+		@badbots {
+        	header "User-Agent" "Go-http-client/2.0"
+		}
+        respond @badbots "Access to this route denied" 403
+		       import acmedns
+		}
+pi.psf.lt {
+        reverse_proxy 192.168.1.64:6970 {
+                header_up Host "piped.projectsegfau.lt"
+        }
+        header {
+                # disable FLoC tracking
+				Permissions-Policy "accelerometer=(), ambient-light-sensor=(), autoplay=(), battery=(), camera=(), clipboard-read=(), display-capture=(), document-domain=(), encrypted-media=(), fullscreen=(), geolocation=(), gyroscope=(), hid=(), idle-detection=(), interest-cohort=(), magnetometer=(), microphone=(), midi=(), payment=(), picture-in-picture=(), screen-wake-lock=(), serial=(), usb=(), sync-xhr=(), xr-spatial-tracking=()";
+
+                # enable HSTS
+                Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+                # disable clients from sniffing the media type
+                X-Content-Type-Options nosniff
+
+                # keep referrer data off of HTTP connections
+                Referrer-Policy no-referrer-when-downgrade
+
+                X-XSS-Protection "1; mode=block"
+                defer
+        }
+		@badbots {
+        	header "User-Agent" "Go-http-client/2.0"
+		}
+        respond @badbots "Access to this route denied" 403
+}
+
+inv.projectsegfau.lt invidious.projectsegfau.lt i.psf.lt {
+        reverse_proxy 192.168.1.64:7573
+        header {
+                # disable FLoC tracking
+				Permissions-Policy "accelerometer=(), ambient-light-sensor=(), autoplay=(), battery=(), camera=(), clipboard-read=(), display-capture=(), document-domain=(), encrypted-media=(), fullscreen=(), geolocation=(), gyroscope=(), hid=(), idle-detection=(), interest-cohort=(), magnetometer=(), microphone=(), midi=(), payment=(), picture-in-picture=(), screen-wake-lock=(), serial=(), usb=(), sync-xhr=(), xr-spatial-tracking=()";
+
+                # enable HSTS
+                Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+                # disable clients from sniffing the media type
+                X-Content-Type-Options nosniff
+
+                # keep referrer data off of HTTP connections
+                Referrer-Policy no-referrer-when-downgrade
+				-Content-Security-Policy
+
+                X-XSS-Protection "1; mode=block"
+                defer
+        }
+		@badbots {
+        	header "User-Agent" "Go-http-client/2.0"
+		}
+        respond @badbots "Access to this route denied" 403
+		import torloc inv
+		       import acmedns
+		}
+
 gothub.dev.projectsegfau.lt gh.dev.psf.lt {
 	reverse_proxy :1025
 	import def
