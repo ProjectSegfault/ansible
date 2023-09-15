@@ -8,7 +8,7 @@ mail.projectsegfau.lt {
 
 # Plausible
 analytics.projectsegfau.lt {
-	reverse_proxy :8001
+	reverse_proxy 192.168.1.64:8001
 	import def
 }
 
@@ -91,5 +91,5 @@ prometheus.vpn.projectsegfau.lt {
 }
 rabbitmq.vpn.projectsegfau.lt rq.v.psf.lt {
 	import acmedns
-	reverse_proxy 192.168.1.5:15672
+	reverse_proxy 192.168.1.64:15672
 }

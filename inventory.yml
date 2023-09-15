@@ -38,3 +38,17 @@ all:
           isp: Bharti Airtel
           wiki_page: India_Node
           watchtower_mtrx_username: watchtower-in
+  others:
+      hosts:
+        in2:
+          ansible_host: in2.vpn.projectsegfau.lt
+          ansible_user: ansiblerunner
+          ansible_port: 22
+          port: 22
+          ansible_become: true # Run everything as root
+          docker_dir: /opt/docker-privfrontends
+          server_prefix: in
+          country: India
+          isp: Bharti Airtel
+          wiki_page: India_Node
+          watchtower_mtrx_username: watchtower-in

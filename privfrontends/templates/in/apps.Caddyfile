@@ -7,7 +7,7 @@ social.projectsegfau.lt {
 
 	# this is explicitly IPv4 since Pleroma.Web.Endpoint binds on IPv4 only
 	# and `localhost.` resolves to [::0] on some systems: see issue #930
-	reverse_proxy 192.168.1.5:4011
+	reverse_proxy 192.168.1.64:4011
 
 	handle /media/* {
 		redir https://media.social.projectsegfau.lt{uri} permanent
@@ -23,7 +23,7 @@ social.projectsegfau.lt {
 # And https://gleasonator.com/notice/AW3PsTi4WCWEUbN0uO
 media.social.projectsegfau.lt {
 	handle /media/* {
-		reverse_proxy 192.168.1.5:4011 {
+		reverse_proxy 192.168.1.64:4011 {
 			transport http {
 				response_header_timeout 10s
 				read_timeout 15s
@@ -32,7 +32,7 @@ media.social.projectsegfau.lt {
 	}
 
 	handle /proxy/* {
-		reverse_proxy 192.168.1.5:4011 {
+		reverse_proxy 192.168.1.64:4011 {
 			transport http {
 				response_header_timeout 10s
 				read_timeout 15s
@@ -51,21 +51,21 @@ cinny.projectsegfau.lt cy.psf.lt {
 projectsegfau.lt {
 	reverse_proxy :1337
 	import def
-	reverse_proxy /_matrix/* 192.168.1.5:8449 {
+	reverse_proxy /_matrix/* 192.168.1.64:8449 {
 		header_up Host "matrix.projectsegfau.lt"
 	}
-	reverse_proxy /_matrix/client/* 192.168.1.5:81 {
+	reverse_proxy /_matrix/client/* 192.168.1.64:81 {
 		header_up Host "matrix.projectsegfau.lt"
 	}
-	reverse_proxy /_synapse/* 192.168.1.5:81 {
+	reverse_proxy /_synapse/* 192.168.1.64:81 {
 		header_up Host "matrix.projectsegfau.lt"
 	}
-	reverse_proxy /.well-known/acme-challenge/* 192.168.1.5:5380
-	reverse_proxy /converse 192.168.1.5:5280
-	reverse_proxy /converseemojis.js 192.168.1.5:5280
-	reverse_proxy /converse/* 192.168.1.5:5280
-	reverse_proxy /bosh 192.168.1.5:5280
-	reverse_proxy /ws 192.168.1.5:5280
+	reverse_proxy /.well-known/acme-challenge/* 192.168.1.64:5380
+	reverse_proxy /converse 192.168.1.64:5280
+	reverse_proxy /converseemojis.js 192.168.1.64:5280
+	reverse_proxy /converse/* 192.168.1.64:5280
+	reverse_proxy /bosh 192.168.1.64:5280
+	reverse_proxy /ws 192.168.1.64:5280
 	header /.well-known/matrix/* Content-Type application/json
 	header /.well-known/matrix/* Access-Control-Allow-Origin *
 	handle_path /.well-known/* {
@@ -91,7 +91,7 @@ import acmedns
         }
 }
 ssync.projectsegfau.lt {
-	reverse_proxy 192.168.1.5:3333
+	reverse_proxy 192.168.1.64:3333
 	import def
 }
 
@@ -101,17 +101,17 @@ www.projectsegfau.lt www.psf.lt {
 }
 
 matrix.projectsegfau.lt {
-	reverse_proxy /_matrix/* 192.168.1.5:8449 {
+	reverse_proxy /_matrix/* 192.168.1.64:8449 {
 		header_up Host "matrix.projectsegfau.lt"
 	}
-	reverse_proxy /_matrix/client/* 192.168.1.5:81 {
+	reverse_proxy /_matrix/client/* 192.168.1.64:81 {
 		header_up Host "matrix.projectsegfau.lt"
 	}
-	reverse_proxy /_synapse/* 192.168.1.5:81 {
+	reverse_proxy /_synapse/* 192.168.1.64:81 {
 		header_up Host "matrix.projectsegfau.lt"
 	}
 	import def
-	#reverse_proxy /_synapse/client/* 192.168.1.5:81 {
+	#reverse_proxy /_synapse/client/* 192.168.1.64:81 {
 	#        header_up Host "matrix.projectsegfau.lt"
 	#}
 	handle_path / {
@@ -214,10 +214,10 @@ pass.projectsegfau.lt vw.psf.lt {
 
 # XMPP
 xmpp.projectsegfau.lt, conference.projectsegfau.lt, proxy.projectsegfau.lt, pubsub.projectsegfau.lt, upload.projectsegfau.lt {
-	reverse_proxy 192.168.1.5:5280 {
+	reverse_proxy 192.168.1.64:5280 {
 		header_up X-Real-IP {remote_host}
 	}
-	reverse_proxy /.well-known/acme-challenge/* 192.168.1.5:5380
+	reverse_proxy /.well-known/acme-challenge/* 192.168.1.64:5380
 	@register {
 		path /new/
 		path /change_password/
@@ -261,7 +261,7 @@ auth.p.projectsegfau.lt {
 }
 # kbin
 kbin.projectsegfau.lt, kb.psf.lt {
-        reverse_proxy 192.168.1.5:8014 {
+        reverse_proxy 192.168.1.64:8014 {
                 header_up X-Real-IP {remote_host}
         }
         import def
