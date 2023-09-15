@@ -116,7 +116,7 @@ teddit.{{ server_prefix }}.projectsegfau.lt teddit.projectsegfau.lt t.psf.lt t.{
 		import torloc teddit
 }
 inv.{{ server_prefix }}.projectsegfau.lt i.{{ server_prefix }}.psf.lt {
-        reverse_proxy :7573
+        reverse_proxy {% if server_prefix == 'in' %}192.168.1.65{%endif%}:7573
         header {
                 # disable FLoC tracking
 				Permissions-Policy "accelerometer=(), ambient-light-sensor=(), autoplay=(), battery=(), camera=(), clipboard-read=(), display-capture=(), document-domain=(), encrypted-media=(), fullscreen=(), geolocation=(), gyroscope=(), hid=(), idle-detection=(), interest-cohort=(), magnetometer=(), microphone=(), midi=(), payment=(), picture-in-picture=(), screen-wake-lock=(), serial=(), usb=(), sync-xhr=(), xr-spatial-tracking=()";
@@ -253,7 +253,7 @@ search.{{ server_prefix }}.projectsegfau.lt search.projectsegfau.lt s.psf.lt s.{
         }
 }
 piped.{{ server_prefix }}.projectsegfau.lt pipedproxy.{{ server_prefix }}.projectsegfau.lt pipedapi.{{ server_prefix }}.projectsegfau.lt {
-        reverse_proxy :6970
+        reverse_proxy {% if server_prefix == 'in' %}192.168.1.65{%endif%}:6970
         header {
                 # disable FLoC tracking
 				Permissions-Policy "accelerometer=(), ambient-light-sensor=(), autoplay=(), battery=(), camera=(), clipboard-read=(), display-capture=(), document-domain=(), encrypted-media=(), fullscreen=(), geolocation=(), gyroscope=(), hid=(), idle-detection=(), interest-cohort=(), magnetometer=(), microphone=(), midi=(), payment=(), picture-in-picture=(), screen-wake-lock=(), serial=(), usb=(), sync-xhr=(), xr-spatial-tracking=()";
@@ -278,7 +278,7 @@ piped.{{ server_prefix }}.projectsegfau.lt pipedproxy.{{ server_prefix }}.projec
 		{% endif %}
 }
 pi.{{ server_prefix }}.psf.lt {
-        reverse_proxy :6970 {
+        reverse_proxy {% if server_prefix == 'in' %}192.168.1.65{%endif%}:6970 {
                 header_up Host "{% if server_prefix == 'eu' %}piped.projectsegfau.lt{%else%}piped.{{ server_prefix }}.projectsegfau.lt{%endif%}"
         }
         header {
