@@ -268,7 +268,7 @@ kbin.projectsegfau.lt, kb.psf.lt {
 }
 
  piped.projectsegfau.lt proxy.piped.projectsegfau.lt api.piped.projectsegfau.lt  {
-        reverse_proxy 192.168.1.64:6970
+        reverse_proxy 192.168.1.64:6971
         header {
                 # disable FLoC tracking
 				Permissions-Policy "accelerometer=(), ambient-light-sensor=(), autoplay=(), battery=(), camera=(), clipboard-read=(), display-capture=(), document-domain=(), encrypted-media=(), fullscreen=(), geolocation=(), gyroscope=(), hid=(), idle-detection=(), interest-cohort=(), magnetometer=(), microphone=(), midi=(), payment=(), picture-in-picture=(), screen-wake-lock=(), serial=(), usb=(), sync-xhr=(), xr-spatial-tracking=()";
@@ -291,7 +291,7 @@ kbin.projectsegfau.lt, kb.psf.lt {
 		       import acmedns
 		}
 pi.psf.lt {
-        reverse_proxy 192.168.1.64:6970 {
+        reverse_proxy 192.168.1.64:6971 {
                 header_up Host "piped.projectsegfau.lt"
         }
         header {
@@ -316,7 +316,7 @@ pi.psf.lt {
 }
 
 inv.projectsegfau.lt invidious.projectsegfau.lt i.psf.lt {
-        reverse_proxy 192.168.1.64:7573
+        reverse_proxy 192.168.1.64:7574
         header {
                 # disable FLoC tracking
 				Permissions-Policy "accelerometer=(), ambient-light-sensor=(), autoplay=(), battery=(), camera=(), clipboard-read=(), display-capture=(), document-domain=(), encrypted-media=(), fullscreen=(), geolocation=(), gyroscope=(), hid=(), idle-detection=(), interest-cohort=(), magnetometer=(), microphone=(), midi=(), payment=(), picture-in-picture=(), screen-wake-lock=(), serial=(), usb=(), sync-xhr=(), xr-spatial-tracking=()";
