@@ -1,9 +1,7 @@
 version: "3"
 services:
   simplytranslate:
-    image: quay.io/pussthecatorg/simplytranslate:latest
+    image: codeberg.org/aryak/mozhi:latest
     ports:
-      - "5046:5000"
-    volumes:
-      - "./extras.conf:/etc/simplytranslate/web.conf" 
+      - "5046:3000"
     restart: unless-stopped
