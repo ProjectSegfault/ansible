@@ -8,7 +8,7 @@ services:
       - "8387:8080"
     volumes:
       - ./extras.conf:/src/nitter.conf:ro
-      - ./guest_accounts.json:/src/guest_accounts.json:ro
+      - ./guest_accounts.jsonl:/src/guest_accounts.jsonl:ro
     depends_on:
       - nitter-redis
     restart: unless-stopped
