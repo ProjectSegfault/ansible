@@ -2,7 +2,7 @@ version: '3'
 
 services:
   anonymousoverflow:
-    image: codeberg.org/aryak/anonymousoverflow-docker-builds:latest
+    image: ghcr.io/httpjamesm/anonymousoverflow:latest
     environment:
       - APP_URL=https://overflow.projectsegfau.lt
       - JWT_SIGNING_SECRET={{anonymousoverflow_signing_secret}}
