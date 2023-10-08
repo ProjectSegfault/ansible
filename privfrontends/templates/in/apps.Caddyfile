@@ -117,7 +117,7 @@ jitsi.projectsegfau.lt {
 }
 # Excalidraw backend for jitsi
 excalidraw.projectsegfau.lt {
-	reverse_proxy :8694
+	reverse_proxy :8695
 }
 
 # Maubot
