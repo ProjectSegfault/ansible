@@ -1,46 +1,5 @@
 # ---Apps Caddyfile---
 
-# Akkoma
-social.projectsegfau.lt {
-	import def
-	encode gzip
-
-	# this is explicitly IPv4 since Pleroma.Web.Endpoint binds on IPv4 only
-	# and `localhost.` resolves to [::0] on some systems: see issue #930
-	reverse_proxy 192.168.1.64:4011
-
-	handle /media/* {
-		redir https://media.social.projectsegfau.lt{uri} permanent
-	}
-	handle /proxy/* {
-		redir https://media.social.projectsegfau.lt{uri} permanent
-	}
-}
-
-# Security mitigation
-# See https://webb.spiderden.org/2023/05/26/pleroma-mitigation/
-# And https://poa.st/notice/AWDToOiKAl4BPhdEB6
-# And https://gleasonator.com/notice/AW3PsTi4WCWEUbN0uO
-media.social.projectsegfau.lt {
-	handle /media/* {
-		reverse_proxy 192.168.1.64:4011 {
-			transport http {
-				response_header_timeout 10s
-				read_timeout 15s
-			}
-		}
-	}
-
-	handle /proxy/* {
-		reverse_proxy 192.168.1.64:4011 {
-			transport http {
-				response_header_timeout 10s
-				read_timeout 15s
-			}
-		}
-	}
-}
-
 # Cinny
 cinny.projectsegfau.lt cy.psf.lt {
 	reverse_proxy :3069
@@ -57,12 +16,9 @@ projectsegfau.lt {
 	reverse_proxy /_synapse/* 192.168.1.54:8008 {
 		header_up Host "matrix.projectsegfau.lt"
 	}
-	reverse_proxy /.well-known/acme-challenge/* 192.168.1.64:5380
-	reverse_proxy /converse 192.168.1.64:5280
-	reverse_proxy /converseemojis.js 192.168.1.64:5280
-	reverse_proxy /converse/* 192.168.1.64:5280
-	reverse_proxy /bosh 192.168.1.64:5280
-	reverse_proxy /ws 192.168.1.64:5280
+	reverse_proxy /.well-known/acme-challenge/* :5380
+	reverse_proxy /bosh :5280
+	reverse_proxy /ws :5280
 	header /.well-known/matrix/* Content-Type application/json
 	header /.well-known/matrix/* Access-Control-Allow-Origin *
 	handle_path /.well-known/* {
@@ -87,10 +43,6 @@ import acmedns
                 file_server
         }
 }
-ssync.projectsegfau.lt {
-	reverse_proxy 192.168.1.64:3333
-	import def
-}
 
 www.projectsegfau.lt www.psf.lt {
 	redir https://projectsegfau.lt{uri}
@@ -105,9 +57,6 @@ matrix.projectsegfau.lt {
 		header_up Host "matrix.projectsegfau.lt"
 	}
 	import def
-	#reverse_proxy /_synapse/client/* 192.168.1.64:81 {
-	#        header_up Host "matrix.projectsegfau.lt"
-	#}
 	handle_path / {
 		redir https://wiki.projectsegfau.lt/Matrix
 	}
@@ -162,7 +111,7 @@ h2.projectsegfau.lt, hydrogen.projectsegfau.lt, h2.psf.lt {
 
 # Jitsi
 jitsi.projectsegfau.lt {
-	reverse_proxy 192.168.1.64:8000 {
+	reverse_proxy :8000 {
 		header_up X-Real-IP {remote_host}
 	}
 }
@@ -208,10 +157,10 @@ pass.projectsegfau.lt vw.psf.lt {
 
 # XMPP
 xmpp.projectsegfau.lt, conference.projectsegfau.lt, proxy.projectsegfau.lt, pubsub.projectsegfau.lt, upload.projectsegfau.lt {
-	reverse_proxy 192.168.1.64:5280 {
+	reverse_proxy :5280 {
 		header_up X-Real-IP {remote_host}
 	}
-	reverse_proxy /.well-known/acme-challenge/* 192.168.1.64:5380
+	reverse_proxy /.well-known/acme-challenge/* :5380
 	@register {
 		path /new/
 		path /change_password/

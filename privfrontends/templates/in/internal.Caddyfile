@@ -3,13 +3,7 @@
 # MailU
 mail.projectsegfau.lt {
 	import def
-	reverse_proxy 192.168.1.64:8082
-}
-
-# Plausible
-analytics.projectsegfau.lt {
-	reverse_proxy 192.168.1.64:8001
-	import def
+	reverse_proxy :8082
 }
 
 # Website dev
@@ -83,11 +77,11 @@ ansible.vpn.projectsegfau.lt a.v.psf.lt {
 }
 grafana.vpn.projectsegfau.lt g.v.psf.lt {
 	import acmedns
-	reverse_proxy 192.168.1.64:3170
+	reverse_proxy :3170
 }
 prometheus.vpn.projectsegfau.lt {
 	import acmedns
-	reverse_proxy 192.168.1.64:9090
+	reverse_proxy :9090
 }
 rabbitmq.vpn.projectsegfau.lt rq.v.psf.lt {
 	import acmedns
