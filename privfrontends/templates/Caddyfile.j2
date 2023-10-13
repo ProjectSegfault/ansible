@@ -192,7 +192,9 @@ hyperpipebackend.{{ server_prefix }}.projectsegfau.lt {
 search.{{ server_prefix }}.projectsegfau.lt search.projectsegfau.lt s.psf.lt s.{{ server_prefix }}.psf.lt {
         import def
 		import torloc search
-        reverse_proxy :8081
+        reverse_proxy :8081 {
+			header_up X-Real-IP {remote_host}
+		}
         @api {
                 path /config
                 path /healthz
