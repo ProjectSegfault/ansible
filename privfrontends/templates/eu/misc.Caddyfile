@@ -59,9 +59,11 @@ nitter.mutahar.rocks {
 #redir lbry.mutahar.rocks lbry.projectsegfau.lt permanent
 #redir nitter.mutahar.rocks nitter.projectsegfau.lt permanent
 www.midou.dev midou.dev {
-#reverse_proxy https://midou36o.github.io
+#reverse_proxy https://midou36o.github.io {
+#header_up Host {http.reverse_proxy.upstream.hostport} 
+#}
 root * /var/www/midouwebsite
 file_server
-header_up Host {http.reverse_proxy.upstream.hostport}
+
 import def
 }
