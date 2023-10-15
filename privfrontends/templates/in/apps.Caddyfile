@@ -10,13 +10,7 @@ cinny.projectsegfau.lt cy.psf.lt {
 projectsegfau.lt {
 	reverse_proxy :1337
 	import def
-	reverse_proxy /_matrix/* 192.168.1.54:8008 {
-		header_up Host "matrix.projectsegfau.lt"
-	}
-	reverse_proxy /_synapse/* 192.168.1.54:8008 {
-		header_up Host "matrix.projectsegfau.lt"
-	}
-	reverse_proxy /_matrix/federation/v1/version /_matrix/key/v2/server /_matrix/federation/* 192.168.1.54:8008 {
+	reverse_proxy /_matrix/* 192.168.1.54:8456 {
 		header_up Host "matrix.projectsegfau.lt"
 	}
 	reverse_proxy /.well-known/acme-challenge/* :5380
@@ -53,13 +47,7 @@ www.projectsegfau.lt www.psf.lt {
 }
 
 matrix.projectsegfau.lt {
-	reverse_proxy /_matrix/* 192.168.1.54:8008 {
-		header_up Host "matrix.projectsegfau.lt"
-	}
-	reverse_proxy /_synapse/* 192.168.1.54:8008 {
-		header_up Host "matrix.projectsegfau.lt"
-	}
-	reverse_proxy /_matrix/federation/v1/version /_matrix/key/v2/server /_matrix/federation/* 192.168.1.54:8008 {
+	reverse_proxy /_matrix/* 192.168.1.54:8456 {
 		header_up Host "matrix.projectsegfau.lt"
 	}
 	import def
