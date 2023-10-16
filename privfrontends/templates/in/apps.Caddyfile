@@ -10,9 +10,7 @@ cinny.projectsegfau.lt cy.psf.lt {
 projectsegfau.lt {
 	reverse_proxy :1337
 	import def
-	reverse_proxy /_matrix/* 192.168.1.54:8456 {
-		header_up Host "matrix.projectsegfau.lt"
-	}
+	reverse_proxy /_matrix/* :8456
 	reverse_proxy /.well-known/acme-challenge/* :5380
 	reverse_proxy /bosh :5280
 	reverse_proxy /ws :5280
@@ -47,9 +45,7 @@ www.projectsegfau.lt www.psf.lt {
 }
 
 matrix.projectsegfau.lt {
-	reverse_proxy /_matrix/* 192.168.1.54:8456 {
-		header_up Host "matrix.projectsegfau.lt"
-	}
+	reverse_proxy /_matrix/* :8456
 	import def
 	handle_path / {
 		redir https://wiki.projectsegfau.lt/Matrix
