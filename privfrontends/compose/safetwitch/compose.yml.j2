@@ -12,7 +12,8 @@ services:
   backend:
     image: codeberg.org/dragongoose/safetwitch-backend
     ports:
-      - "5071:7000"
+      - "5072:7000"
+      # Something is using 5071, so I went ahead and changed it to 5072.
     environment:
       - PORT=7000
       - URL=https://api.safetwitch.{{server_prefix}}.projectsegfau.lt

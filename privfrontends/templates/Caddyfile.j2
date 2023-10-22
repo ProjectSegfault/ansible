@@ -180,7 +180,8 @@ safetwitch.{{ server_prefix }}.projectsegfau.lt safetwitch.projectsegfau.lt tw.p
 	import torloc safetwitch
 }
 api.safetwitch.{{ server_prefix }}.projectsegfau.lt {
-	reverse_proxy :5071
+	reverse_proxy :5072
+	# Something is taking the port 5071, I've went ahead and changed it to 5072 temporarily, can be permanently kept.
 }
 hyperpipe.{{ server_prefix }}.projectsegfau.lt hyperpipe.projectsegfau.lt hp.psf.lt hp.{{ server_prefix }}.psf.lt {
 	import def
