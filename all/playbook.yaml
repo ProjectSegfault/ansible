@@ -23,6 +23,7 @@
           - tmux
           - prometheus-node-exporter
           - goaccess
+          - nala
     - name: Enable VNStat service
       ansible.builtin.service:
         name: vnstat
