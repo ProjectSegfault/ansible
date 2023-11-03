@@ -1,7 +1,7 @@
 version: "3.9"
 services:
   frontend:
-    image: codeberg.org/dragongoose/safetwitch
+    image: codeberg.org/safetwitch/safetwitch
     ports:
       - "5070:80"
     environment:
@@ -10,7 +10,7 @@ services:
       - SAFETWITCH_HTTPS=true
     restart: always
   backend:
-    image: codeberg.org/dragongoose/safetwitch-backend
+    image: codeberg.org/safetwitch/safetwitch-backend
     ports:
       - "5072:7000"
       # Something is using 5071, so I went ahead and changed it to 5072.
