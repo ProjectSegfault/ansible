@@ -7,9 +7,9 @@
       - breezewiki
       - anonymousoverflow-anonymousoverflow-1
       - simplytranslate-simplytranslate-1
-      - scribe
       - libreddit-libreddit-1
       - teddit
+      - nitter-nitter-1
   tasks:
     - name: Do thing
       ansible.builtin.command: docker restart {{ item }}
