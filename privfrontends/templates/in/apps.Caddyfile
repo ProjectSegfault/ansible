@@ -188,7 +188,7 @@ auth.p.projectsegfau.lt {
 }
 # kbin
 kbin.projectsegfau.lt, kb.psf.lt {
-        reverse_proxy 192.168.1.64:8014 {
+        reverse_proxy :8014 {
                 header_up X-Real-IP {remote_host}
         }
         import def
