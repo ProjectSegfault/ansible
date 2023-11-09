@@ -10,8 +10,8 @@ all:
           docker_dir: /opt/docker-privfrontends
           server_prefix: eu
           ansible_become: true # Run everything as root
-          country: Luxembourg
-          isp: BuyVM
+          country: Netherlands
+          isp: Nonic Cloud
           wiki_page: Pizza-1
           watchtower_mtrx_username: psf-watchtower-pizza
         us:
