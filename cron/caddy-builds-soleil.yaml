@@ -1,9 +1,9 @@
 ---
-- name: Caddy Builds on Soleil (Weekly Cron)
-  hosts: core
+- name: Caddy Builds on IN Node (Weekly Cron)
+  hosts: in
   tasks:
     - name: Do the thing
-      ansible.builtin.command: xcaddy build --with github.com/caddy-dns/rfc2136@master --with github.com/RussellLuo/caddy-ext/ratelimit --output /var/www/caddy-build/bin
+      ansible.builtin.command: xcaddy build --with github.com/caddy-dns/rfc2136@master --output /var/www/caddy-build/api/download
       register: out
       changed_when: out.rc != 0
     - name: Print output of thing
