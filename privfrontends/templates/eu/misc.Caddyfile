@@ -23,6 +23,53 @@ inv.bp.projectsegfau.lt, i.bp.psf.lt {
 	import torloc invbp
 	import i2ploc pjsfi2szfkb4guqzmfmlyq4no46fayertjrwt4h2uughccrh2lvq.b32.i2p
 }
+ piped.projectsegfau.lt proxy.piped.projectsegfau.lt api.piped.projectsegfau.lt  {
+        reverse_proxy :6970
+        header {
+                # disable FLoC tracking
+				Permissions-Policy "accelerometer=(), ambient-light-sensor=(), autoplay=(), battery=(), camera=(), clipboard-read=(), display-capture=(), document-domain=(), encrypted-media=(), fullscreen=(), geolocation=(), gyroscope=(), hid=(), idle-detection=(), interest-cohort=(), magnetometer=(), microphone=(), midi=(), payment=(), picture-in-picture=(), screen-wake-lock=(), serial=(), usb=(), sync-xhr=(), xr-spatial-tracking=()";
+
+                # enable HSTS
+                Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+                # disable clients from sniffing the media type
+                X-Content-Type-Options nosniff
+
+                # keep referrer data off of HTTP connections
+                Referrer-Policy no-referrer-when-downgrade
+
+                X-XSS-Protection "1; mode=block"
+                defer
+        }
+		@badbots {
+        	header "User-Agent" "Go-http-client/2.0"
+		}
+        respond @badbots "Access to this route denied" 403
+		       import acmedns
+		}
+pi.psf.lt {
+        reverse_proxy :6970
+                header_up Host "piped.projectsegfau.lt"
+        }
+        header {
+                # disable FLoC tracking
+				Permissions-Policy "accelerometer=(), ambient-light-sensor=(), autoplay=(), battery=(), camera=(), clipboard-read=(), display-capture=(), document-domain=(), encrypted-media=(), fullscreen=(), geolocation=(), gyroscope=(), hid=(), idle-detection=(), interest-cohort=(), magnetometer=(), microphone=(), midi=(), payment=(), picture-in-picture=(), screen-wake-lock=(), serial=(), usb=(), sync-xhr=(), xr-spatial-tracking=()";
+
+                # enable HSTS
+                Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+                # disable clients from sniffing the media type
+                X-Content-Type-Options nosniff
+
+                # keep referrer data off of HTTP connections
+                Referrer-Policy no-referrer-when-downgrade
+
+                X-XSS-Protection "1; mode=block"
+                defer
+        }
+		@badbots {
+        	header "User-Agent" "Go-http-client/2.0"
+		}
+        respond @badbots "Access to this route denied" 403
+}
 proxy.lbry.projectsegfau.lt {
 	reverse_proxy localhost:3001
 	import def
