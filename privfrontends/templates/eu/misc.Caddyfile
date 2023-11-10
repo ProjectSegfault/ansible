@@ -47,7 +47,7 @@ inv.bp.projectsegfau.lt, i.bp.psf.lt {
 		       import acmedns
 		}
 pi.psf.lt {
-        reverse_proxy :6970
+        reverse_proxy :6970 {
                 header_up Host "piped.projectsegfau.lt"
         }
         header {
