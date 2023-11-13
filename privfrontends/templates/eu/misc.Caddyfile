@@ -2,7 +2,7 @@ sl.projectsegfau.lt sl.psf.lt {
 	reverse_proxy :7777
 	import def
 }
-inv.bp.projectsegfau.lt, i.bp.psf.lt {
+inv.bp.projectsegfau.lt, i.bp.psf.lt, invidious.projectsegfau.lt, inv.projectsegfau.lt, i.psf.lt {
 	reverse_proxy localhost:7573
 	header {
 		# disable FLoC tracking
