@@ -4,6 +4,13 @@ sl.projectsegfau.lt sl.psf.lt {
 }
 inv.bp.projectsegfau.lt, i.bp.psf.lt, invidious.projectsegfau.lt, inv.projectsegfau.lt, i.psf.lt {
 	reverse_proxy localhost:7573
+        @jpgRedirect path_regexp maxres2 /vi/(.+)/maxres.jpg
+        @thumbnailRedirect path_regexp ggpht /ggpht/(.+)
+        redir @jpgRedirect /vi/{re.maxres2.1}/maxres2.jpg
+        redir @thumbnailRedirect https://proxy.piped.projectsegfau.lt/{re.ggpht.1}?host=yt3.ggpht.com
+        redir /vi/* https://proxy.piped.projectsegfau.lt{uri}?host=i.ytimg.com
+        redir /videoplayback/* https://proxy.piped.projectsegfau.lt{uri}
+        redir /videoplayback https://proxy.piped.projectsegfau.lt{uri}
 	header {
 		# disable FLoC tracking
 		Permissions-Policy "accelerometer=(), ambient-light-sensor=(), autoplay=(), battery=(), camera=(), clipboard-read=(), display-capture=(), document-domain=(), encrypted-media=(), fullscreen=(), geolocation=(), gyroscope=(), hid=(), idle-detection=(), interest-cohort=(), magnetometer=(), microphone=(), midi=(), payment=(), picture-in-picture=(), screen-wake-lock=(), serial=(), usb=(), sync-xhr=(), xr-spatial-tracking=()";
