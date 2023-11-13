@@ -106,6 +106,13 @@ teddit.{{ server_prefix }}.projectsegfau.lt teddit.projectsegfau.lt t.psf.lt t.{
 }
 inv.{{ server_prefix }}.projectsegfau.lt i.{{ server_prefix }}.psf.lt {
         reverse_proxy :7573
+        @playback {
+                path /videoplayback
+                path /videoplayback/*
+        }
+        header @playback {
+                Access-Control-Allow-Origin "*"
+        }
         @jpgRedirect path_regexp maxres2 /vi/(.+)/maxres.jpg
         @thumbnailRedirect path_regexp ggpht /ggpht/(.+)
         redir @jpgRedirect /vi/{re.maxres2.1}/maxres2.jpg
