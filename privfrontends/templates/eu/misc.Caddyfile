@@ -3,7 +3,9 @@ sl.projectsegfau.lt sl.psf.lt {
 	import def
 }
 inv.bp.projectsegfau.lt, i.bp.psf.lt, invidious.projectsegfau.lt, inv.projectsegfau.lt, i.psf.lt {
-	reverse_proxy localhost:7573
+	reverse_proxy localhost:7573 {
+		header_up Hpst "invidious.projectsegfau.lt"
+	}
         @pipedproxy {
                 path /videoplayback
                 path /videoplayback/*
@@ -12,7 +14,7 @@ inv.bp.projectsegfau.lt, i.bp.psf.lt, invidious.projectsegfau.lt, inv.projectseg
         }
         handle @pipedproxy {
                 reverse_proxy :6970 {
-                        header_up Host "pipedproxy.{{server_prefix}}.projectsegfau.lt"
+                        header_up Host "proxy.piped.projectsegfau.lt"
                 }
                 @jpgRedirect path_regexp maxres2 /vi/(.+)/maxres.jpg
                 @thumbnailRedirect path /ggpht/*
@@ -21,71 +23,22 @@ inv.bp.projectsegfau.lt, i.bp.psf.lt, invidious.projectsegfau.lt, inv.projectseg
                 uri @jpgRedirect replace /maxres.jpg /maxres2.jpg
                 rewrite /vi/* ?host=i.ytimg.com
         }
-	header {
-		# disable FLoC tracking
-		Permissions-Policy "accelerometer=(), ambient-light-sensor=(), autoplay=(), battery=(), camera=(), clipboard-read=(), display-capture=(), document-domain=(), encrypted-media=(), fullscreen=(), geolocation=(), gyroscope=(), hid=(), idle-detection=(), interest-cohort=(), magnetometer=(), microphone=(), midi=(), payment=(), picture-in-picture=(), screen-wake-lock=(), serial=(), usb=(), sync-xhr=(), xr-spatial-tracking=()";
-
-		# enable HSTS
-		Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
-		# disable clients from sniffing the media type
-		X-Content-Type-Options nosniff
-		-Content-Security-Policy
-
-		# keep referrer data off of HTTP connections
-		Referrer-Policy no-referrer-when-downgrade
-
-		X-XSS-Protection "1; mode=block"
-		defer
-	}
+	import def
+	header -X-Frame-Options
 	import torloc invbp
 	import i2ploc pjsfi2szfkb4guqzmfmlyq4no46fayertjrwt4h2uughccrh2lvq.b32.i2p
 }
  piped.projectsegfau.lt proxy.piped.projectsegfau.lt api.piped.projectsegfau.lt  {
         reverse_proxy :6970
-        header {
-                # disable FLoC tracking
-				Permissions-Policy "accelerometer=(), ambient-light-sensor=(), autoplay=(), battery=(), camera=(), clipboard-read=(), display-capture=(), document-domain=(), encrypted-media=(), fullscreen=(), geolocation=(), gyroscope=(), hid=(), idle-detection=(), interest-cohort=(), magnetometer=(), microphone=(), midi=(), payment=(), picture-in-picture=(), screen-wake-lock=(), serial=(), usb=(), sync-xhr=(), xr-spatial-tracking=()";
-
-                # enable HSTS
-                Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
-                # disable clients from sniffing the media type
-                X-Content-Type-Options nosniff
-
-                # keep referrer data off of HTTP connections
-                Referrer-Policy no-referrer-when-downgrade
-
-                X-XSS-Protection "1; mode=block"
-                defer
-        }
-		@badbots {
-        	header "User-Agent" "Go-http-client/2.0"
-		}
-        respond @badbots "Access to this route denied" 403
-		       import acmedns
+		header -X-Frame-Options
+		import def
 		}
 pi.psf.lt {
         reverse_proxy :6970 {
                 header_up Host "piped.projectsegfau.lt"
         }
-        header {
-                # disable FLoC tracking
-				Permissions-Policy "accelerometer=(), ambient-light-sensor=(), autoplay=(), battery=(), camera=(), clipboard-read=(), display-capture=(), document-domain=(), encrypted-media=(), fullscreen=(), geolocation=(), gyroscope=(), hid=(), idle-detection=(), interest-cohort=(), magnetometer=(), microphone=(), midi=(), payment=(), picture-in-picture=(), screen-wake-lock=(), serial=(), usb=(), sync-xhr=(), xr-spatial-tracking=()";
-
-                # enable HSTS
-                Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
-                # disable clients from sniffing the media type
-                X-Content-Type-Options nosniff
-
-                # keep referrer data off of HTTP connections
-                Referrer-Policy no-referrer-when-downgrade
-
-                X-XSS-Protection "1; mode=block"
-                defer
-        }
-		@badbots {
-        	header "User-Agent" "Go-http-client/2.0"
-		}
-        respond @badbots "Access to this route denied" 403
+		header -X-Frame-Options
+		import def
 }
 proxy.lbry.projectsegfau.lt {
 	reverse_proxy localhost:3001
@@ -98,6 +51,7 @@ aryak.me {
 }
 arya.projectsegfau.lt {
 	redir https://aryak.me{uri}
+	import acmedns
 }
 ## OLD URL REDIRECTS
 bb.us.projectsegfau.lt bb.in.projectsegfau.lt bb.eu.projectsegfau.lt bb.projectsegfau.lt {

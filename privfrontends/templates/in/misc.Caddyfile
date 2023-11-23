@@ -8,10 +8,12 @@ files.perso.in.projectsegfau.lt files.perso.in.projectsegfau.lt:6942 {
 		browse
 	}
 	root * /zfspool/files
+	import acmedns
 }
 tnfiles.perso.in.projectsegfau.lt {
 	file_server {
 		browse
 	}
 	root * /zfspool/files/tn-sw
+	import acmedns
 }

@@ -30,7 +30,6 @@ psf.lt {
 	reverse_proxy :1337
 	import def
 	import torloc www
-import acmedns
         header /.well-known/matrix/* Content-Type application/json
         header /.well-known/matrix/* Access-Control-Allow-Origin *
         handle_path /.well-known/* {
@@ -42,6 +41,7 @@ import acmedns
 www.projectsegfau.lt www.psf.lt {
 	redir https://projectsegfau.lt{uri}
 	import torloc www
+	import acmedns
 }
 
 matrix.projectsegfau.lt {
@@ -104,10 +104,12 @@ jitsi.projectsegfau.lt {
 	reverse_proxy :8000 {
 		header_up X-Real-IP {remote_host}
 	}
+	import acmedns
 }
 # Excalidraw backend for jitsi
 excalidraw.projectsegfau.lt {
 	reverse_proxy :8695
+	import acmedns
 }
 
 # MediaWiki
@@ -194,32 +196,6 @@ kbin.projectsegfau.lt, kb.psf.lt {
         import def
 }
 
-inv.projectsegfau.lt invidious.projectsegfau.lt i.psf.lt {
-        reverse_proxy 192.168.1.64:7574
-        header {
-                # disable FLoC tracking
-				Permissions-Policy "accelerometer=(), ambient-light-sensor=(), autoplay=(), battery=(), camera=(), clipboard-read=(), display-capture=(), document-domain=(), encrypted-media=(), fullscreen=(), geolocation=(), gyroscope=(), hid=(), idle-detection=(), interest-cohort=(), magnetometer=(), microphone=(), midi=(), payment=(), picture-in-picture=(), screen-wake-lock=(), serial=(), usb=(), sync-xhr=(), xr-spatial-tracking=()";
-
-                # enable HSTS
-                Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
-                # disable clients from sniffing the media type
-                X-Content-Type-Options nosniff
-
-                # keep referrer data off of HTTP connections
-                Referrer-Policy no-referrer-when-downgrade
-				-Content-Security-Policy
-
-                X-XSS-Protection "1; mode=block"
-                defer
-        }
-		@badbots {
-        	header "User-Agent" "Go-http-client/2.0"
-		}
-        respond @badbots "Access to this route denied" 403
-		import torloc inv
-		       import acmedns
-		}
-
 gothub.dev.projectsegfau.lt gh.dev.psf.lt {
 	reverse_proxy :1025
 	import def
@@ -227,10 +203,13 @@ gothub.dev.projectsegfau.lt gh.dev.psf.lt {
 }
 ak.psf.lt {
 	redir https://social.projectsegfau.lt{uri}
+	import acmedns
 }
 j.psf.lt {
 	redir https://jitsi.projectsegfau.lt{uri}
+	import acmedns
 }
 d.psf.lt {
 	redir https://doc.projectsegfau.lt{uri}
+	import acmedns
 }

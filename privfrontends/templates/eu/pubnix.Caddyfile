@@ -16,6 +16,7 @@
 # Redirect base subdomain to the pubnix homepage
 p.projectsegfau.lt p.psf.lt {
 	redir https://projectsegfau.lt/pubnix
+	import acmedns
 }
 
 # Cockpit

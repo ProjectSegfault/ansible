@@ -53,9 +53,7 @@
                 defer
         }
         
-		{% if inventory_hostname == 'in' %}
         import acmedns
-		{% endif %}
 }
 
 import ./*.Caddyfile
@@ -85,8 +83,6 @@ nitter.{{ server_prefix }}.projectsegfau.lt nitter.projectsegfau.lt n.psf.lt n.{
                         format json
                 }
         header {
-                X-Permitted-Cross-Domain-Policies none
-                Permissions-Policy "Permissions-Policy: accelerometer=(), ambient-light-sensor=(), autoplay=(self), battery=(), camera=(), cross-origin-isolated=(), display-capture=(), document-domain=(), encrypted-media=(), execution-while-not-rendered=(), execution-while-out-of-viewport=(), fullscreen=(self), geolocation=(), gyroscope=(), keyboard-map=(), magnetometer=(), microphone=(), midi=(), navigation-override=(), payment=(), picture-in-picture=(self), publickey-credentials-get=(), screen-wake-lock=(), sync-xhr=(), usb=(), web-share=(), xr-spatial-tracking=()"
                 header Content-Security-Policy "default-src 'none'; script-src 'self' 'unsafe-inline'; script-src-attr 'none'; img-src 'self'; style-src 'self' 'unsafe-inline'; style-src-elem 'self'; font-src 'self'; object-src 'none'; media-src 'self' blob:; worker-src 'self' blob:; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; connect-src 'self' https://*.twimg.com; manifest-src 'self'"
         }
         reverse_proxy :8065
@@ -105,7 +101,9 @@ teddit.{{ server_prefix }}.projectsegfau.lt teddit.projectsegfau.lt t.psf.lt t.{
 		import torloc teddit
 }
 inv.{{ server_prefix }}.projectsegfau.lt i.{{ server_prefix }}.psf.lt {
-        reverse_proxy :7573
+        reverse_proxy :7573 {
+                header_up Host "inv.{{server_prefix}}.projectsegfau.lt"
+        }
         @pipedproxy {
                 path /videoplayback
                 path /videoplayback/*
@@ -123,30 +121,9 @@ inv.{{ server_prefix }}.projectsegfau.lt i.{{ server_prefix }}.psf.lt {
                 uri @jpgRedirect replace /maxres.jpg /maxres2.jpg
                 rewrite /vi/* ?host=i.ytimg.com
         }
-        header {
-                # disable FLoC tracking
-				Permissions-Policy "accelerometer=(), ambient-light-sensor=(), autoplay=(), battery=(), camera=(), clipboard-read=(), display-capture=(), document-domain=(), encrypted-media=(), fullscreen=(), geolocation=(), gyroscope=(), hid=(), idle-detection=(), interest-cohort=(), magnetometer=(), microphone=(), midi=(), payment=(), picture-in-picture=(), screen-wake-lock=(), serial=(), usb=(), sync-xhr=(), xr-spatial-tracking=()";
-
-                # enable HSTS
-                Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
-                # disable clients from sniffing the media type
-                X-Content-Type-Options nosniff
-
-                # keep referrer data off of HTTP connections
-                Referrer-Policy no-referrer-when-downgrade
-				-Content-Security-Policy
-
-                X-XSS-Protection "1; mode=block"
-                defer
-        }
-		@badbots {
-        	header "User-Agent" "Go-http-client/2.0"
-		}
-        respond @badbots "Access to this route denied" 403
+		header -X-Frame-Options
+		import def
 		import torloc inv
-		{% if server_prefix == 'in' %}
-        import acmedns
-		{% endif %}
 }
 gothub.{{ server_prefix }}.projectsegfau.lt gothub.projectsegfau.lt gh.psf.lt gh.{{ server_prefix }}.psf.lt {
         reverse_proxy :1024
@@ -238,6 +215,7 @@ search.{{ server_prefix }}.projectsegfau.lt search.projectsegfau.lt s.psf.lt s.{
                 # Remove Server header
                 -Server
         }
+		import acmedns
         header @api {
                 Access-Control-Allow-Methods "GET, OPTIONS"
                 Access-Control-Allow-Origin "*"
@@ -263,50 +241,13 @@ search.{{ server_prefix }}.projectsegfau.lt search.projectsegfau.lt s.psf.lt s.{
 }
 piped.{{ server_prefix }}.projectsegfau.lt pipedproxy.{{ server_prefix }}.projectsegfau.lt pipedapi.{{ server_prefix }}.projectsegfau.lt {
         reverse_proxy :6970
-        header {
-                # disable FLoC tracking
-				Permissions-Policy "accelerometer=(), ambient-light-sensor=(), autoplay=(), battery=(), camera=(), clipboard-read=(), display-capture=(), document-domain=(), encrypted-media=(), fullscreen=(), geolocation=(), gyroscope=(), hid=(), idle-detection=(), interest-cohort=(), magnetometer=(), microphone=(), midi=(), payment=(), picture-in-picture=(), screen-wake-lock=(), serial=(), usb=(), sync-xhr=(), xr-spatial-tracking=()";
-
-                # enable HSTS
-                Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
-                # disable clients from sniffing the media type
-                X-Content-Type-Options nosniff
-
-                # keep referrer data off of HTTP connections
-                Referrer-Policy no-referrer-when-downgrade
-
-                X-XSS-Protection "1; mode=block"
-                defer
-        }
-		@badbots {
-        	header "User-Agent" "Go-http-client/2.0"
-		}
-        respond @badbots "Access to this route denied" 403
-		{% if server_prefix == 'in' %}
-        import acmedns
-		{% endif %}
+		header -X-Frame-Options
+		import def
 }
 pi.{{ server_prefix }}.psf.lt {
         reverse_proxy :6970 {
                 header_up Host "{% if server_prefix == 'eu' %}piped.projectsegfau.lt{%else%}piped.{{ server_prefix }}.projectsegfau.lt{%endif%}"
         }
-        header {
-                # disable FLoC tracking
-				Permissions-Policy "accelerometer=(), ambient-light-sensor=(), autoplay=(), battery=(), camera=(), clipboard-read=(), display-capture=(), document-domain=(), encrypted-media=(), fullscreen=(), geolocation=(), gyroscope=(), hid=(), idle-detection=(), interest-cohort=(), magnetometer=(), microphone=(), midi=(), payment=(), picture-in-picture=(), screen-wake-lock=(), serial=(), usb=(), sync-xhr=(), xr-spatial-tracking=()";
-
-                # enable HSTS
-                Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
-                # disable clients from sniffing the media type
-                X-Content-Type-Options nosniff
-
-                # keep referrer data off of HTTP connections
-                Referrer-Policy no-referrer-when-downgrade
-
-                X-XSS-Protection "1; mode=block"
-                defer
-        }
-		@badbots {
-        	header "User-Agent" "Go-http-client/2.0"
-		}
-        respond @badbots "Access to this route denied" 403
+		header -X-Frame-Options
+		import def
 }
