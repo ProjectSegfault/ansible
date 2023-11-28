@@ -111,7 +111,9 @@ inv.{{ server_prefix }}.projectsegfau.lt i.{{ server_prefix }}.psf.lt {
                 path /ggpht/*
         }
         handle @pipedproxy {
-				reverse_proxy https://proxy.piped.projectsegfau.lt
+                reverse_proxy pizza1.v.psf.lt:6970 {
+                        header_up Host "proxy.piped.projectsegfau.lt"
+                }
                 #reverse_proxy :6970 {
                         #header_up Host "pipedproxy.{{server_prefix}}.projectsegfau.lt"
                 #}
