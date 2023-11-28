@@ -112,8 +112,7 @@ inv.{{ server_prefix }}.projectsegfau.lt i.{{ server_prefix }}.psf.lt {
         }
         handle @pipedproxy {
                 reverse_proxy :6970 {
-                        #header_up Host "pipedproxy.{{server_prefix}}.projectsegfau.lt"
-                        header_up Host "proxy.piped.projectsegfau.lt"
+                        header_up Host "pipedproxy.{{server_prefix}}.projectsegfau.lt"
                 }
                 @jpgRedirect path_regexp maxres2 /vi/(.+)/maxres.jpg
                 @thumbnailRedirect path /ggpht/*
