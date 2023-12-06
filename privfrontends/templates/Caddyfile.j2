@@ -85,7 +85,9 @@ nitter.{{ server_prefix }}.projectsegfau.lt nitter.projectsegfau.lt n.psf.lt n.{
         header {
                 header Content-Security-Policy "default-src 'none'; script-src 'self' 'unsafe-inline'; script-src-attr 'none'; img-src 'self'; style-src 'self' 'unsafe-inline'; style-src-elem 'self'; font-src 'self'; object-src 'none'; media-src 'self' blob:; worker-src 'self' blob:; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; connect-src 'self' https://*.twimg.com; manifest-src 'self'"
         }
-        reverse_proxy :8065
+        reverse_proxy :8065 {
+			header_up X-Real-IP {remote_host}
+		}
 		import torloc nitter
 		import i2ploc pjsfs4ukb6prmfx3qx3a5ef2cpcupkvcrxdh72kqn2rxc2cw4nka.b32.i2p
 }
