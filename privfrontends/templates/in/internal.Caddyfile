@@ -41,10 +41,6 @@ cb.projectsegfau.lt {
 docs.gothub.app {
 	redir https://gothub.app/docs{uri}
 }
-# OLD URLs
-http://mutahar.rocks, http://*.mutahar.rocks {
-	redir https://projectsegfau.lt
-}
 
 synapseadmin.vpn.projectsegfau.lt s.v.psf.lt {
         import acmedns

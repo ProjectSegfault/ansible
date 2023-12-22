@@ -60,28 +60,14 @@ bb.us.projectsegfau.lt bb.in.projectsegfau.lt bb.eu.projectsegfau.lt bb.projects
 	import i2ploc pjsflmvtqax7ii44qy4ladap65c3kqspbs7h7krqy7x43uovklla.b32.i2p
 	redir https://hyperpipe.projectsegfau.lt{uri}
 }
-invidious.mutahar.rocks {
-	redir https://inv.bp.projectsegfau.lt{uri} permanent
-}
-ferrit.projectsegfau.lt snooddit.projectsegfau.lt libreddit.mutahar.rocks {
+ferrit.projectsegfau.lt snooddit.projectsegfau.lt {
 	redir https://libreddit.projectsegfau.lt{uri} permanent
 }
-lbry.mutahar.rocks {
-	redir https://lbry.projectsegfau.lt{uri} permanent
-}
-nitter.mutahar.rocks {
-	redir https://nitter.projectsegfau.lt{uri} permanent
-}
-#redir inv.bp.mutahar.rocks inv.bp.projectsegfau.lt permanent
-#redir libreddit.mutahar.rocks libreddit.projectsegfau.lt permanent
-#redir lbry.mutahar.rocks lbry.projectsegfau.lt permanent
-#redir nitter.mutahar.rocks nitter.projectsegfau.lt permanent
 www.midou.dev midou.dev {
-#reverse_proxy https://midou36o.github.io {
-#header_up Host {http.reverse_proxy.upstream.hostport} 
-#}
+# reverse_proxy https://midou36o.github.io {
+# header_up Host {http.reverse_proxy.upstream.hostport} 
+# }
 root * /var/www/midouwebsite
 file_server
-
 import def
 }
