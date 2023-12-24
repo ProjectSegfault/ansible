@@ -30,12 +30,12 @@ psf.lt {
 	reverse_proxy :1337
 	import def
 	import torloc www
-        header /.well-known/matrix/* Content-Type application/json
-        header /.well-known/matrix/* Access-Control-Allow-Origin *
-        handle_path /.well-known/* {
-                root * /var/www/psf-well-known
-                file_server
-        }
+	header /.well-known/matrix/* Content-Type application/json
+	header /.well-known/matrix/* Access-Control-Allow-Origin *
+	handle_path /.well-known/* {
+		root * /var/www/psf-well-known
+		file_server
+	}
 }
 
 www.projectsegfau.lt www.psf.lt {
@@ -51,11 +51,11 @@ matrix.projectsegfau.lt {
 		redir https://wiki.projectsegfau.lt/Matrix
 	}
 	@hasSlashes path_regexp expression \/_matrix\/media\/projectsegfau.lt\/([a-zA-Z]{2})([a-zA-Z]{2})([a-zA-z]+)
-    rewrite @hasSlashes /mediawork/{re.expression.1}/{re.expression.2}/{re.expression.3}
-    handle_path /mediawork/* {
-            root * /mnt/matrix/synapse/storage/media-store/local_content
-            file_server browse
-    }
+	rewrite @hasSlashes /mediawork/{re.expression.1}/{re.expression.2}/{re.expression.3}
+	handle_path /mediawork/* {
+		root * /mnt/matrix/synapse/storage/media-store/local_content
+		file_server browse
+	}
 }
 
 # Element
@@ -196,10 +196,10 @@ auth.p.projectsegfau.lt {
 }
 # kbin
 kbin.projectsegfau.lt, kb.psf.lt {
-        reverse_proxy :8014 {
-                header_up X-Real-IP {remote_host}
-        }
-        import def
+	reverse_proxy :8014 {
+		header_up X-Real-IP {remote_host}
+	}
+	import def
 }
 
 gothub.dev.projectsegfau.lt gh.dev.psf.lt {

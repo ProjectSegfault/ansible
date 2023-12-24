@@ -43,12 +43,12 @@ docs.gothub.app {
 }
 
 synapseadmin.vpn.projectsegfau.lt s.v.psf.lt {
-        import acmedns
+	import acmedns
 	reverse_proxy :8420
 }
 
 bitpuit.vpn.projectsegfau.lt b.v.psf.lt {
-        import acmedns
+	import acmedns
 	reverse_proxy https://192.168.1.2:8006 {
 		transport http {
 			tls_insecure_skip_verify
@@ -58,7 +58,7 @@ bitpuit.vpn.projectsegfau.lt b.v.psf.lt {
 }
 
 bitpuit2.vpn.projectsegfau.lt b2.v.psf.lt {
-        import acmedns
+	import acmedns
 	reverse_proxy https://192.168.1.58:8006 {
 		transport http {
 			tls_insecure_skip_verify

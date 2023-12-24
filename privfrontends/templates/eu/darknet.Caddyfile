@@ -19,7 +19,7 @@ http://cockpit.pjsfkvpxlinjamtawaksbnnaqs2fc2mtvmozrzckxh7f3kis6yea25ad.onion {
 	import tor cockpit
 }
 http://*.p.pjsfkvpxlinjamtawaksbnnaqs2fc2mtvmozrzckxh7f3kis6yea25ad.onion {
-	@host header_regexp host Host ^([a-zA-Z0-9]+\-)?([A-Za-z0-9]+)\.p\.pjsfkvpxlinjamtawaksbnnaqs2fc2mtvmozrzckxh7f3kis6yea25ad\.onion 
+	@host header_regexp host Host ^([a-zA-Z0-9]+\-)?([A-Za-z0-9]+)\.p\.pjsfkvpxlinjamtawaksbnnaqs2fc2mtvmozrzckxh7f3kis6yea25ad\.onion
 	handle @host {
 		reverse_proxy 10.7.0.2:80 {
 			header_up Host "{re.host.1}{re.host.2}.p.projectsegfau.lt"
@@ -117,7 +117,6 @@ http://search.pjsfkvpxlinjamtawaksbnnaqs2fc2mtvmozrzckxh7f3kis6yea25ad.onion htt
 		header_up Host "search.projectsegfau.lt"
 	}
 }
-
 
 http://git.pjsfkvpxlinjamtawaksbnnaqs2fc2mtvmozrzckxh7f3kis6yea25ad.onion http://pjsfdrtv2465bisenvzhfvdleznx4arlih2hlnrhpzugailnm7iq.b32.i2p {
 	import tor git
