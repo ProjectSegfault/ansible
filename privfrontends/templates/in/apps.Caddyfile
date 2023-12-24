@@ -54,7 +54,7 @@ matrix.projectsegfau.lt {
 	rewrite @hasSlashes /mediawork/{re.expression.1}/{re.expression.2}/{re.expression.3}
 	handle_path /mediawork/* {
 		root * /mnt/matrix/synapse/storage/media-store/local_content
-		file_server browse
+		file_server
 	}
 }
 
