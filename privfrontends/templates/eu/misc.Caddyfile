@@ -6,39 +6,39 @@ inv.bp.projectsegfau.lt, i.bp.psf.lt, invidious.projectsegfau.lt, inv.projectseg
 	reverse_proxy localhost:7573 {
 		header_up Host "invidious.projectsegfau.lt"
 	}
-        @pipedproxy {
-                path /videoplayback
-                path /videoplayback/*
-                path /vi/*
-                path /ggpht/*
-        }
-        handle @pipedproxy {
-                reverse_proxy :6970 {
-                        header_up Host "proxy.piped.projectsegfau.lt"
-                }
-                @jpgRedirect path_regexp maxres2 /vi/(.+)/maxres.jpg
-                @thumbnailRedirect path /ggpht/*
-                uri @thumbnailRedirect strip_prefix /ggpht
-                rewrite @thumbnailRedirect ?host=yt3.ggpht.com
-                uri @jpgRedirect replace /maxres.jpg /maxres2.jpg
-                rewrite /vi/* ?host=i.ytimg.com
-        }
+	@pipedproxy {
+		path /videoplayback
+		path /videoplayback/*
+		path /vi/*
+		path /ggpht/*
+	}
+	handle @pipedproxy {
+		reverse_proxy :6970 {
+			header_up Host "proxy.piped.projectsegfau.lt"
+		}
+		@jpgRedirect path_regexp maxres2 /vi/(.+)/maxres.jpg
+		@thumbnailRedirect path /ggpht/*
+		uri @thumbnailRedirect strip_prefix /ggpht
+		rewrite @thumbnailRedirect ?host=yt3.ggpht.com
+		uri @jpgRedirect replace /maxres.jpg /maxres2.jpg
+		rewrite /vi/* ?host=i.ytimg.com
+	}
 	import def
 	header -X-Frame-Options
 	import torloc invbp
 	import i2ploc pjsfi2szfkb4guqzmfmlyq4no46fayertjrwt4h2uughccrh2lvq.b32.i2p
 }
- piped.projectsegfau.lt proxy.piped.projectsegfau.lt api.piped.projectsegfau.lt  {
-        reverse_proxy :6970
-		header -X-Frame-Options
-		import def
-		}
+piped.projectsegfau.lt proxy.piped.projectsegfau.lt api.piped.projectsegfau.lt {
+	reverse_proxy :6970
+	header -X-Frame-Options
+	import def
+}
 pi.psf.lt {
-        reverse_proxy :6970 {
-                header_up Host "piped.projectsegfau.lt"
-        }
-		header -X-Frame-Options
-		import def
+	reverse_proxy :6970 {
+		header_up Host "piped.projectsegfau.lt"
+	}
+	header -X-Frame-Options
+	import def
 }
 proxy.lbry.projectsegfau.lt {
 	reverse_proxy localhost:3001
