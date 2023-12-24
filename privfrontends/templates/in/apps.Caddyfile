@@ -50,6 +50,12 @@ matrix.projectsegfau.lt {
 	handle_path / {
 		redir https://wiki.projectsegfau.lt/Matrix
 	}
+	@hasSlashes path_regexp expression \/_matrix\/media\/projectsegfau.lt\/([a-zA-Z]{2})([a-zA-Z]{2})([a-zA-z]+)
+    rewrite @hasSlashes /mediawork/{re.expression.1}/{re.expression.2}/{re.expression.3}
+    handle_path /mediawork/* {
+            root * /mnt/matrix/synapse/storage/media-store/local_content
+            file_server browse
+    }
 }
 
 # Element
