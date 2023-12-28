@@ -7,7 +7,7 @@
         name:
           - htop
           - vim
-          - nvim # What could go wrong?
+          - neovim # Something went wrong!
           - curl
           - wget
           - sudo
