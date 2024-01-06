@@ -154,13 +154,13 @@
         groups: users,sudo
         password: "{{ item.password }}"
         shell: /bin/bash
-        update_password: on_create # Add the same initial password for all users (can be overwritten by user)
+        update_password: always
       with_items:
         - "{{ users }}"
     - name: "Add authorized keys"
       ansible.posix.authorized_key:
         user: "{{ item.name }}"
-        key: "{{ lookup('file', 'files/' + item + '.pub') }}"
+        key: "{{ lookup('file', 'files/' + item.name + '.pub') }}"
       with_items:
         - "{{ users }}"
 
