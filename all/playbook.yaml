@@ -74,7 +74,6 @@
         name: ufw
         enabled: true
         state: started
-
     - name: Disable dmesg logging to console
       ansible.posix.sysctl:
         name: kernel.printk
@@ -105,7 +104,6 @@
         value: "60"
         state: present
         sysctl_set: true
-
     - name: Bashrc skel
       ansible.builtin.template:
         src: templates/bashrc.j2
@@ -146,7 +144,6 @@
         src: templates/prompt.j2
         dest: /root/.prompt
         mode: preserve
-
     - name: Add user
       ansible.builtin.user:
         name: "{{ item.name }}"
@@ -163,14 +160,12 @@
         key: "{{ lookup('file', 'files/' + item.name + '.pub') }}"
       with_items:
         - "{{ users }}"
-
     - name: "Allow admin users to sudo without a password"
       ansible.builtin.lineinfile:
         dest: "/etc/sudoers" # path: in version 2.3
         state: "present"
         regexp: "^%sudo"
         line: "%sudo ALL=(ALL) NOPASSWD: ALL"
-
     - name: Sshd configuration file update
       ansible.builtin.template:
         src: templates/sshd_config.j2
@@ -187,7 +182,6 @@
         dest: "/etc/borgmatic/config.yaml"
         state: "absent"
         regexp: "^.*encryption_passphrase"
-
   handlers:
     - name: Restart sshd
       ansible.builtin.service:
@@ -244,4 +238,4 @@
         port: "{{ item.port }}"
         proto: "{{ item.proto }}"
       with_items:
-        - "{{ ufw_deny_rules }}"
+        - "{{ ufw_allow_rules }}"
