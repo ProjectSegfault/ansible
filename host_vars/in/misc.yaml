@@ -1,0 +1,31 @@
+---
+bkp_source_directories:
+  - /var
+  - /home
+  - /boot
+  - /usr
+  - /root
+  - /opt
+  - /zfspool
+  - /etc
+bkp_exclude_patterns:
+  - /var/log
+  - /var/lib/docker/buildkit
+  - /var/lib/docker/containers
+  - /var/lib/docker/image
+  - /var/lib/docker/overlay2
+  - /var/lib/docker/plugins
+  - /var/lib/docker/runtimes
+  - /var/lib/docker/swarm
+  - /var/lib/docker/tmp
+  - /var/lib/docker/trust
+  - /var/lib/postgresql
+bkp_postgresql_databases:
+  - name: gitea
+  - name: healthchecks
+  - name: hedgedoc
+  - name: semaphore
+  - name: vaultwarden
+  - name: ejabberd
+  - name: mailu
+  - name: roundcube

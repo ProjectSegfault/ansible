@@ -1,3 +1,6 @@
 ---
 - src: git+https://github.com/caddy-ansible/caddy-ansible.git
   version: v3.2.0
+- src: geerlingguy.docker
+- src: artis3n.tailscale
+- src: borgbase.ansible_role_borgbackup

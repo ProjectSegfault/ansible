@@ -1,0 +1,51 @@
+---
+ufw_allow_rules:
+  - port: 22
+    proto: tcp
+  - port: 80
+    proto: tcp
+  - port: 443
+    proto: tcp
+  - port: 443
+    proto: udp
+  - port: 53
+    proto: udp
+  - port: 53
+    proto: tcp
+  - port: 25
+    proto: tcp
+  - port: 5201
+    proto: tcp
+  - port: 6697
+    proto: tcp
+  - port: 1965
+    proto: tcp
+  - port: 51820
+    proto: udp
+  - port: 5202
+    proto: tcp
+  - port: 3389
+    proto: tcp
+bkp_source_directories:
+  - /configs
+  - /var
+  - /home
+  - /boot
+  - /usr
+  - /root
+  - /opt
+  - /zfspool
+  - /etc
+bkp_exclude_patterns:
+  - /var/log
+  - /var/lib/docker/buildkit
+  - /var/lib/docker/containers
+  - /var/lib/docker/image
+  - /var/lib/docker/overlay2
+  - /var/lib/docker/plugins
+  - /var/lib/docker/runtimes
+  - /var/lib/docker/swarm
+  - /var/lib/docker/tmp
+  - /var/lib/docker/trust
+bkp_postgresql_databases:
+  - name: invidious

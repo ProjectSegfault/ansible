@@ -14,6 +14,7 @@ all:
           isp: Nonic Cloud
           wiki_page: Pizza-1
           watchtower_mtrx_username: psf-watchtower-pizza
+          rsyncnet_slug: pizza1
         us:
           ansible_host: us.vpn.projectsegfau.lt
           ansible_user: ansiblerunner
@@ -26,6 +27,7 @@ all:
           wiki_page: US_Node
           server_prefix: us
           watchtower_mtrx_username: psf-watchtower-us
+          rsyncnet_slug: us
         in:
           ansible_host: in.vpn.projectsegfau.lt
           ansible_user: ansiblerunner
@@ -38,3 +40,4 @@ all:
           isp: Bharti Airtel
           wiki_page: India_Node
           watchtower_mtrx_username: psf-watchtower-in
+          rsyncnet_slug: in
