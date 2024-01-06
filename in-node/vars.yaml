@@ -1,0 +1,282 @@
+---
+apps:
+  groups:
+    semaphore:
+      docker_settings:
+        services:
+          - name: semaphore
+            image: semaphoreui/semaphore:latest
+            ports:
+              - "3527:3000"
+            environment:
+              SEMAPHORE_DB_USER: semaphore
+              #SEMAPHORE_DB_PASS: "{{semaphore_db_pass}}"
+              #SEMAPHORE_DB_HOST: "{{common_postgres_ip}}"
+              SEMAPHORE_DB_PORT: 5432
+              SEMAPHORE_DB_DIALECT: postgres
+              SEMAPHORE_DB: semaphore
+              SEMAPHORE_PLAYBOOK_PATH: /tmp/semaphore/
+              #SEMAPHORE_ADMIN_PASSWORD: "{{semaphore_admin_password}}"
+              SEMAPHORE_ADMIN_NAME: admin
+              SEMAPHORE_ADMIN_EMAIL: admin@projectsegfau.lt
+              SEMAPHORE_ADMIN: admin
+              #SEMAPHORE_ACCESS_KEY_ENCRYPTION: "{{semaphore_access_key_encryption}}"
+              SEMAPHORE_LDAP_ACTIVATED: 'no' # if you wish to use ldap, set to: 'yes' 
+              ANSIBLE_HOST_KEY_CHECKING: 'false'
+    ghost:
+      docker_settings:
+        services:
+          - name: ghost
+            image: ghost:latest
+            ports:
+              - "2368:2368"
+            environment:
+              NODE_ENV: production
+            mounts:
+              - "{{configs_dir}}/ghost/config.production.json:/var/lib/ghost/config.production.json:z"
+              - "{{data_dir}}/ghost/content:/var/lib/ghost/content:z"
+
+    gitea:
+      docker_settings:
+        services:
+          - name: gitea
+            image: gitea/gitea:latest
+            environment:
+              USER_UID=1000
+              USER_GID=1000
+            networks:
+              - gitea
+            mounts:
+              - "{{data_dir}}/gitea:/data"
+              - "{{configs_dir}}/gitea/templates:/data/gitea/templates"
+              - "{{configs_dir}}/gitea/conf/app.ini:/data/gitea/conf/app.ini"
+              - "/etc/timezone:/etc/timezone:ro"
+              - "/etc/localtime:/etc/localtime:ro"
+            ports:
+              - "3444:3000"
+              - "222:22"
+    headscale:
+      docker_settings:
+        services:
+          - name: headscale
+            image: headscale/headscale:latest
+            ports:
+              - "8089:8080"
+            mounts:
+              - "{{data_dir}}/headscale:/etc/headscale"
+              - "{{configs_dir}}/headscale/config.yaml:/etc/headscale/config.yaml"
+    healthchecks:
+      docker_settings:
+        services:
+          - name: healthchecks
+            image: healthchecks/healthchecks:latest
+            ports:
+              - "8450:8000"
+            environment:
+              ALLOWED_HOSTS: "*"
+              APPRISE_ENABLED: True
+              DB: postgres
+              DB_CONN_MAX_AGE: 0
+              #DB_HOST: {{common_postgres_ip}}
+              DB_NAME: healthchecks
+              #DB_PASSWORD: {{healthchecks_db_pass}}
+              DB_PORT: 5432
+              DB_SSLMODE: prefer
+              DB_TARGET_SESSION_ATTRS: read-write
+              DB_USER: healthchecks
+              DEBUG: False
+              DEFAULT_FROM_EMAIL: healthchecks@projectsegfau.lt
+              EMAIL_HOST: mail.projectsegfau.lt
+              #EMAIL_HOST_PASSWORD: {{healthchecks_email_pass}}
+              EMAIL_HOST_USER: healthchecks@projectsegfau.lt
+              EMAIL_PORT: 587
+              EMAIL_USE_TLS: True
+              EMAIL_USE_VERIFICATION: True
+              INTEGRATIONS_ALLOW_PRIVATE_IPS: False
+              #MATRIX_ACCESS_TOKEN: {{healthchecks_matrix_access_token}}
+              MATRIX_HOMESERVER: https://matrix.envs.net
+              MATRIX_USER_ID: @psf-bot:envs.net
+              PING_BODY_LIMIT: 10000
+              PING_EMAIL_DOMAIN: healthchecks.projectsegfau.lt
+              PING_ENDPOINT: https://healthchecks.projectsegfau.lt/ping/
+              PROMETHEUS_ENABLED: True
+              REGISTRATION_OPEN: True
+              REMOTE_USER_HEADER: X-Forwarded-For
+              RP_ID: healthchecks.projectsegfau.lt
+              #SECRET_KEY: {{healthchecks_secret_key}}
+              SHELL_ENABLED: False
+              SITE_LOGO_URL: https://psf.lt/logo.png
+              SITE_NAME: Mychecks
+              SITE_ROOT: https://healthchecks.projectsegfau.lt
+    hedgedoc:
+      docker_settings:
+        services:
+          - name: hedgedoc
+            image: quay.io/hedgedoc/hedgedoc:latest
+            mounts:
+              - "{{data_dir}}/hedgedoc/files:/files"
+              - "{{data_dir}}/hedgedoc/uploads:/hedgedoc/public/uploads"
+            ports:
+              - "2069:3000"
+            environment:
+              CMD_DB_URL: postgres://hedgedoc:{{hedgedoc_db_pass}}@{{common_postgres_ip}}/hedgedoc
+              CMD_DOMAIN: doc.projectsegfau.lt
+              CMD_PROTOCOL_USESSL: true
+              TZ: UTC
+              CMD_URL_ADDPORT: false
+              CMD_COOKIE_POLICY: lax
+              CMD_ALLOW_GRAVATAR: true
+              CMD_ALLOW_ANONYMOUS: true
+              CMD_ALLOW_ANONYMOUS_EDITS: true
+              CMD_ALLOW_FREEURL: true
+              CMD_REQUIRE_FREEURL_AUTHENTICATION: false
+              CMD_ALLOW_EMAIL_REGISTER: true
+              CMD_PORT: 3000
+              CMD_SESSION_SECRET: "{{hedgedoc_session_secret}}"
+              CMD_CSP_ENABLE: true
+              CMD_OAUTH2_PROVIDERNAME: "authentik"
+              CMD_OAUTH2_CLIENT_ID: "{{hedgedoc_authentik_client_id}}"
+              CMD_OAUTH2_CLIENT_SECRET: "{{hedgedoc_authentik_client_secret}}"
+              CMD_OAUTH2_SCOPE: "openid email profile"
+              CMD_OAUTH2_USER_PROFILE_URL: "https://auth.p.projectsegfau.lt/application/o/userinfo/"
+              CMD_OAUTH2_TOKEN_URL: "https://auth.p.projectsegfau.lt/application/o/token/"
+              CMD_OAUTH2_AUTHORIZATION_URL: "https://auth.p.projectsegfau.lt/application/o/authorize/"
+              CMD_OAUTH2_USER_PROFILE_USERNAME_ATTR: "preferred_username"
+              CMD_OAUTH2_USER_PROFILE_DISPLAY_NAME_ATTR: "name"
+              CMD_OAUTH2_USER_PROFILE_EMAIL_ATTR: "email"
+              CMD_ALLOW_ORIGIN: "['localhost', 'doc.projectsegfau.lt', 'auth.p.projectsegfau.lt']"
+    website:
+      docker_settings:
+        services:
+          - name: website
+            image: ghcr.io/projectsegfault/website:latest
+            ports:
+              - "1337:3000"
+            environment:
+              GHOST_API_KEY: "{{website_ghost_api_key}}"
+              GHOST_URL: https://blog.projectsegfau.lt
+              KUMA_URL: https://st.psf.lt/api/status-page/projectsegfault
+              ADDRESS_HEADER: X-Forwarded-For
+          - name: website-dev
+            image: ghcr.io/projectsegfault/website:dev
+            ports:
+              - "1339:3000"
+            environment:
+              GHOST_API_KEY: "{{website_ghost_api_key}}"
+              GHOST_URL: https://blog.projectsegfau.lt
+              KUMA_URL: https://st.psf.lt/api/status-page/projectsegfault
+              ADDRESS_HEADER: X-Forwarded-For
+    grafana:
+      docker_settings:
+        services:
+          - name: grafana
+            image: grafana/grafana-oss:latest
+            user: 1000
+            ports:
+              - "3170:3000"
+            mounts:
+              {{data_dir}}/grafana/grafdata:/var/lib/grafana
+            environment:
+              GF_SERVER_ROOT_URL: "https://grafana.vpn.projectsegfau.lt"
+          - name: prometheus
+            image: prom/prometheus:latest
+            mounts:
+              - "{{config_dir}}/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml"
+              - "{{data_dir}}/prometheus:/prometheus"
+            command: "--config.file=/etc/prometheus/prometheus.yml --storage.tsdb.path=/prometheus --web.console.libraries=/etc/prometheus/console_libraries --web.console.templates=/etc/prometheus/consoles --web.enable-lifecycle"
+            ports:
+              - "9090:9090"
+    chatclients:
+      docker_settings:
+        services:
+          - name: cinny
+            image: ajbura/cinny:latest
+            ports:
+              - "3069:80"
+            mounts:
+              - "{{config_dir}}/chatclients/cinny/config.json:/usr/share/nginx/html/config.json"
+          - name: element
+            image: vectorim/element-web:latest
+            ports:
+              - "3070:80"
+            mounts:
+              - "{{config_dir}}/chatclients/element/config.json:/app/config.json"
+          - name: hydrogen
+            image: regsitry.gitlab.com/jcgruenhage/hydrogen-web:latest
+            ports:
+              - "3071:80"
+          - name: xmpp-web
+            image: nioc/xmpp-web:latest
+            ports:
+              - "3072:80"
+            environment:
+              XMPP_WS: https://projectsegfau.lt/ws
+              APP_WS: wss://projectsegfau.lt/ws
+              APP_DEFAULT_DOMAIN: projectsegfau.lt
+              APP_HAS_SENDING_ENTER_KEY: true
+    vaultwarden:
+      docker_settings:
+        services:
+          - name: vaultwarden
+            image: vaultwarden/server:latest
+            mounts:
+              - "{{data_dir}}/vaultwarden:/data"
+            ports:
+              - "6980:80"
+            environment:
+              DATA_FOLDER: data
+              #DATABASE_URL: postgresql://vaultwarden:{{vaultwarden_db_pass}}@{{common_postgres_ip}}/vaultwarden
+              DATABASE_MAX_CONNS: 100
+              IP_HEADER: X-Forwarded-For
+              WEB_VAULT_FOLDER: web-vault/
+              WEB_VAULT_ENABLED: true
+              WEBSOCKET_ENABLED: true
+              SENDS_ALLOWED: true
+              EMERGENCY_ACCESS_ALLOWED: true
+              ORG_EVENTS_ENABLED: true
+              JOB_POLL_INTERVAL_MS: 30000
+              SEND_PURGE_SCHEDULE: "0 5 * * * *"
+              TRASH_PURGE_SCHEDULE: "0 5 0 * * *"
+              INCOMPLETE_2FA_SCHEDULE: "30 * * * * *"
+              EMERGENCY_NOTIFICATION_REMINDER_SCHEDULE: "0 3 * * * *"
+              EMERGENCY_REQUEST_TIMEOUT_SCHEDULE: "0 7 * * * *"
+              EVENT_CLEANUP_SCHEDULE: "0 10 0 * * *"
+              EXTENDED_LOGGING: true
+              LOG_TIMESTAMP_FORMAT: "%Y-%m-%d %H:%M:%S.%3f"
+              LOG_FILE: /data/vaultwarden.log
+              ICON_SERVICE: internal
+              EMAIL_TOKEN_SIZE: 6
+              SIGNUPS_ALLOWED: true
+              SIGNUPS_VERIFY: true
+              SIGNUPS_VERIFY_RESEND_TIME: 3600
+              SIGNUPS_VERIFY_RESEND_LIMIT: 12
+              #ADMIN_TOKEN: {{vaultwarden_admin_token}}
+              INVITATIONS_ALLOWED: true
+              INVITATION_ORG_NAME: Vaultwarden
+              INVITATION_EXPIRATION_HOURS: 120
+              ORG_ATTACHMENT_LIMIT: 200000
+              USER_ATTACHMENT_LIMIT: 100000
+              TRASH_AUTO_DELETE_DAYS: 90
+              DOMAIN: https://pass.projectsegfau.lt
+              ROCKET_WORKERS: 64
+              SMTP_HOST: mail.projectsegfau.lt
+              SMTP_FROM: vaultwarden@projectsegfau.lt
+              SMTP_FROM_NAME: Vaultwarden
+              SMTP_SECURITY: starttls
+              SMTP_PORT: 587         
+              SMTP_USERNAME: vaultwarden@projectsegfau.lt
+              #SMTP_PASSWORD: {{vaultwarden_smtp_pass}}
+              SMTP_AUTH_MECHANISM: "Plain"
+              SMTP_EMBED_IMAGES: true
+              REQUIRE_DEVICE_EMAIL: false
+              YUBICO_CLIENT_ID: 89607
+              #YUBICO_SECRET_KEY: {{vaultwarden_yubico_secret_key}}
+    mauliasproxy:
+      docker_settings:
+        services:
+          - name: mauliasproxy
+            image: dock.mau.dev/tulir/mauliasproxy:latest
+            ports:
+              - "8456:8008"
+            mounts:
+              - "{{config_dir}}/mauliasproxy/config.yaml:/data/config.yaml"
