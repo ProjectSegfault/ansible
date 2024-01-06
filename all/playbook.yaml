@@ -182,6 +182,12 @@
         validate: "/usr/sbin/sshd -T -f %s"
       notify:
         - Restart sshd
+    - name: Remove useless passphrase line
+      ansible.builtin.lineinfile:
+        dest: "/etc/borgmatic/config.yaml"
+        state: "absent"
+        regexp: "^.*encryption_passphrase"
+
   handlers:
     - name: Restart sshd
       ansible.builtin.service:

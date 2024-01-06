@@ -95,7 +95,7 @@ apps:
               INTEGRATIONS_ALLOW_PRIVATE_IPS: False
               #MATRIX_ACCESS_TOKEN: {{healthchecks_matrix_access_token}}
               MATRIX_HOMESERVER: https://matrix.envs.net
-              MATRIX_USER_ID: @psf-bot:envs.net
+              MATRIX_USER_ID: "@psf-bot:envs.net"
               PING_BODY_LIMIT: 10000
               PING_EMAIL_DOMAIN: healthchecks.projectsegfau.lt
               PING_ENDPOINT: https://healthchecks.projectsegfau.lt/ping/
@@ -175,7 +175,7 @@ apps:
             ports:
               - "3170:3000"
             mounts:
-              {{data_dir}}/grafana/grafdata:/var/lib/grafana
+              - "{{data_dir}}/grafana/grafdata:/var/lib/grafana"
             environment:
               GF_SERVER_ROOT_URL: "https://grafana.vpn.projectsegfau.lt"
           - name: prometheus
