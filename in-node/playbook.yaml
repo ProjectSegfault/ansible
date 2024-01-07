@@ -1,18 +1,17 @@
 - name: Docker
-  hosts: in2
+  hosts: in
   vars_files:
     - ./vars.yaml
   tasks:
+    - name: Debug apps.groups
+      debug:
+        msg: "{{ apps.groups }}"
     - name: Deploy stack role
       ansible.builtin.include_role:
-        name: docker
+        name: gi-yt.docker_compose_declarative
       vars:
         app: "{{ item.value }}"
         app_name: "{{ item.key | lower }}"
-        default_restart_policy: unless-stopped
-        configs_dir: "/opt/configs"
         configs_dir_local: "./configs/{{ item.key }}"
-        compose_dir: "/opt/docker"
-        data_dir: "/opt/docker"
-      loop: "{{ apps.groups | dict2items }}"
+      loop: "{{ apps.groups | default({}) | dict2items }}"
       when: item.value.docker_settings

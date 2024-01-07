@@ -4,3 +4,4 @@
 - src: geerlingguy.docker
 - src: artis3n.tailscale
 - src: borgbase.ansible_role_borgbackup
+- src: gi-yt.docker_compose_declarative
