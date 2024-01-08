@@ -31,9 +31,11 @@ projectsegfau.lt {
 		file_server
 	}
 	header /.well-known/host-meta Content-Type application/xrd+xml
+	header /.well-known/host-meta Access-Control-Allow-Origin *
 	header /.well-known/host-meta.json Content-Type application/json
 	header /.well-known/host-meta.json Access-Control-Allow-Origin *
-	header /.well-known/host-meta Access-Control-Allow-Origin *
+	header /.well-known/xmpp-provider-v2.json Content-Type application/json
+	header /.well-known/xmpp-provider-v2.json Access-Control-Allow-Origin *
 	import torloc www
 }
 psf.lt {
