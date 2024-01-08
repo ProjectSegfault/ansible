@@ -21,29 +21,18 @@
         enabled: true
         state: reloaded
       tags: caddy-non-update
-- name: Setup docker compose for privacy frontends
+- name: Docker
   hosts: privfrontends
-  vars:
-    docker_services:
-      - librarian
-      - libreddit
-      - nitter
-      - teddit
-      - watchtower
-      - anonymousoverflow
-      - breezewiki
-      - gothub
-      - gothub-dev
-      - searxng
-      - hyperpipe
-      - rimgo
-      - safetwitch
-      - scribe
-      - simplytranslate
+  vars_files:
+    - ./vars.yaml
   tasks:
-    # community.docker does not support compose 2.0 right now.
-    # https://github.com/ansible-collections/community.docker/issues/216
-    - name: Update docker compose files and restart those with changes
-      ansible.builtin.include_tasks: docker-tasks.yaml
-      with_items: "{{ docker_services }}"
-      tags: docker,pizza
+    - name: Deploy stack role
+      ansible.builtin.include_role:
+        name: gi-yt.docker_compose_declarative
+      vars:
+        app: "{{ item.value }}"
+        app_name: "{{ item.key | lower }}"
+        configs_dir_local: "./configs/{{ item.key }}"
+      loop: "{{ apps.groups | default({}) | dict2items }}"
+      when: item.value.docker_settings
+      tags: docker
