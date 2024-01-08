@@ -6,6 +6,22 @@ compose_dir: "/opt/docker-privfrontends"
 data_dir: "/opt/data-privfrontends"
 apps:
   groups:
+    hyperpipe:
+      needs_configs_dir: false
+      needs_data_dir: false
+      docker_settings:
+        services:
+          - name: frontend
+            image: codeberg.org/hyperpipe/hyperpipe
+            entrypoint: sh -c 'find /usr/share/nginx/html -type f -exec sed -i s/pipedapi.kavin.rocks/{% if server_prefix == 'eu' %}api.piped.projectsegfau.lt{%else%}pipedapi.{{server_prefix}}.projectsegfau.lt{%endif%}/g {} \; -exec sed -i s/hyperpipeapi.onrender.com/hyperpipebackend.{{ server_prefix }}.projectsegfau.lt/g {} \; && /docker-entrypoint.sh && nginx -g "daemon off;"'
+            ports:
+              - "8843:80"
+          - name: backend
+            image: codeberg.org/hyperpipe/hyperpipe-backend
+            environment:
+              HYP_PROXY: "{% if server_prefix == 'eu' %}proxy.piped.projectsegfau.lt{%else%}pipedproxy.{{server_prefix}}.projectsegfau.lt{%endif%}"
+            ports:
+              - "3536:3000"
     anonymousoverflow:
       needs_configs_dir: false
       needs_data_dir: false
@@ -55,7 +71,7 @@ apps:
       needs_data_dir: false
       docker_settings:
         services:
-          - name: gothub
+          - name: gothub-dev
             image: codeberg.org/gothub/gothub:dev
             environment:
               DOCKER: true
@@ -71,22 +87,6 @@ apps:
               GOTHUB_INSTANCE_CLOUDFLARE: false
             ports:
               - "1025:3000"
-    hyperpipe:
-      needs_configs_dir: false
-      needs_data_dir: false
-      docker_settings:
-        services:
-          - name: frontend
-            image: codeberg.org/hyperpipe/hyperpipe
-            entrypoint: sh -c 'find /usr/share/nginx/html -type f -exec sed -i s/pipedapi.kavin.rocks/{% if server_prefix == 'eu' %}api.piped.projectsegfau.lt{%else%}pipedapi.{{server_prefix}}.projectsegfau.lt{%endif%}/g {} \; -exec sed -i s/hyperpipeapi.onrender.com/hyperpipebackend.{{ server_prefix }}.projectsegfau.lt/g {} \; && /docker-entrypoint.sh && nginx -g "daemon off;"'
-            ports:
-              - "8843:80"
-          - name: backend
-            image: codeberg.org/hyperpipe/hyperpipe-backend
-            environment:
-              HYP_PROXY: "{% if server_prefix == 'eu' %}proxy.piped.projectsegfau.lt{%else%}pipedproxy.{{server_prefix}}.projectsegfau.lt{%endif%}"
-            ports:
-              - "3536:3000"
     librarian:
       needs_configs_dir: true
       needs_data_dir: false
@@ -163,7 +163,7 @@ apps:
             ports:
               - "5070:8280"
             environment:
-              SAFETWITCH_BACKEND_DOMAIN: api.safetwitch.{{server_prefix}}.projectsegfau.lt
+              SAFETWITCH_BACKEND_DOMAIN: "api.safetwitch.{{server_prefix}}.projectsegfau.lt"
               SAFETWITCH_INSTANCE_DOMAIN: safetwitch.projectsegfau.lt
               SAFETWITCH_HTTPS: true
           - name: backend
@@ -172,7 +172,7 @@ apps:
               - "5072:7000"
             environment:
               PORT: 7000
-              URL: https://api.safetwitch.{{server_prefix}}.projectsegfau.lt
+              URL: "https://api.safetwitch.{{server_prefix}}.projectsegfau.lt"
     scribe:
       needs_configs_dir: false
       needs_data_dir: false
@@ -203,7 +203,7 @@ apps:
               - "{{configs_dir}}/searxng/settings.yml:/etc/searxng/settings.yml:rw"
             environment:
               SEARXNG_BASE_URL: "https://{% if server_prefix == 'eu' %}search.projectsegfau.lt{%else%}search.{{inventory_hostname}}.projectsegfau.lt{%endif%}/"
-          - name: redis
+          - name: searxng-redis
             image: redis:alpine
             command: redis-server --save 30 1 --loglevel warning
             mounts:
@@ -233,7 +233,7 @@ apps:
               USE_HELMET: true
               TRUST_PROXY: true
               REDIS_HOST: teddit-redis
-          - name: redis
+          - name: teddit-redis
             image: redis:6.2.5-alpine
             command: redis-server
             environment:
