@@ -30,8 +30,10 @@
       ansible.builtin.include_role:
         name: gi-yt.docker_compose_declarative
       vars:
-        app: "{{ item.value }}"
-        app_name: "{{ item.key | lower }}"
+        app: "{{ service.value }}"
+        app_name: "{{ service.key | lower }}"
       loop: "{{ apps.groups | default({}) | dict2items }}"
-      when: item.value.docker_settings
+      loop_control:
+        loop_var: service
+      when: service.value.docker_settings
       tags: docker
