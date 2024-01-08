@@ -13,7 +13,7 @@ apps:
         services:
           - name: frontend
             image: codeberg.org/hyperpipe/hyperpipe
-            entrypoint: sh -c 'find /usr/share/nginx/html -type f -exec sed -i s/pipedapi.kavin.rocks/{% if server_prefix == 'eu' %}api.piped.projectsegfau.lt{%else%}pipedapi.{{server_prefix}}.projectsegfau.lt{%endif%}/g {} \; -exec sed -i s/hyperpipeapi.onrender.com/hyperpipebackend.{{ server_prefix }}.projectsegfau.lt/g {} \; && /docker-entrypoint.sh && nginx -g "daemon off;"'
+            entrypoint: sh -c 'find /usr/share/nginx/html -type f -exec sed -i s/pipedapi.kavin.rocks/{% if server_prefix == 'eu' %}api.piped.projectsegfau.lt{%else%}pipedapi.{{server_prefix}}.projectsegfau.lt{%endif%}/g {} \; -exec sed -i s/hyperpipeapi.onrender.com/hyperpipebackend.{{ server_prefix }}.projectsegfau.lt/g {} \; && /docker-entrypoint.sh && nginx -g "daemon off;" && echo daemon off\; >> /etc/nginx/nginx.conf'
             ports:
               - "8843:80"
           - name: backend
@@ -107,7 +107,7 @@ apps:
       needs_configs_dir: false
       docker_settings:
         services:
-          - name: libreddit
+          - name: redlib
             image: quay.io/redlib/redlib:latest
             ports:
               - "6464:8080"
