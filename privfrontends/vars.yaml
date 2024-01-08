@@ -44,8 +44,8 @@ apps:
               GOTHUB_USER_AGENT_LOGGED: false
               GOTHUB_DIAGNOSTIC_INFO_LOGGED: false
               GOTHUB_INSTANCE_PRIVACY_POLICY: https://projectsegfau.lt/legal/privacy-policy
-              GOTHUB_INSTANCE_COUNTRY: {{country}}
-              GOTHUB_INSTANCE_PROVIDER: {{isp}}
+              GOTHUB_INSTANCE_COUNTRY: "{{ country }}"
+              GOTHUB_INSTANCE_PROVIDER: "{{ isp }}"
               GOTHUB_INSTANCE_CLOUDFLARE: false
             ports:
               - "1024:3000"
@@ -65,8 +65,8 @@ apps:
               GOTHUB_USER_AGENT_LOGGED: false
               GOTHUB_DIAGNOSTIC_INFO_LOGGED: false
               GOTHUB_INSTANCE_PRIVACY_POLICY: https://projectsegfau.lt/legal/privacy-policy
-              GOTHUB_INSTANCE_COUNTRY: {{country}}
-              GOTHUB_INSTANCE_PROVIDER: {{isp}}
+              GOTHUB_INSTANCE_COUNTRY: "{{ country }}"
+              GOTHUB_INSTANCE_PROVIDER: "{{ isp }}"
               GOTHUB_INSTANCE_CLOUDFLARE: false
             ports:
               - "1025:3000"
@@ -77,7 +77,7 @@ apps:
         services:
           - name: frontend
             image: codeberg.org/hyperpipe/hyperpipe
-            entrypoint: "sh -c 'find /usr/share/nginx/html -type f -exec sed -i s/pipedapi.kavin.rocks/{% if server_prefix == 'eu' %}api.piped.projectsegfau.lt{%else%}pipedapi.{{server_prefix}}.projectsegfau.lt{%endif%}/g {} \; -exec sed -i s/hyperpipeapi.onrender.com/hyperpipebackend.{{ server_prefix }}.projectsegfau.lt/g {} \; && /docker-entrypoint.sh && nginx -g "daemon off;"'"
+            entrypoint: sh -c 'find /usr/share/nginx/html -type f -exec sed -i s/pipedapi.kavin.rocks/{% if server_prefix == 'eu' %}api.piped.projectsegfau.lt{%else%}pipedapi.{{server_prefix}}.projectsegfau.lt{%endif%}/g {} \; -exec sed -i s/hyperpipeapi.onrender.com/hyperpipebackend.{{ server_prefix }}.projectsegfau.lt/g {} \; && /docker-entrypoint.sh && nginx -g "daemon off;"'
             ports:
               - "8843:80"
           - name: backend
@@ -148,8 +148,8 @@ apps:
               FIBER_PREFORK: false
               IMGUR_CLIENT_ID: 546c25a59c58ad7
               PRIVACY_POLICY: https://projectsegfau.lt/legal/privacy-policy
-              PRIVACY_COUNTRY: {{country}}
-              PRIVACY_PROVIDER: {{isp}}
+              PRIVACY_COUNTRY: "{{country}}"
+              PRIVACY_PROVIDER: "{{isp}}"
               PRIVACY_CLOUDFLARE: false
               PRIVACY_NOT_COLLECTED: true
     safetwitch:
@@ -187,7 +187,7 @@ apps:
               APP_DOMAIN: scribe.projectsegfau.lt
               LUCKY_ENV: production
               PORT: 8006
-              SECRET_KEY_BASE: {{scribe_secret_key_base}}
+              SECRET_KEY_BASE: "{{scribe_secret_key_base}}"
     searxng:
       needs_configs_dir: true
       needs_data_dir: true
@@ -250,4 +250,4 @@ apps:
         WATCHTOWER_INCLUDE_STOPPED: false
         WATCHTOWER_POLL_INTERVAL: 3600
         WATCHTOWER_MONITOR_ONLY: false
-        WATCHTOWER_NOTIFICATION_URL: matrix://{{watchtower_mtrx_username}}:{{watchtower_mtrx_pass}}@matrix.envs.net/
+        WATCHTOWER_NOTIFICATION_URL: "matrix://{{watchtower_mtrx_username}}:{{watchtower_mtrx_pass}}@matrix.envs.net/"
