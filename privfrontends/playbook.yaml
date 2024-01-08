@@ -32,7 +32,6 @@
       vars:
         app: "{{ item.value }}"
         app_name: "{{ item.key | lower }}"
-        configs_dir_local: "./configs/{{ item.key }}"
       loop: "{{ apps.groups | default({}) | dict2items }}"
       when: item.value.docker_settings
       tags: docker

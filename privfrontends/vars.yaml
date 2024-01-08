@@ -1,6 +1,7 @@
 ---
 default_restart_policy: unless-stopped
 configs_dir: "/opt/configs-privfrontends"
+configs_dir_local: "./configs"
 compose_dir: "/opt/docker-privfrontends"
 data_dir: "/opt/data-privfrontends"
 apps:
