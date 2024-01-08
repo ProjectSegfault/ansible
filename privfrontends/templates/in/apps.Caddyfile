@@ -12,8 +12,18 @@ projectsegfau.lt {
 	import def
 	reverse_proxy /_matrix/* :8456
 	reverse_proxy /.well-known/acme-challenge/* :5380
-	reverse_proxy /bosh :5280
-	reverse_proxy /ws :5280
+	reverse_proxy /bosh :5443 {
+		header_up X-Real-IP {remote_host}
+		transport http {
+			tls_insecure_skip_verify
+		}
+	}
+	reverse_proxy /ws :5443 {
+		header_up X-Real-IP {remote_host}
+		transport http {
+			tls_insecure_skip_verify
+		}
+	}
 	header /.well-known/matrix/* Content-Type application/json
 	header /.well-known/matrix/* Access-Control-Allow-Origin *
 	handle_path /.well-known/* {
