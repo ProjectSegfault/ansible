@@ -133,7 +133,7 @@ apps:
             ports:
               - "2069:3000"
             environment:
-              #CMD_DB_URL: postgres://hedgedoc:{{hedgedoc_db_pass}}@{{common_postgres_ip}}/hedgedoc
+              # CMD_DB_URL: postgres://hedgedoc:{{hedgedoc_db_pass}}@{{common_postgres_ip}}/hedgedoc
               CMD_DOMAIN: doc.projectsegfau.lt
               CMD_PROTOCOL_USESSL: true
               TZ: UTC
@@ -146,11 +146,11 @@ apps:
               CMD_REQUIRE_FREEURL_AUTHENTICATION: false
               CMD_ALLOW_EMAIL_REGISTER: true
               CMD_PORT: 3000
-              #CMD_SESSION_SECRET: "{{hedgedoc_session_secret}}"
+              # CMD_SESSION_SECRET: "{{hedgedoc_session_secret}}"
               CMD_CSP_ENABLE: true
               CMD_OAUTH2_PROVIDERNAME: "authentik"
-              #CMD_OAUTH2_CLIENT_ID: "{{hedgedoc_authentik_client_id}}"
-              #CMD_OAUTH2_CLIENT_SECRET: "{{hedgedoc_authentik_client_secret}}"
+              # CMD_OAUTH2_CLIENT_ID: "{{hedgedoc_authentik_client_id}}"
+              # CMD_OAUTH2_CLIENT_SECRET: "{{hedgedoc_authentik_client_secret}}"
               CMD_OAUTH2_SCOPE: "openid email profile"
               CMD_OAUTH2_USER_PROFILE_URL: "https://auth.p.projectsegfau.lt/application/o/userinfo/"
               CMD_OAUTH2_TOKEN_URL: "https://auth.p.projectsegfau.lt/application/o/token/"
@@ -169,7 +169,7 @@ apps:
             ports:
               - "1337:3000"
             environment:
-              #GHOST_API_KEY: "{{website_ghost_api_key}}"
+              # GHOST_API_KEY: "{{website_ghost_api_key}}"
               GHOST_URL: https://blog.projectsegfau.lt
               KUMA_URL: https://st.psf.lt/api/status-page/projectsegfault
               ADDRESS_HEADER: X-Forwarded-For
@@ -178,7 +178,7 @@ apps:
             ports:
               - "1339:3000"
             environment:
-              #GHOST_API_KEY: "{{website_ghost_api_key}}"
+              # GHOST_API_KEY: "{{website_ghost_api_key}}"
               GHOST_URL: https://blog.projectsegfau.lt
               KUMA_URL: https://st.psf.lt/api/status-page/projectsegfault
               ADDRESS_HEADER: X-Forwarded-For

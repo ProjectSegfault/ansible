@@ -166,7 +166,7 @@
         state: "present"
         regexp: "^%sudo"
         line: "%sudo ALL=(ALL) NOPASSWD: ALL"
-    - name: Sshd configuration file update
+    - name: "Sshd configuration file update"
       ansible.builtin.template:
         src: templates/sshd_config.j2
         dest: /etc/ssh/sshd_config
@@ -177,7 +177,7 @@
         validate: "/usr/sbin/sshd -T -f %s"
       notify:
         - Restart sshd
-    - name: Remove useless passphrase line
+    - name: "Remove useless passphrase line (runs after borgmatic role)"
       ansible.builtin.lineinfile:
         dest: "/etc/borgmatic/config.yaml"
         state: "absent"

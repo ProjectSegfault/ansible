@@ -3,9 +3,6 @@
   vars_files:
     - ./vars.yaml
   tasks:
-    - name: Debug apps.groups
-      debug:
-        msg: "{{ apps.groups }}"
     - name: Deploy stack role
       ansible.builtin.include_role:
         name: gi-yt.docker_compose_declarative
