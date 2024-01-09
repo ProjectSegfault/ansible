@@ -6,6 +6,24 @@ compose_dir: "/opt/docker-privfrontends"
 data_dir: "/opt/data-privfrontends"
 apps:
   groups:
+    hyperpipe:
+      needs_configs_dir: true
+      needs_data_dir: false
+      docker_settings:
+        services:
+          - name: frontend
+            image: codeberg.org/hyperpipe/hyperpipe
+            entrypoint: sh -c '/new-entrypoint.sh'
+            ports:
+              - "8843:80"
+            mounts:
+              - "{{configs_dir}}/hyperpipe/entrypoint.sh:/new-entrypoint.sh"
+          - name: backend
+            image: codeberg.org/hyperpipe/hyperpipe-backend
+            environment:
+              HYP_PROXY: "{% if server_prefix == 'eu' %}proxy.piped.projectsegfau.lt{%else%}pipedproxy.{{server_prefix}}.projectsegfau.lt{%endif%}"
+            ports:
+              - "3536:3000"
     anonymousoverflow:
       needs_configs_dir: false
       needs_data_dir: false
@@ -241,19 +259,3 @@ apps:
               WATCHTOWER_POLL_INTERVAL: 3600
               WATCHTOWER_MONITOR_ONLY: false
               WATCHTOWER_NOTIFICATION_URL: "matrix://{{watchtower_mtrx_username}}:{{watchtower_mtrx_pass}}@matrix.envs.net/"
-    hyperpipe:
-      needs_configs_dir: false
-      needs_data_dir: false
-      docker_settings:
-        services:
-          - name: frontend
-            image: codeberg.org/hyperpipe/hyperpipe
-            entrypoint: sh -c 'find /usr/share/nginx/html -type f -exec sed -i s/pipedapi.kavin.rocks/{% if server_prefix == 'eu' %}api.piped.projectsegfau.lt{%else%}pipedapi.{{server_prefix}}.projectsegfau.lt{%endif%}/g {} \; -exec sed -i s/hyperpipeapi.onrender.com/hyperpipebackend.{{ server_prefix }}.projectsegfau.lt/g {} \; && /docker-entrypoint.sh && nginx'
-            ports:
-              - "8843:80"
-          - name: backend
-            image: codeberg.org/hyperpipe/hyperpipe-backend
-            environment:
-              HYP_PROXY: "{% if server_prefix == 'eu' %}proxy.piped.projectsegfau.lt{%else%}pipedproxy.{{server_prefix}}.projectsegfau.lt{%endif%}"
-            ports:
-              - "3536:3000"
