@@ -11,14 +11,14 @@ apps:
       needs_data_dir: false
       docker_settings:
         services:
-          - name: frontend
+          - name: hyperpipe-frontend
             image: codeberg.org/hyperpipe/hyperpipe
             entrypoint: sh -c '/new-entrypoint.sh'
             ports:
               - "8843:80"
             mounts:
               - "{{configs_dir}}/hyperpipe/entrypoint.sh:/new-entrypoint.sh"
-          - name: backend
+          - name: hyperpipe-backend
             image: codeberg.org/hyperpipe/hyperpipe-backend
             environment:
               HYP_PROXY: "{% if server_prefix == 'eu' %}proxy.piped.projectsegfau.lt{%else%}pipedproxy.{{server_prefix}}.projectsegfau.lt{%endif%}"
@@ -160,7 +160,7 @@ apps:
       needs_configs_dir: false
       docker_settings:
         services:
-          - name: frontend
+          - name: safetwitch-frontend
             image: codeberg.org/safetwitch/safetwitch:latest
             ports:
               - "5070:8280"
@@ -168,7 +168,7 @@ apps:
               SAFETWITCH_BACKEND_DOMAIN: "api.safetwitch.{{server_prefix}}.projectsegfau.lt"
               SAFETWITCH_INSTANCE_DOMAIN: safetwitch.projectsegfau.lt
               SAFETWITCH_HTTPS: true
-          - name: backend
+          - name: safetwitch-backend
             image: codeberg.org/safetwitch/safetwitch-backend
             ports:
               - "5072:7000"
