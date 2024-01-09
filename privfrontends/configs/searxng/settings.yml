@@ -24,7 +24,7 @@ ui:
   theme_args:
     simple_style: auto
 redis:
-  url: redis://redis:6379/0
+  url: redis://searxng-redis:6379/0
 search:
   # Filter results. 0: None, 1: Moderate, 2: Strict
   safe_search: 1
