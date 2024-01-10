@@ -5,11 +5,11 @@
     services:
       - invidious-invidious-1
       - breezewiki
-      - anonymousoverflow-anonymousoverflow-1
-      - simplytranslate-simplytranslate-1
-      - libreddit-libreddit-1
+      - anonymousoverflow
+      - mozhi
+      - redlib
       - teddit
-      - nitter-nitter-1
+      - nitter
   tasks:
     - name: Do thing
       ansible.builtin.command: docker restart {{ item }}
