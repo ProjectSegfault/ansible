@@ -24,6 +24,7 @@
           - tmux
           - nala
           - apt-file
+          - fail2ban
           # Monitoring
           - htop
           - gdu
@@ -72,6 +73,11 @@
     - name: Enable UFW service
       ansible.builtin.service:
         name: ufw
+        enabled: true
+        state: started
+    - name: Enable Fail2Ban service
+      ansible.builtin.service:
+        name: fail2ban
         enabled: true
         state: started
     - name: Disable dmesg logging to console

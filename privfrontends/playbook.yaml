@@ -1,4 +1,19 @@
 ---
+- name: Docker
+  hosts: privfrontends
+  vars_files:
+    - ./vars.yaml
+  tasks:
+    - name: Deploy stack role
+      ansible.builtin.include_role:
+        name: gi-yt.docker_compose_declarative
+      vars:
+        app: "{{ service.value }}"
+        app_name: "{{ service.key | lower }}"
+      loop: "{{ apps.groups | default({}) | dict2items }}"
+      loop_control:
+        loop_var: service
+      when: service.value.docker_settings
 - name: Setup Caddy
   hosts: privfrontends
   tasks:
@@ -21,19 +36,18 @@
         enabled: true
         state: reloaded
       tags: caddy-non-update
-- name: Docker
+- name: Fail2Ban
   hosts: privfrontends
-  vars_files:
-    - ./vars.yaml
   tasks:
-    - name: Deploy stack role
-      ansible.builtin.include_role:
-        name: gi-yt.docker_compose_declarative
-      vars:
-        app: "{{ service.value }}"
-        app_name: "{{ service.key | lower }}"
-      loop: "{{ apps.groups | default({}) | dict2items }}"
-      loop_control:
-        loop_var: service
-      when: service.value.docker_settings
-      tags: docker
+    - name: Copy jail.local config to fail2ban
+      ansible.builtin.copy:
+        src: "./configs/fail2ban/jail.local"
+        dest: "/etc/fail2ban/jail.local"
+        mode: "0644"
+      tags: fail2ban
+    - name: Copy caddy-status filter to fail2ban
+      ansible.builtin.copy:
+        src: "./configs/fail2ban/caddy-status.conf"
+        dest: "/etc/fail2ban/filter.d/caddy-status.conf"
+        mode: "0644"
+      tags: fail2ban
