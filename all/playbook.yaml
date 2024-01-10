@@ -232,6 +232,16 @@
         rule: allow
         interface: wg0
         direction: in
+    # For some reason in order for a docker container to connect to postgres on host it needs this
+    - name: Allow all in from bogon ranges
+      community.general.ufw:
+        rule: allow
+        src: "{{ item }}"
+        direction: in
+      loop:
+        - 10.0.0.0/8
+        - 172.16.0.0/12
+        - 192.168.0.0/16
     - name: Deny rules
       community.general.ufw:
         rule: allow
