@@ -51,3 +51,7 @@
         dest: "/etc/fail2ban/filter.d/caddy-status.conf"
         mode: "0644"
       tags: fail2ban
+    - name: Restart fail2ban
+      ansible.builtin.service:
+        name: fail2ban
+        state: restarted
