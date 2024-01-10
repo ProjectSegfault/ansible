@@ -130,7 +130,7 @@ apps:
               - "8387:8080"
             mounts:
               - "{{configs_dir}}/nitter/nitter.conf:/src/nitter.conf:ro"
-              - "./guest_accounts.jsonl:/src/guest_accounts.jsonl:ro"
+              - "{{data_dir}}/nitter/guest_accounts.jsonl:/src/guest_accounts.jsonl:ro"
           - name: nitter-redis
             image: redis:6-alpine
             command: redis-server --save 60 1 --loglevel warning
