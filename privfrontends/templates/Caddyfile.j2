@@ -79,7 +79,7 @@ nitter.{{ server_prefix }}.projectsegfau.lt nitter.projectsegfau.lt n.psf.lt n.{
 		import banips
         log {
                 # This is temporarily required to monitor nitter traffic due to scrapers being more active, so we need to monitor and rate limit them at a later date.
-                        output file /var/log/caddy/nitter.log
+                        output file /var/log/caddy/ratelimiters.log
                         format json
                 }
         header {
@@ -94,6 +94,11 @@ nitter.{{ server_prefix }}.projectsegfau.lt nitter.projectsegfau.lt n.psf.lt n.{
 libreddit.{{ server_prefix }}.projectsegfau.lt libreddit.projectsegfau.lt lr.psf.lt lr.{{ server_prefix }}.psf.lt {
         reverse_proxy :6464
         import def
+        log {
+                # This is temporarily required to monitor nitter traffic due to scrapers being more active, so we need to monitor and rate limit them at a later date.
+                        output file /var/log/caddy/ratelimiters.log
+                        format json
+                }
 		import torloc libreddit
 		import i2ploc pjsfkref7g66mji45kyccqnn5hmjtjp3cfodozabpyplj2rmv5sa.b32.i2p
 }
