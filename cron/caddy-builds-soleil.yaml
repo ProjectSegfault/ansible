@@ -3,7 +3,7 @@
   hosts: in
   tasks:
     - name: Do the thing
-      ansible.builtin.command: xcaddy build --with github.com/caddy-dns/rfc2136@master --with github.com/mholt/caddy-ratelimit@master --output /var/www/caddy-build/api/download
+      ansible.builtin.command: xcaddy build --with github.com/caddy-dns/rfc2136@master --with github.com/RussellLuo/caddy-ext/ratelimit@master --output /var/www/caddy-build/api/download
       register: out
       changed_when: out.rc != 0
     - name: Print output of thing
