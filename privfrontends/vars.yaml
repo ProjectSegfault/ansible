@@ -13,7 +13,7 @@ apps:
         services:
           - name: hyperpipe-frontend
             image: codeberg.org/hyperpipe/hyperpipe
-            entrypoint: sh -c '/new-entrypoint.sh'
+            entrypoint: sh '/new-entrypoint.sh'
             ports:
               - "8843:80"
             mounts:
