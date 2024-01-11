@@ -183,7 +183,7 @@ apps:
           - name: scribe
             image: registry.gitlab.com/lomanic/scribe-binaries:latest
             ports:
-              - "8006:806"
+              - "8006:8006"
             environment:
               SCRIBE_PORT: 8006
               SCRIBE_HOST: 0.0.0.0
