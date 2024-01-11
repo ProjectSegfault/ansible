@@ -62,6 +62,7 @@ bb.us.projectsegfau.lt bb.in.projectsegfau.lt bb.eu.projectsegfau.lt bb.projects
 }
 ferrit.projectsegfau.lt snooddit.projectsegfau.lt {
 	redir https://libreddit.projectsegfau.lt{uri} permanent
+	import acmedns
 }
 www.midou.dev midou.dev {
 # reverse_proxy https://midou36o.github.io {

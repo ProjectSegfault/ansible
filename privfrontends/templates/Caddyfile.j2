@@ -68,6 +68,7 @@ cdn.projectsegfau.lt cdn.{{ server_prefix }}.projectsegfau.lt {
         file_server {
                 browse
         }
+		import def
 }
 lbry.{{ server_prefix }}.projectsegfau.lt lbry.projectsegfau.lt {
         reverse_proxy :3550
@@ -181,6 +182,7 @@ safetwitch.{{ server_prefix }}.projectsegfau.lt safetwitch.projectsegfau.lt tw.p
 api.safetwitch.{{ server_prefix }}.projectsegfau.lt {
 	reverse_proxy :5072
 	# Something is taking the port 5071, I've went ahead and changed it to 5072 temporarily, can be permanently kept.
+	import def
 }
 hyperpipe.{{ server_prefix }}.projectsegfau.lt hyperpipe.projectsegfau.lt hp.psf.lt hp.{{ server_prefix }}.psf.lt {
 	import def
@@ -188,6 +190,7 @@ hyperpipe.{{ server_prefix }}.projectsegfau.lt hyperpipe.projectsegfau.lt hp.psf
 }
 hyperpipebackend.{{ server_prefix }}.projectsegfau.lt {
 	reverse_proxy :3536
+	import def
 }
 search.{{ server_prefix }}.projectsegfau.lt search.projectsegfau.lt s.psf.lt s.{{ server_prefix }}.psf.lt {
         import def

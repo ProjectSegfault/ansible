@@ -28,6 +28,7 @@ hs.projectsegfau.lt {
 		}
 	}
 	reverse_proxy * :8089
+	import def
 }
 
 # Caddy daily build (for ansible)
@@ -35,6 +36,7 @@ cb.projectsegfau.lt {
 	root * /var/www/caddy-build
 	file_server browse
 	encode gzip
+	import def
 }
 
 # GotHub
