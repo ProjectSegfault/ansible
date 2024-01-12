@@ -1,8 +1,6 @@
 ---
 - name: Pizza-1 specific stuff
   hosts: eu
-  vars_files:
-    - ./vars.yaml
   tasks:
     - name: Install stuff
       ansible.builtin.apt:
