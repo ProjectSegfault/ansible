@@ -53,4 +53,4 @@
       ansible.builtin.service:
         name: wg-quick@wg0
         enabled: true
-        state: started
+        state: restarted
