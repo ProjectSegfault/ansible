@@ -1,6 +1,6 @@
 ---
 - name: Pizza-1 specific stuff
-  hosts: pizza1
+  hosts: eu
   vars_files:
     - ./vars.yaml
   tasks:
