@@ -13,6 +13,7 @@
           - knot
           - knot-dnsutils
           - knot-module-geoip
+          - haproxy
     - name: Setup postfix configs
       ansible.builtin.copy:
         src: ./configs/postfix
@@ -32,5 +33,15 @@
     - name: Restart tor
       ansible.builtin.service:
         name: tor
+        enabled: true
+        state: restarted
+    - name: Setup haproxy configs
+      ansible.builtin.copy:
+        src: ./configs/haproxy/haproxy.cfg
+        target: /etc/haproxy/haproxy.cfg
+        mode: preserve
+    - name: Restart+Enable haproxy
+      ansible.builtin.service:
+        name: haproxy
         enabled: true
         state: restarted
