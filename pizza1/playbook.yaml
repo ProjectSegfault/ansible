@@ -14,7 +14,7 @@
           - haproxy
     - name: Setup postfix configs
       ansible.builtin.copy:
-        src: ./configs/postfix/*
+        src: ./configs/postfix
         dest: /etc/postfix
         mode: preserve
     - name: Restart postfix
