@@ -15,7 +15,7 @@
     - name: Setup postfix configs
       ansible.builtin.copy:
         src: ./configs/postfix
-        dest: /etc/postfix
+        dest: /etc
         mode: preserve
     - name: Restart postfix
       ansible.builtin.service:
