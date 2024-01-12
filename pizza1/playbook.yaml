@@ -12,6 +12,7 @@
           - knot-dnsutils
           - knot-module-geoip
           - haproxy
+          - wireguard
     - name: Setup postfix configs
       ansible.builtin.copy:
         src: ./configs/postfix
@@ -43,3 +44,13 @@
         name: haproxy
         enabled: true
         state: restarted
+    - name: Setup wireguard configs
+      ansible.builtin.template:
+        src: ./configs/wireguard/wg0.conf
+        dest: /etc/wireguard/wg0.conf
+        mode: preserve
+    - name: Enable wireguard
+      ansible.builtin.service:
+        name: wg-quick@wg0
+        enabled: true
+        state: started
