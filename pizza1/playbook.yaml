@@ -1,0 +1,36 @@
+---
+- name: Pizza-1 specific stuff
+  hosts: pizza1
+  vars_files:
+    - ./vars.yaml
+  tasks:
+    - name: Install stuff
+      ansible.builtin.apt:
+        name:
+          - postfix
+          - postfix-pgsql
+          - tor
+          - knot
+          - knot-dnsutils
+          - knot-module-geoip
+    - name: Setup postfix configs
+      ansible.builtin.copy:
+        src: ./configs/postfix
+        target: /etc/postfix
+        mode: preserve
+    - name: Restart postfix
+      ansible.builtin.service:
+        name: postfix
+        enabled: true
+        state: restarted
+    - name: Setup torrc
+      ansible.builtin.copy:
+        src: ./configs/tor/torrc
+        target: /etc/tor/torrc
+        mode: preserve
+    # You gotta copy pjsfsvc manually though
+    - name: Restart tor
+      ansible.builtin.service:
+        name: tor
+        enabled: true
+        state: restarted

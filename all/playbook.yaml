@@ -15,6 +15,15 @@
       ansible.builtin.apt_repository:
         repo: deb http://deb.debian.org/debian bookworm-backports main contrib
         state: present
+    - name: Get Knot GPG keys
+      ansible.builtin.get_url:
+        url: https://deb.knot-dns.cz/apt.gpg
+        dest: /usr/share/keyrings/knot.gpg
+        mode: '0644'
+    - name: Enable knot repo
+      ansible.builtin.apt_repository:
+        repo: deb [signed-by=/usr/share/keyrings/knot.gpg] https://deb.knot-dns.cz/knot-latest/ bookworm main
+        state: present
     - name: Install Required Programs / APT
       ansible.builtin.apt:
         name:
