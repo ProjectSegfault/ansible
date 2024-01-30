@@ -217,6 +217,14 @@ kbin.projectsegfau.lt, kb.psf.lt {
 	import def
 }
 
+# RSS-Bridge
+rssbridge.projectsegfau.lt, rb.psf.lt {
+	reverse_proxy :5678 {
+		header_up X-Real-IP {remote_host}
+	}
+	import def
+}
+
 gothub.dev.projectsegfau.lt gh.dev.psf.lt {
 	reverse_proxy :1025
 	import def
