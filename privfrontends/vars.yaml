@@ -115,7 +115,7 @@ apps:
             environment:
               FRONT_PAGE: popular
               COMMENT_SORT: new
-              PUSHSHIFT_FRONTEND: "https://undelete.pullpush.io/"
+              PUSHSHIFT_FRONTEND: "undelete.pullpush.io"
               BLUR_NSFW: on
               USE_HLS: on
               AUTOPLAY_VIDEOS: off
