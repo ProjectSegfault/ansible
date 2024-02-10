@@ -69,7 +69,7 @@ www.midou.dev midou.dev {
 # header_up Host {http.reverse_proxy.upstream.hostport} 
 # }
 #root * /var/www/midouwebsite
-reverse_proxy https://localhost:3000
+reverse_proxy http://localhost:3000
 # Apparently sveltekit built apps needs to have strict path tries.
 #try_files {path} {path}/index.html {path}.html =404
 #file_server
