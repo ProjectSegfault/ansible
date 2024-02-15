@@ -222,6 +222,7 @@ rssbridge.projectsegfau.lt, rb.psf.lt {
 	reverse_proxy :5678 {
 		header_up X-Real-IP {remote_host}
 	}
+	import torloc rssbridge
 	import def
 }
 
