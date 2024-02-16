@@ -50,6 +50,11 @@ psf.lt {
 	}
 }
 
+mtx.psf.lt {
+	reverse_proxy :8465
+	import def
+}
+
 www.projectsegfau.lt www.psf.lt {
 	redir https://projectsegfau.lt{uri}
 	import torloc www
