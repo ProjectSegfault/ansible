@@ -13,15 +13,27 @@ inv.bp.projectsegfau.lt, i.bp.psf.lt, invidious.projectsegfau.lt, inv.projectseg
   respond @blocked 410 {
    body <<HTML
    <html style="font-family: arial; background-color: #151515; color: #ffffffde; text-align: center; width: 75%; padding: 3em 0px 0px 0px; margin: auto;">
-   <title>Content blocked.</title>
-   <h1 style="color: #f8a306;">This page/channel/video is blocked due to Nonic forcing us to honor the fraudulent takedown request.</h1>
-   <p>You may access this channel through our other servers or any public invidious instance.</p>
-   <p>Replace this url with <strong><a style="color:#00a584;" href="https://i.in.psf.lt{uri}">i.in.psf.lt</a></strong> or <strong><a style="color:#00a584;" href="https://i.us.psf.lt{uri}">i.us.psf.lt</a></strong>.</p>
-   <p>Sorry for the inconvenience. This page will be back up once we find a better provider.</p>
-   <img src="https://midou.dev/takedown.png"/>
-   </html>
+		 <title>Content blocked.</title>
+		 <h1 style="color: #f8a306;">This page/channel/video is blocked due to Nonic forcing us to honor the fraudulent takedown request.</h1>
+		 <p>You may access this channel through our other servers or any public invidious instance.</p>
+		 <p>Replace this url with <strong><a style="color:#00a584;" href="https://i.in.psf.lt{uri}">i.in.psf.lt</a></strong> or <strong><a style="color:#00a584;" href="https://i.us.psf.lt{uri}">i.us.psf.lt</a></strong>.</p>
+		 <p>Sorry for the inconvenience. This page will be back up once we find a better provider.</p>
+		 <img src="https://midou.dev/takedown.png"/>
+		 <p>The takedown letter coming from the Russian federation. (English only and formatted.) <a style="color:#00a584;" href="https://i.psf.lt/takedown.txt">(Original - click here)</a><p>
+		 <div style="text-align: left;overflow: auto; background-color: #171717;">
+			 <code>
+				 Based on the requirement of the Prosecutor General of the Russian Federation or his deputy to take measures to restrict access to information resources dated 11.08.2023 N° 27-31-2023/TpeX640-23 a notification is sent about a violation of the distribution of information posted at the following URLs: https://invidious.projectsegfau.lt/channel/UC9GX7E1o69jz1QvO5QvbkZQ The hosting provider or another person ensuring the placement of the specified information resource on the Internet is obliged:
+				 1) immediately after receiving this notice, inform the owner of the information resource about the need to immediately delete the information disseminated in violation of the law;
+				 2) in case of refusal or inaction of the owner of the information resource to delete the information disseminated in violation of the law, after 24 hours from the date of receipt of this notification, restrict access to the specified information resource.
+				 The owner of the information resource is obliged to delete information disseminated in violation of the law within 24 hours from the date of receipt of the relevant notification from the hosting provider or another person.
+				 Sincerely,
+				 The Federal service for supervision of communications, information technology, and mass media.
+			 </code>
+		 </div>
+	 </html>
    HTML
   }
+	respond /takedown.txt "На основании требования Генерального прокурора Российской Федерации или его заместителя о принятии мер по ограничению доступа к информационным ресурсам от 11.08.2023 № 27-31-2023/Треб640-23 направляется уведомление о нарушении порядка распространения информации, размещённой по следующим URL-адресам: https://invidious.projectsegfau.lt/channel/UC9GX7E1o69jz1QvO5QvbkZQ Провайдер хостинга или иное лицо, обеспечивающее размещение данного информационного ресурса в сети «Интернет», обязаны: 1) незамедлительно с момента получения настоящего уведомления проинформировать владельца информационного ресурса о необходимости незамедлительного удаления распространяемой с нарушением закона информации; 2) по истечении суток с момента получения настоящего уведомления ограничить доступ к указанному информационному ресурсу в случае отказа или бездействия владельца информационного ресурса в удалении распространяемой с нарушением закона информации. Владелец информационного ресурса обязан в течение суток с момента получения соответствующего уведомления от провайдера хостинга или указанного иного лица удалить распространяемую с нарушением закона информацию. С уважением, Федеральная служба по надзору в сфере связи, информационных технологий и массовых коммуникаций Based on the requirement of the Prosecutor General of the Russian Federation or his deputy to take measures to restrict access to information resources dated 11.08.2023 № 27-31-2023/Треб640-23 a notification is sent about a violation of the distribution of information posted at the following URLs: https://invidious.projectsegfau.lt/channel/UC9GX7E1o69jz1QvO5QvbkZQ The hosting provider or another person ensuring the placement of the specified information resource on the Internet is obliged: 1) immediately after receiving this notice, inform the owner of the information resource about the need to immediately delete the information disseminated in violation of the law; 2) in case of refusal or inaction of the owner of the information resource to delete the information disseminated in violation of the law, after 24 hours from the date of receipt of this notification, restrict access to the specified information resource. The owner of the information resource is obliged to delete information disseminated in violation of the law within 24 hours from the date of receipt of the relevant notification from the hosting provider or another person. Sincerely, The Federal service for supervision of communications, information technology, and mass media" 200
   @blocked {
    path /channel/UC9GX7E1o69jz1QvO5QvbkZQ
   }
