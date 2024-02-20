@@ -20,7 +20,7 @@ inv.bp.projectsegfau.lt, i.bp.psf.lt, invidious.projectsegfau.lt, inv.projectseg
 		 <p>Sorry for the inconvenience. This page will be back up once we find a better provider.</p>
 		 <img src="https://midou.dev/takedown.png"/>
 		 <p>The takedown letter coming from the Russian federation. (English only and formatted.) <a style="color:#00a584;" href="https://i.psf.lt/takedown.txt">(Original - click here)</a><p>
-		 <div style="text-align: left;overflow: auto; background-color: #171717;">
+		 <div style="text-align: left;overflow: auto;background-color: #202020;border-radius: 3px;padding: 5px;">
 			 <code>
 				 Based on the requirement of the Prosecutor General of the Russian Federation or his deputy to take measures to restrict access to information resources dated 11.08.2023 N° 27-31-2023/TpeX640-23 a notification is sent about a violation of the distribution of information posted at the following URLs: https://invidious.projectsegfau.lt/channel/UC9GX7E1o69jz1QvO5QvbkZQ The hosting provider or another person ensuring the placement of the specified information resource on the Internet is obliged:
 				 1) immediately after receiving this notice, inform the owner of the information resource about the need to immediately delete the information disseminated in violation of the law;
