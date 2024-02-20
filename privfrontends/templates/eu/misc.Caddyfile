@@ -6,6 +6,25 @@ inv.bp.projectsegfau.lt, i.bp.psf.lt, invidious.projectsegfau.lt, inv.projectseg
 	reverse_proxy localhost:7573 {
 		header_up Host "invidious.projectsegfau.lt"
 	}
+	handle @blocked {
+    header Content-Type text/html
+  }
+  # Nonic is fucking us up. I hope we can find a better provider very soon.
+  respond @blocked 410 {
+   body <<HTML
+   <html style="font-family: arial; background-color: #151515; color: #ffffffde; text-align: center; width: 75%; padding: 3em 0px 0px 0px; margin: auto;">
+   <title>Content blocked.</title>
+   <h1 style="color: #f8a306;">This page/channel/video is blocked due to Nonic forcing us to honor the fraudulent takedown request.</h1>
+   <p>You may access this channel through our other servers or any public invidious instance.</p>
+   <p>Replace this url with <strong><a style="color:#00a584;" href="https://i.in.psf.lt{uri}">i.in.psf.lt</a></strong> or <strong><a style="color:#00a584;" href="https://i.us.psf.lt{uri}">i.us.psf.lt</a></strong>.</p>
+   <p>Sorry for the inconvenience. This page will be back up once we find a better provider.</p>
+   <img src="https://midou.dev/takedown.png"/>
+   </html>
+   HTML
+  }
+  @blocked {
+   path /channel/UC9GX7E1o69jz1QvO5QvbkZQ
+  }
 	@pipedproxy {
 		path /videoplayback
 		path /videoplayback/*
