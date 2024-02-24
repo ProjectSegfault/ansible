@@ -34,6 +34,7 @@
           - nala
           - apt-file
           - fail2ban
+          - tree
           # Monitoring
           - htop
           - gdu
