@@ -237,7 +237,7 @@ rssbridge.projectsegfau.lt, rb.psf.lt {
 }
 
 # MatriXMPP Ejabberd
-matrixmpp.projectsegfau.lt {
+matrixmpp.projectsegfau.lt https://matrixmpp.projectsegfau.lt:8448 {
 	reverse_proxy :8446 {
 		header_up X-Real-IP {remote_host}
 	}
