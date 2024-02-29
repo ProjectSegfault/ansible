@@ -236,6 +236,14 @@ rssbridge.projectsegfau.lt, rb.psf.lt {
 	import def
 }
 
+# MatriXMPP Ejabberd
+matrixmpp.projectsegfau.lt {
+	reverse_proxy :8446 {
+		header_up X-Real-IP {remote_host}
+	}
+	import acmedns
+}
+
 gothub.dev.projectsegfau.lt gh.dev.psf.lt {
 	reverse_proxy :1025
 	import def
