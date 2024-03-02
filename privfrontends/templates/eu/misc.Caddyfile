@@ -74,3 +74,10 @@ reverse_proxy http://localhost:3000
 #try_files {path} {path}/index.html {path}.html =404
 #file_server
 }
+file.midou.dev {
+	reverse_proxy :8986
+}
+fastdl.midou.dev {
+ root * /srv/fastdl-tf2
+ file_server browse
+}
