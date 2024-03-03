@@ -267,3 +267,9 @@ d.psf.lt {
 	redir https://doc.projectsegfau.lt{uri}
 	import acmedns
 }
+
+# TimeTagger
+timetagger.projectsegfau.lt tt.projectsegfau.lt tt.psf.lt {
+	reverse_proxy :9900
+	import def
+}
