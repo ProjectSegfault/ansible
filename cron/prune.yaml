@@ -8,3 +8,9 @@
         images: true
         networks: true
         timeout: 1000
+- hosts: in
+  tasks:
+    - name: Run fstrim (IN Node)
+      ansible.builtin.command: fstrim -av
+      register: out
+      changed_when: out.rc != 0
