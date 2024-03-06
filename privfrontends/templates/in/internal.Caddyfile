@@ -85,3 +85,7 @@ rabbitmq.vpn.projectsegfau.lt rq.v.psf.lt {
 	import acmedns
 	reverse_proxy 192.168.1.64:15672
 }
+
+mirror.bom.albony.in {
+	reverse_proxy 10.50.15.5:80
+}
