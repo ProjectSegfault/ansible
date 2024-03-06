@@ -36,3 +36,7 @@ schfiles.aryak.me {
         }
         root * /zfspool/schfiles
 }
+
+mirror.bom.albony.in {
+	reverse_proxy 192.168.1.59:80
+}
