@@ -26,7 +26,6 @@ inv.bp.projectsegfau.lt, i.bp.psf.lt, invidious.projectsegfau.lt, inv.projectseg
 	import def
 	header -X-Frame-Options
 	import torloc invbp
-	import i2ploc pjsfi2szfkb4guqzmfmlyq4no46fayertjrwt4h2uughccrh2lvq.b32.i2p
 }
 piped.projectsegfau.lt proxy.piped.projectsegfau.lt api.piped.projectsegfau.lt {
 	reverse_proxy :6970
@@ -57,7 +56,6 @@ arya.projectsegfau.lt {
 bb.us.projectsegfau.lt bb.in.projectsegfau.lt bb.eu.projectsegfau.lt bb.projectsegfau.lt {
 	import def
 	import torloc beatbump
-	import i2ploc pjsflmvtqax7ii44qy4ladap65c3kqspbs7h7krqy7x43uovklla.b32.i2p
 	redir https://hyperpipe.projectsegfau.lt{uri}
 }
 ferrit.projectsegfau.lt snooddit.projectsegfau.lt {

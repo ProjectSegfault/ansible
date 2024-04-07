@@ -24,9 +24,6 @@
 (torloc) {
         header Onion-Location http://{args[0]}.pjsfkvpxlinjamtawaksbnnaqs2fc2mtvmozrzckxh7f3kis6yea25ad.onion{path}
 }
-(i2ploc) {
-        header X-I2P-Location http://{args[0]}{path}
-}
 (acmedns) {
 	tls {
         dns rfc2136 {
@@ -74,13 +71,16 @@ lbry.{{ server_prefix }}.projectsegfau.lt lbry.projectsegfau.lt {
         reverse_proxy :3550
         import def
 		import torloc lbry
-        import i2ploc pjsf7uucpqf2crcmfo3nvwdmjhirxxjfyuvibdfp5x3af2ghqnaa.b32.i2p
 }
 nitter.{{ server_prefix }}.projectsegfau.lt nitter.projectsegfau.lt n.psf.lt n.{{ server_prefix }}.psf.lt {
-        import def
-		import torloc nitter
-		import i2ploc pjsfs4ukb6prmfx3qx3a5ef2cpcupkvcrxdh72kqn2rxc2cw4nka.b32.i2p
-		redir https://twiiit.com{uri}
+    import def
+	import torloc nitter
+    reverse_proxy :8387
+	basicauth {
+		{% for item in private_service_basicauth %}
+      	{{ item }}
+		{% endfor %}
+	}
 }
 libreddit.{{ server_prefix }}.projectsegfau.lt libreddit.projectsegfau.lt lr.psf.lt lr.{{ server_prefix }}.psf.lt {
         reverse_proxy :6464
@@ -91,7 +91,6 @@ libreddit.{{ server_prefix }}.projectsegfau.lt libreddit.projectsegfau.lt lr.psf
                         format json
                 }
 		import torloc libreddit
-		import i2ploc pjsfkref7g66mji45kyccqnn5hmjtjp3cfodozabpyplj2rmv5sa.b32.i2p
 }
 teddit.{{ server_prefix }}.projectsegfau.lt teddit.projectsegfau.lt t.psf.lt t.{{ server_prefix }}.psf.lt {
 		redir https://libreddit.projectsegfau.lt{uri}
@@ -141,13 +140,11 @@ rimgo.{{ server_prefix }}.projectsegfau.lt rimgo.projectsegfau.lt rg.psf.lt rg.{
 bw.{{ server_prefix }}.projectsegfau.lt bw.projectsegfau.lt bw.psf.lt bw.{{ server_prefix }}.psf.lt {
         import def
 		import torloc breezewiki
-		import i2ploc pjsfk4xvekoc7wx4pteevp3q2wy7jmzlem7rvl74nx33zkdr4vyq.b32.i2p
         reverse_proxy :10416
 }
 scribe.{{ server_prefix }}.projectsegfau.lt scribe.projectsegfau.lt sc.psf.lt sc.{{ server_prefix }}.psf.lt {
         import def
 		import torloc scribe
-        import i2ploc pjsflkkkcn33ahmzmpyq6idy2knkzh4atp7zaetqfsnenpyori6a.b32.i2p
         reverse_proxy :8006
 }
 translate.{{ server_prefix }}.projectsegfau.lt translate.projectsegfau.lt tl.psf.lt tl.{{ server_prefix }}.psf.lt {

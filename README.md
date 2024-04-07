@@ -19,7 +19,7 @@ ansible-playbook all/playbook.yaml # Initialize
 ```
 For Privacy Frontends playbook, you need access to the ansible vault password, which you'll have if you are a segfault sysadmin :)
 ```
-ansible-playbook -i inventory.yml -e @secrets.enc --ask-vault-pass privfrontends/playbook.yaml
+ansible-playbook -i inventory.yml -e @secrets.yaml --ask-vault-pass privfrontends/playbook.yaml
 ```
 Additionally, you can make use of the following ansible tags:
 - caddy-non-update \- update Caddy configs but don't update caddy itself
@@ -32,10 +32,10 @@ Many parts of our privacy frontends configurations are meant to be private, such
 
 Hence, these are stored as variables using ansible-vault.
 
-There are two different ansible-vaults in use in our setup, encrypted `host_vars` files per-host, and a global `secrets.enc`.
+There are two different ansible-vaults in use in our setup, encrypted `host_vars` files per-host, and a global `secrets.yaml`.
 
-### secrets.enc
-`/secrets.enc` contains private variables that are same for all our servers.
+### secrets.yaml
+`/secrets.yaml` contains private variables that are same for all our servers.
 Currently, it contains the following: (as of 9/6/23)
 - rfc2136_key \- RFC2136 key for DNS01
 - watchtower_mtrx_pass \- Watchtower Matrix password
@@ -78,7 +78,7 @@ Firstly, add the thing to `docker_services` array/var in `/privfrontends/playboo
 
 Then, create the `/compose/SERVICE_NAME` directory and add the compose file (compose.yml.j2) to the same. You can use the `{{inventory_hostname}}` variables where required.
 
-If the service needs a secret key, add it to the ansible-vault secrets.enc with `ansible-vault edit secrets.enc`. If you are a Project Segfault sysadmin you already have the password for it :P
+If the service needs a secret key, add it to the ansible-vault secrets.yaml with `ansible-vault edit secrets.yaml`. If you are a Project Segfault sysadmin you already have the password for it :P
 
 Past this, Caddy needs to be configured.
 
