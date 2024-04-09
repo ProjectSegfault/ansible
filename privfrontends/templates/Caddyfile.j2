@@ -1,7 +1,32 @@
 {
-	log {
-		output discard
-	}
+log {
+        # Anonymised IPs, User-Agents, and Cookies, also removed the URI as mentionned in the privacy policy.
+        # Subject to change, if we find any missing config we haven't filtered, it will be added.
+        output file /var/log/caddy/caddy.log
+                format filter {
+                   wrap json
+                   fields {
+                   request>remote_ip ip_mask {
+                           ipv4 24
+                           ipv6 64
+                   }
+                   request>headers>X-Forwarded-For ip_mask {
+                           ipv4 24
+                           ipv6 64
+                   }
+                   request>headers>client_ip ip_mask {
+                           ipv4 24
+                           ipv6 64
+                   }
+                   request>headers>Cookie cookie {
+                           replace session REDACTED
+                           delete secret
+                   }
+                   request>headers>User-Agent delete
+                   request>uri delete
+           }
+        }
+}
 	order rate_limit before basicauth
 }
 
