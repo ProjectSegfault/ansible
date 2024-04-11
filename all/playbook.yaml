@@ -24,6 +24,15 @@
       ansible.builtin.apt_repository:
         repo: deb [signed-by=/usr/share/keyrings/knot.gpg] https://deb.knot-dns.cz/knot-latest/ bookworm main
         state: present
+    - name: Get GoAccess GPG keys
+      ansible.builtin.get_url:
+        url: https://deb.goaccess.io/gnupg.key
+        dest: /usr/share/keyrings/goaccess.gpg
+        mode: '0644'
+    - name: Enable goaccess repo
+      ansible.builtin.apt_repository:
+        repo: deb [signed-by=/usr/share/keyrings/goaccess.gpg arch=amd64] https://deb.goaccess.io/ bookworm main
+        state: present
     - name: Install Required Programs / APT
       ansible.builtin.apt:
         name:
