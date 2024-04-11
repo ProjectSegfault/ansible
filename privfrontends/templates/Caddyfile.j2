@@ -7,15 +7,15 @@ log {
                    wrap json
                    fields {
                    request>remote_ip ip_mask {
-                           ipv4 24
+                           ipv4 16
                            ipv6 64
                    }
                    request>headers>X-Forwarded-For ip_mask {
-                           ipv4 24
+                           ipv4 16
                            ipv6 64
                    }
                    request>headers>client_ip ip_mask {
-                           ipv4 24
+                           ipv4 16
                            ipv6 64
                    }
                    request>headers>Cookie cookie {
