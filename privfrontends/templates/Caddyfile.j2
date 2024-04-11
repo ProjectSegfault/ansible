@@ -72,7 +72,9 @@
 		                           delete secret
 		                   }
 		                   request>headers>User-Agent delete
-		                   request>uri delete
+		                   request>headers>Onion-Location delete
+		                   request>headers>Referer delete
+		                   request>uri replace "/ABCDF"
 		           }
 		        }
 		}
