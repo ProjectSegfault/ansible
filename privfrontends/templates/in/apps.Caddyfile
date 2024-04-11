@@ -277,4 +277,5 @@ timetagger.projectsegfau.lt tt.projectsegfau.lt tt.psf.lt {
 rss.projectsegfau.lt freshrss.projectsegfau.lt rss.psf.lt {
 	reverse_proxy :3529
 	import def
+	import torloc rss
 }
