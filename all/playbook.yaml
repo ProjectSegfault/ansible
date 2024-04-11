@@ -31,7 +31,7 @@
         mode: '0644'
     - name: Enable goaccess repo
       ansible.builtin.apt_repository:
-        repo: deb [signed-by=/usr/share/keyrings/goaccess.gpg arch=amd64] https://deb.goaccess.io/ bookworm main
+        repo: deb [signed-by=/usr/share/keyrings/goaccess.asc arch=amd64] https://deb.goaccess.io/ bookworm main
         state: present
     - name: Install Required Programs / APT
       ansible.builtin.apt:
