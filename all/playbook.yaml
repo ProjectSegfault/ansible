@@ -27,7 +27,7 @@
     - name: Get GoAccess GPG keys
       ansible.builtin.get_url:
         url: https://deb.goaccess.io/gnugpg.key
-        dest: /usr/share/keyrings/goaccess.gpg
+        dest: /usr/share/keyrings/goaccess.asc
         mode: '0644'
     - name: Enable goaccess repo
       ansible.builtin.apt_repository:
