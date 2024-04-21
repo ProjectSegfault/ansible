@@ -6,7 +6,6 @@
         header {
                 -Strict-Transport-Security
                 -Referrer-Policy
-                -X-XSS-Protection
                 -Content-Security-Policy
                 # disable clients from sniffing the media type
                 X-Content-Type-Options nosniff
@@ -44,7 +43,6 @@
                 # clickjacking protection
                 X-Frame-Options SAMEORIGIN
 
-                X-XSS-Protection "1; mode=block"
                 defer
         }
         
@@ -224,8 +222,6 @@ search.{{ server_prefix }}.projectsegfau.lt search.projectsegfau.lt s.psf.lt s.{
         header {
                 # Enable HTTP Strict Transport Security (HSTS) to force clients to always connect via HTTPS
                 Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
-                # Enable cross-site filter (XSS) and tell browser to block detected attacks
-                X-XSS-Protection "1; mode=block"
                 # Prevent some browsers from MIME-sniffing a response away from the declared Content-Type
                 X-Content-Type-Options "nosniff"
                 # Disable some features
