@@ -248,7 +248,7 @@ apps:
       docker_settings:
         services:
           - name: priviblur
-            image: quay.io/pussthecat.org/priviblur:latest
+            image: quay.io/pussthecatorg/priviblur:latest
             ports:
               - "9084:8000"
             mounts:
