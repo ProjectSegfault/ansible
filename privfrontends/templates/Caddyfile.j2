@@ -144,6 +144,11 @@ inv.{{ server_prefix }}.projectsegfau.lt i.{{ server_prefix }}.psf.lt {
                 rewrite /vi/* ?host=i.ytimg.com
         }
 		header -X-Frame-Options
+        log {
+                # This is temporarily required to monitor nitter traffic due to scrapers being more active, so we need to monitor and rate limit them at a later date.
+                        output file /var/log/caddy/ratelimiters.log
+                        format json
+                }
 		import def
 		import torloc inv
 }
@@ -270,4 +275,9 @@ pi.{{ server_prefix }}.psf.lt {
         }
 		header -X-Frame-Options
 		import def
+}
+priviblur.{{ server_prefix }}.projectsegfau.lt priviblur.projectsegfau.lt pb.psf.lt pb.{{ server_prefix }}.psf.lt {
+	import def
+	reverse_proxy :9084
+	import torloc priviblur
 }

@@ -242,6 +242,24 @@ apps:
               REDIS_REPLICATION_MODE: master
             mounts:
               - "{{data_dir}}/teddit/redis-data:/data"
+    priviblur:
+      needs_configs_dir: true
+      needs_data_dir: true
+      docker_settings:
+        services:
+          - name: priviblur
+            image: quay.io/pussthecat.org/priviblur:latest
+            ports:
+              - "9084:8000"
+            mounts:
+              - "{{configs_dir}}/priviblur/config.toml:/priviblur/config.toml:Z,ro"
+          - name: priviblur-redis
+            image: redis:6.2.5-alpine
+            command: redis-server
+            environment:
+              REDIS_REPLICATION_MODE: master
+            mounts:
+              - "{{data_dir}}/priviblur/redis-data:/data"
     watchtower:
       needs_configs_dir: false
       needs_data_dir: false
