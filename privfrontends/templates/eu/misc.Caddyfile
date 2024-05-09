@@ -30,6 +30,7 @@ inv.bp.projectsegfau.lt, i.bp.psf.lt, invidious.projectsegfau.lt, inv.projectseg
 	}
 	import def
 	header -X-Frame-Options
+	header -Content-Security-Policy
 	import torloc invbp
 }
 piped.projectsegfau.lt proxy.piped.projectsegfau.lt api.piped.projectsegfau.lt {
