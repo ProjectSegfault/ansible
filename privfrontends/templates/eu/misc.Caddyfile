@@ -3,7 +3,7 @@ sl.projectsegfau.lt sl.psf.lt {
 	import def
 }
 inv.bp.projectsegfau.lt, i.bp.psf.lt, invidious.projectsegfau.lt, inv.projectsegfau.lt, i.psf.lt {
-	reverse_proxy localhost:7573 {
+	reverse_proxy :7573 {
 		header_up Host "invidious.projectsegfau.lt"
 	}
     log {
@@ -45,7 +45,7 @@ pi.psf.lt {
 	import def
 }
 proxy.lbry.projectsegfau.lt {
-	reverse_proxy localhost:3001
+	reverse_proxy :3001
 	import def
 }
 aryak.me {
@@ -72,7 +72,7 @@ www.midou.dev midou.dev {
 # header_up Host {http.reverse_proxy.upstream.hostport} 
 # }
 #root * /var/www/midouwebsite
-reverse_proxy http://localhost:3000
+reverse_proxy :3000
 # Apparently sveltekit built apps needs to have strict path tries.
 #try_files {path} {path}/index.html {path}.html =404
 #file_server
