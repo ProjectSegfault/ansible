@@ -125,7 +125,7 @@ apps:
       docker_settings:
         services:
           - name: nitter
-            image: codeberg.org/aryak/nitter-image:latest
+            image: ghcr.io/privacydevel/nitter:master
             ports:
               - "8387:8080"
             mounts:
