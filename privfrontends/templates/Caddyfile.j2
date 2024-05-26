@@ -143,15 +143,14 @@ inv.{{ server_prefix }}.projectsegfau.lt i.{{ server_prefix }}.psf.lt {
                 uri @jpgRedirect replace /maxres.jpg /maxres2.jpg
                 rewrite /vi/* ?host=i.ytimg.com
         }
+		import def
+		header -X-Frame-Options
+		header -Content-Security-Policy
         log {
                 # This is temporarily required to monitor nitter traffic due to scrapers being more active, so we need to monitor and rate limit them at a later date.
                         output file /var/log/caddy/ratelimiters.log
                         format json
                 }
-		import def
-		header -X-Frame-Options
-		header -Content-Security-Policy
-		import torloc inv
 }
 gothub.{{ server_prefix }}.projectsegfau.lt gothub.projectsegfau.lt gh.psf.lt gh.{{ server_prefix }}.psf.lt {
         reverse_proxy :1024
