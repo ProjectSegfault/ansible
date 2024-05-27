@@ -76,6 +76,10 @@
 		           }
 		        }
 		}
+		@denied client_ip {{ blocked_ranges }}
+		respond @denied 403 "Unfortunately, your IP is part of a range that has been involved in mass spam to our servers. If you think our action was a mistake, please email contact@projectsegfau.lt."
+		
+
         import acmedns
 }
 
