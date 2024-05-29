@@ -264,7 +264,7 @@ apps:
           - name: shoelace
             image: nixgoat/shoelace
             ports:
-              - "9029:8000"
+              - "9029:8080"
             mounts:
               - "{{configs_dir}}/shoelace/shoelace.toml:/data/shoelace.toml"
               - "{{data_dir}}/shoelace:/data"
