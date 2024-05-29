@@ -256,6 +256,20 @@ apps:
               REDIS_REPLICATION_MODE: master
             mounts:
               - "{{data_dir}}/priviblur/redis-data:/data"
+    shoelace:
+      needs_configs_dir: true
+      needs_data_dir: true
+      docker_settings:
+        services:
+          - name: shoelace
+            image: nixgoat/shoelace
+            ports:
+              - "9029:8000"
+            mounts:
+              - "{{configs_dir}}/shoelace/shoelace.toml:/data/shoelace.toml"
+              - "{{data_dir}}/shoelace:/data"
+            environment:
+              SHOELACE_CONFIG=/data/shoelace.toml
     watchtower:
       needs_configs_dir: false
       needs_data_dir: false

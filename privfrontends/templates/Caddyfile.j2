@@ -290,3 +290,9 @@ priviblur.{{ server_prefix }}.projectsegfau.lt priviblur.projectsegfau.lt pb.psf
 	reverse_proxy :9084
 	import torloc priviblur
 }
+
+lace.{{ server_prefix }}.projectsegfau.lt lace.projectsegfau.lt l.psf.lt l.{{ server_prefix }}.psf.lt {
+	import def
+	reverse_proxy :9029
+	import torloc lace
+}
