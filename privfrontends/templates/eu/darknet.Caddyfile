@@ -139,3 +139,9 @@ http://healthchecks.pjsfkvpxlinjamtawaksbnnaqs2fc2mtvmozrzckxh7f3kis6yea25ad.oni
 		header_up Host "healthchecks.projectsegfau.lt"
 	}
 }
+http://rss.pjsfkvpxlinjamtawaksbnnaqs2fc2mtvmozrzckxh7f3kis6yea25ad.onion {
+	import tor rss
+	reverse_proxy https://rss.projectsegfau.lt {
+		header_up Host "rss.projectsegfau.lt"
+	}
+}

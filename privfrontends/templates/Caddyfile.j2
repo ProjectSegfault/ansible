@@ -1,32 +1,4 @@
 {
-log {
-        # Anonymised IPs, User-Agents, and Cookies, also removed the URI as mentionned in the privacy policy.
-        # Subject to change, if we find any missing config we haven't filtered, it will be added.
-        output file /var/log/caddy/caddy.log
-                format filter {
-                   wrap json
-                   fields {
-                   request>remote_ip ip_mask {
-                           ipv4 24
-                           ipv6 64
-                   }
-                   request>headers>X-Forwarded-For ip_mask {
-                           ipv4 24
-                           ipv6 64
-                   }
-                   request>headers>client_ip ip_mask {
-                           ipv4 24
-                           ipv6 64
-                   }
-                   request>headers>Cookie cookie {
-                           replace session REDACTED
-                           delete secret
-                   }
-                   request>headers>User-Agent delete
-                   request>uri delete
-           }
-        }
-}
 	order rate_limit before basicauth
 }
 
@@ -34,7 +6,6 @@ log {
         header {
                 -Strict-Transport-Security
                 -Referrer-Policy
-                -X-XSS-Protection
                 -Content-Security-Policy
                 # disable clients from sniffing the media type
                 X-Content-Type-Options nosniff
@@ -72,10 +43,43 @@ log {
                 # clickjacking protection
                 X-Frame-Options SAMEORIGIN
 
-                X-XSS-Protection "1; mode=block"
                 defer
         }
         
+		log {
+		        # Anonymised IPs, User-Agents, and Cookies, also removed the URI as mentionned in the privacy policy.
+		        # Subject to change, if we find any missing config we haven't filtered, it will be added.
+		        output file /var/log/caddy/caddy.log
+		                format filter {
+		                   wrap json
+		                   fields {
+		                   request>remote_ip ip_mask {
+		                           ipv4 16
+		                           ipv6 64
+		                   }
+		                   request>client_ip ip_mask {
+		                           ipv4 16
+		                           ipv6 64
+		                   }
+		                   request>headers>X-Forwarded-For ip_mask {
+		                           ipv4 16
+		                           ipv6 64
+		                   }
+		                   request>headers>Cookie cookie {
+		                           replace session REDACTED
+		                           delete secret
+		                   }
+		                   request>headers>User-Agent delete
+		                   request>headers>Onion-Location delete
+		                   request>headers>Referer delete
+		                   request>uri replace "/ABCDF"
+		           }
+		        }
+		}
+		@denied client_ip {{ blocked_ranges }}
+		respond @denied "Unfortunately, your IP is part of a range that has been involved in mass spam to our servers. If you think our action was a mistake, please email contact@projectsegfau.lt." 403
+		
+
         import acmedns
 }
 
@@ -143,9 +147,19 @@ inv.{{ server_prefix }}.projectsegfau.lt i.{{ server_prefix }}.psf.lt {
                 uri @jpgRedirect replace /maxres.jpg /maxres2.jpg
                 rewrite /vi/* ?host=i.ytimg.com
         }
-		header -X-Frame-Options
 		import def
-		import torloc inv
+		header -X-Frame-Options
+		header -Content-Security-Policy
+	@ratelimit not path /videoplayback/* /ggpht/* /vi/* /videoplayback /videojs/* /css/* /js/* /fonts/* /apple-touch-icon.png /favicon-16x16.png /feed/webhook /feed/webhook/*
+	rate_limit @ratelimit {remote.ip} 10r/s
+	rate_limit @ratelimit {remote.ip} 100r/m
+	@ratelimit_pubsub path /feed/webhook /feed/webhook/*
+	rate_limit @ratelimit_pubsub {remote.ip} 2r/s 404
+        log {
+                # This is temporarily required to monitor nitter traffic due to scrapers being more active, so we need to monitor and rate limit them at a later date.
+                        output file /var/log/caddy/ratelimiters.log
+                        format json
+                }
 }
 gothub.{{ server_prefix }}.projectsegfau.lt gothub.projectsegfau.lt gh.psf.lt gh.{{ server_prefix }}.psf.lt {
         reverse_proxy :1024
@@ -222,8 +236,6 @@ search.{{ server_prefix }}.projectsegfau.lt search.projectsegfau.lt s.psf.lt s.{
         header {
                 # Enable HTTP Strict Transport Security (HSTS) to force clients to always connect via HTTPS
                 Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
-                # Enable cross-site filter (XSS) and tell browser to block detected attacks
-                X-XSS-Protection "1; mode=block"
                 # Prevent some browsers from MIME-sniffing a response away from the declared Content-Type
                 X-Content-Type-Options "nosniff"
                 # Disable some features
@@ -272,4 +284,15 @@ pi.{{ server_prefix }}.psf.lt {
         }
 		header -X-Frame-Options
 		import def
+}
+priviblur.{{ server_prefix }}.projectsegfau.lt priviblur.projectsegfau.lt pb.psf.lt pb.{{ server_prefix }}.psf.lt {
+	import def
+	reverse_proxy :9084
+	import torloc priviblur
+}
+
+lace.{{ server_prefix }}.projectsegfau.lt lace.projectsegfau.lt l.psf.lt l.{{ server_prefix }}.psf.lt {
+	import def
+	reverse_proxy :9029
+	import torloc lace
 }

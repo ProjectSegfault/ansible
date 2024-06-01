@@ -3,7 +3,7 @@ sl.projectsegfau.lt sl.psf.lt {
 	import def
 }
 inv.bp.projectsegfau.lt, i.bp.psf.lt, invidious.projectsegfau.lt, inv.projectsegfau.lt, i.psf.lt {
-	reverse_proxy localhost:7573 {
+	reverse_proxy :7573 {
 		header_up Host "invidious.projectsegfau.lt"
 	}
 	@pipedproxy {
@@ -25,6 +25,17 @@ inv.bp.projectsegfau.lt, i.bp.psf.lt, invidious.projectsegfau.lt, inv.projectseg
 	}
 	import def
 	header -X-Frame-Options
+	header -Content-Security-Policy
+	@ratelimit not path /videoplayback/* /ggpht/* /vi/* /videoplayback /videojs/* /css/* /js/* /fonts/* /apple-touch-icon.png /favicon-16x16.png /feed/webhook /feed/webhook/*
+	rate_limit @ratelimit {remote.ip} 10r/s
+	rate_limit @ratelimit {remote.ip} 100r/m
+	@ratelimit_pubsub path /feed/webhook /feed/webhook/*
+	rate_limit @ratelimit_pubsub {remote.ip} 2r/s 404
+    log {
+            # This is temporarily required to monitor nitter traffic due to scrapers being more active, so we need to monitor and rate limit them at a later date.
+                    output file /var/log/caddy/ratelimiters.log
+                    format json
+            }
 	import torloc invbp
 }
 piped.projectsegfau.lt proxy.piped.projectsegfau.lt api.piped.projectsegfau.lt {
@@ -40,7 +51,7 @@ pi.psf.lt {
 	import def
 }
 proxy.lbry.projectsegfau.lt {
-	reverse_proxy localhost:3001
+	reverse_proxy :3001
 	import def
 }
 aryak.me {
@@ -67,7 +78,7 @@ www.midou.dev midou.dev {
 # header_up Host {http.reverse_proxy.upstream.hostport} 
 # }
 #root * /var/www/midouwebsite
-reverse_proxy http://localhost:3000
+reverse_proxy :3000
 # Apparently sveltekit built apps needs to have strict path tries.
 #try_files {path} {path}/index.html {path}.html =404
 #file_server

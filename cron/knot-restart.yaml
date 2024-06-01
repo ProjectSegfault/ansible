@@ -1,0 +1,12 @@
+---
+- name: Knot Restarts (EU/US)
+  hosts: eu,us
+  vars:
+    services:
+      - knot
+  tasks:
+    - name: Do thing
+      ansible.builtin.systemd_service:
+        state: restarted
+        name: knot 
+      with_items: "{{ services }}"

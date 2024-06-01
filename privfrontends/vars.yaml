@@ -94,15 +94,11 @@ apps:
       docker_settings:
         services:
           - name: librarian
-            image: codeberg.org/librarian/librarian:latest
+            image: quay.io/pussthecatorg/librarian
             ports:
               - "3550:3550"
             mounts:
               - "{{configs_dir}}/librarian/config.yml:/app/config.yml"
-          - name: stream-proxy
-            image: codeberg.org/librarian/stream-proxy-ng:latest
-            ports:
-              - "3001:3001"
     redlib:
       needs_data_dir: false
       needs_configs_dir: false
@@ -125,7 +121,7 @@ apps:
       docker_settings:
         services:
           - name: nitter
-            image: codeberg.org/aryak/nitter-image:latest
+            image: ghcr.io/privacydevel/nitter:master
             ports:
               - "8387:8080"
             mounts:
@@ -242,6 +238,38 @@ apps:
               REDIS_REPLICATION_MODE: master
             mounts:
               - "{{data_dir}}/teddit/redis-data:/data"
+    priviblur:
+      needs_configs_dir: true
+      needs_data_dir: true
+      docker_settings:
+        services:
+          - name: priviblur
+            image: quay.io/pussthecatorg/priviblur:latest
+            ports:
+              - "9084:8000"
+            mounts:
+              - "{{configs_dir}}/priviblur/config.toml:/priviblur/config.toml:Z,ro"
+          - name: priviblur-redis
+            image: redis:6.2.5-alpine
+            command: redis-server
+            environment:
+              REDIS_REPLICATION_MODE: master
+            mounts:
+              - "{{data_dir}}/priviblur/redis-data:/data"
+    shoelace:
+      needs_configs_dir: true
+      needs_data_dir: true
+      docker_settings:
+        services:
+          - name: shoelace
+            image: nixgoat/shoelace
+            ports:
+              - "9029:8080"
+            mounts:
+              - "{{configs_dir}}/shoelace/shoelace.toml:/data/shoelace.toml"
+              - "{{data_dir}}/shoelace:/data"
+            environment:
+              SHOELACE_CONFIG: /data/shoelace.toml
     watchtower:
       needs_configs_dir: false
       needs_data_dir: false

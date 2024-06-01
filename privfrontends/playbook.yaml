@@ -16,6 +16,8 @@
       when: service.value.docker_settings
 - name: Setup Caddy
   hosts: privfrontends
+  vars_files:
+    - ./blocked-ranges.yaml
   tasks:
     - name: Copy Caddyfile
       ansible.builtin.template:
