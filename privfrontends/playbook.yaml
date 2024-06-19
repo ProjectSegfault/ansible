@@ -38,6 +38,22 @@
         enabled: true
         state: reloaded
       tags: caddy-non-update
+    - name: Create www directory if doesn't exist already
+      ansible.builtin.file:
+        path: /var/lib/caddy/www
+        state: directory
+        mode: '0755'
+        owner: caddy
+        group: caddy
+      tags: caddy-non-update
+    - name: "Instal VNStat Metrics CGI Script to WWW"
+      ansible.builtin.copy:
+        src: ./templates/vnstat-metrics.cgi
+        dest: /var/lib/caddy/www/vnstat-metrics.cgi
+        mode: preserve
+        owner: caddy
+        group: caddy
+      tags: caddy-non-update
 - name: Fail2Ban
   hosts: privfrontends
   tasks:
