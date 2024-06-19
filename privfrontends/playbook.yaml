@@ -74,23 +74,3 @@
       ansible.builtin.service:
         name: fail2ban
         state: restarted
-- name: Logs stuff
-  hosts: privfrontends
-  tasks:
-    - name: Create www directory if doesn't exist already
-      ansible.builtin.file:
-        path: /var/lib/caddy/www
-        state: directory
-        mode: '0755'
-        owner: caddy
-        group: caddy
-    - name: Copy VNStat CGI script
-      ansible.builtin.copy:
-        src: ./configs/vnstat-metrics.cgi
-        dest: /var/lib/caddy/www/vnstat-metrics.cgi
-        mode: preserve
-        owner: caddy
-        group: caddy
-    - name: Copy Systemd service for goaccess on Caddy logfiles
-    - name: Copy Systemd service file for HTTP Server
-
