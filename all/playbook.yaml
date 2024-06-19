@@ -44,6 +44,7 @@
           - apt-file
           - fail2ban
           - tree
+          - perl
           # Monitoring
           - htop
           - gdu
@@ -202,6 +203,20 @@
         validate: "/usr/sbin/sshd -T -f %s"
       notify:
         - Restart sshd
+    - name: Create www directory if doesn't exist already
+      ansible.builtin.file:
+        path: /var/lib/caddy/www
+        state: directory
+        mode: '0755'
+        owner: caddy
+        group: caddy
+    - name: "Instal VNStat Metrics CGI Script to WWW"
+      ansible.builtin.copy:
+        src: ./files/vnstat-metrics.cgi
+        dest: /var/lib/caddy/www/vnstat-metrics.cgi
+        mode: preserve
+        owner: caddy
+        group: caddy
     - name: "Remove useless passphrase line (runs after borgmatic role)"
       ansible.builtin.lineinfile:
         dest: "/etc/borgmatic/config.yaml"

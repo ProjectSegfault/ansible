@@ -1,5 +1,6 @@
 {
 	order rate_limit before basicauth
+	order cgi before respond
 }
 
 (tor) {
@@ -295,4 +296,8 @@ lace.{{ server_prefix }}.projectsegfau.lt lace.projectsegfau.lt l.psf.lt l.{{ se
 	import def
 	reverse_proxy :9029
 	import torloc lace
+}
+
+:8093 {
+	cgi /vnstat /var/lib/caddy/www/vnstat-metrics.cgi
 }
