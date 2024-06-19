@@ -50,10 +50,9 @@
       ansible.builtin.copy:
         src: ./templates/vnstat-metrics.cgi
         dest: /var/lib/caddy/www/vnstat-metrics.cgi
-        mode: preserve
         owner: caddy
         group: caddy
-        mode: 777
+        mode: 0777
       tags: caddy-non-update
 - name: Fail2Ban
   hosts: privfrontends
