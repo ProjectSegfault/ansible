@@ -142,8 +142,12 @@ excalidraw.projectsegfau.lt {
 
 # MediaWiki
 wiki.projectsegfau.lt w.psf.lt {
-	reverse_proxy 10.0.3.39:80 {
+	reverse_proxy localhost:8047 {
 		header_up X-Real-IP {remote_host}
+	}
+	@pubnix path /Category:Pubnix /Pubnix
+	handle @pubnix {
+		redir /t/pubnix
 	}
 	import def
 	encode gzip
