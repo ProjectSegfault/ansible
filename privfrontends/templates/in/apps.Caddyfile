@@ -146,9 +146,7 @@ wiki.projectsegfau.lt w.psf.lt {
 		header_up X-Real-IP {remote_host}
 	}
 	@pubnix path /Category:Pubnix /Pubnix
-	handle @pubnix {
-		redir /t/pubnix
-	}
+	redir @pubnix /t/pubnix
 	import def
 	encode gzip
 	import torloc wiki
