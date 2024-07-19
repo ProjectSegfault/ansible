@@ -71,7 +71,6 @@ enabled_plugins:
   - 'Search on category select'
 engines:
   - name: google
-    use_mobile_ui: true
     disabled: false
   - name: bing
     engine: bing
