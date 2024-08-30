@@ -165,9 +165,6 @@ pass.projectsegfau.lt vw.psf.lt {
 		header_up X-Real-IP {remote_host}
 	}
 	import def
-	reverse_proxy /notifications/hub :3012 {
-		header_up X-Real-IP {remote_host}
-	}
 	import torloc pass
 }
 
