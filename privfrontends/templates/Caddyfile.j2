@@ -102,7 +102,9 @@ lbry.{{ server_prefix }}.projectsegfau.lt lbry.projectsegfau.lt {
         import def
 		import torloc lbry
 }
-nitter.{{ server_prefix }}.projectsegfau.lt nitter.projectsegfau.lt n.psf.lt n.{{ server_prefix }}.psf.lt {
+# We need this inventory_hostname block since nitter is only going to be on EU from now on
+{% if inventory_hostname == 'eu' %}
+nitter.eu.projectsegfau.lt nitter.us.projectsegfau.lt nitter.in.projectsegfau.lt nitter.projectsegfau.lt n.psf.lt n.eu.psf.lt n.us.psf.lt n.in.psf.lt {
     import def
 	import torloc nitter
     reverse_proxy :8387
@@ -112,6 +114,7 @@ nitter.{{ server_prefix }}.projectsegfau.lt nitter.projectsegfau.lt n.psf.lt n.{
 		{% endfor %}
 	}
 }
+{% endif %}
 libreddit.{{ server_prefix }}.projectsegfau.lt libreddit.projectsegfau.lt lr.psf.lt lr.{{ server_prefix }}.psf.lt {
         reverse_proxy :6464
         import def
