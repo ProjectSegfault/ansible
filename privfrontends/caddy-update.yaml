@@ -1,6 +1,8 @@
 ---
 - name: Setup Caddy
   hosts: privfrontends
+  vars_files:
+    - ./blocked-ranges.yaml
   roles:
     - role: caddy-ansible
       caddy_systemd_capabilities_enabled: true
