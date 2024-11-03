@@ -1,0 +1,43 @@
+# IMPORTANT: Inventory file for pubnix is stored in semaphore, not inventory.yml
+---
+- name: Borgmatic Setup
+  hosts: pubnix
+  vars:
+    bkp_source_directories:
+      - /usr
+      - /var
+      - /root
+      - /boot
+      - /etc
+      - /configs
+      - /aquota.user
+      - /aquota.group
+      - /home
+      - /nix
+    bkp_exclude_patterns:
+      - /var/log
+    bkp_hc_uuid: 94c410f3-22f4-49f6-9f7f-e6f7b6409ced
+  tasks:
+    - name: "Remove useless passphrase line (runs after borgmatic role)"
+      ansible.builtin.lineinfile:
+        dest: "/etc/borgmatic/config.yaml"
+        state: "absent"
+        regexp: "^.*encryption_passphrase"
+  roles:
+    - role: borgbase.ansible_role_borgbackup
+      borg_repository:
+        - ssh://zh3117@zh3117.rsync.net/data1/home/zh3117/backups/pubnix
+      borg_source_directories: "{{bkp_source_directories}}"
+      borg_exclude_patterns: "{{bkp_exclude_patterns}}"
+      borg_remote_path: /usr/local/bin/borg_1.2.4/borg1
+      borgmatic_hooks:
+        healthchecks:
+          ping_url: https://healthchecks.projectsegfau.lt/ping/{{bkp_hc_uuid}}
+          states:
+            - finish
+      borg_retention_policy:
+        keep_daily: 7
+        keep_weekly: 4
+        keep_monthly: 3
+      # very secure I know; it has to be plain text anyway for automated backups, unless there is a better way (in which case please email me@aryak.me)
+      borg_encryption_passcommand: "cat /etc/borgmatic/passphrase"
