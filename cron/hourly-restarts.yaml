@@ -3,7 +3,6 @@
   hosts: privfrontends
   vars:
     services:
-      - invidious-invidious-1
       - breezewiki
       - anonymousoverflow
       - mozhi
