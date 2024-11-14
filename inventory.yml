@@ -40,4 +40,4 @@ all:
           isp: Bharti Airtel
           wiki_page: India_Node
           watchtower_mtrx_username: psf-watchtower-in
-          rsyncnet_slug: in
+          rsyncnet_slug: in-1
