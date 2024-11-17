@@ -267,14 +267,70 @@ d.psf.lt {
 	import acmedns
 }
 
-# TimeTagger
-timetagger.projectsegfau.lt tt.projectsegfau.lt tt.psf.lt {
-	reverse_proxy :9900
-	import def
-}
-
 rss.projectsegfau.lt freshrss.projectsegfau.lt rss.psf.lt {
 	reverse_proxy :3529
 	import def
 	import torloc rss
+}
+
+owncloud.projectsegfau.lt {
+	reverse_proxy http://127.0.0.1:9200
+	import def
+}
+wopi.projectsegfau.lt {
+	import acmedns
+	reverse_proxy http://127.0.0.1:9320
+}
+collabora.projectsegfau.lt {
+	import acmedns
+	reverse_proxy http://127.0.0.1:9980
+}
+
+ente.projectsegfau.lt pic.psf.lt {
+	import def
+	reverse_proxy http://127.0.0.1:8085
+}
+
+museum.ente.projectsegfau.lt {
+	import acmedns
+	reverse_proxy http://127.0.0.1:8254
+}
+
+album.ente.projectsegfau.lt {
+	import def
+	reverse_proxy http://127.0.0.1:8087
+}
+
+accounts.ente.projectsegfau.lt {
+	import acmedns
+	reverse_proxy http://127.0.0.1:8086
+}
+
+minio.projectsegfau.lt {
+	import acmedns
+	reverse_proxy http://127.0.0.1:9000
+}
+
+timetagger.projectsegfau.lt tt.psf.lt {
+	import def
+	route {
+		reverse_proxy /outpost.goauthentik.io/* https://localhost:7444 {
+			header_up Host {http.reverse_proxy.upstream.hostport}
+			transport http {
+				tls_insecure_skip_verify
+			}
+		}
+		# Forward authentication requests to Authentik's outpost
+		forward_auth https://localhost:7444 {
+			transport http {
+				tls_insecure_skip_verify
+			}
+			uri /outpost.goauthentik.io/auth/caddy
+
+			# Ensure these headers are passed, using correct capitalization
+			copy_headers X-Authentik-Username X-Authentik-Groups X-Authentik-Email X-Authentik-Name
+			trusted_proxies private_ranges
+		}
+	}
+	reverse_proxy http://localhost:9900
 }

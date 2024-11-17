@@ -145,3 +145,9 @@ http://rss.pjsfkvpxlinjamtawaksbnnaqs2fc2mtvmozrzckxh7f3kis6yea25ad.onion {
 		header_up Host "rss.projectsegfau.lt"
 	}
 }
+http://ente.pjsfkvpxlinjamtawaksbnnaqs2fc2mtvmozrzckxh7f3kis6yea25ad.onion {
+	import tor ente
+	reverse_proxy https://ente.projectsegfau.lt {
+		header_up Host "ente.projectsegfau.lt"
+	}
+}
