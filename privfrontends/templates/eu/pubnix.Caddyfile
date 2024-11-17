@@ -36,12 +36,12 @@ publapi.p.projectsegfau.lt {
 	import def
 }
 geminiproxy.projectsegfau.lt geminiproxy.p.projectsegfau.lt gp.p.psf.lt {
-        reverse_proxy 10.7.0.2:8000
-        @robots path /robots.txt
-        handle @robots {
-        respond `User-agent: *
-Disallow: /` 200
-				}
-        import def
-        import torloc geminiproxy
+	reverse_proxy 10.7.0.2:8000
+	@robots path /robots.txt
+	handle @robots {
+		respond `User-agent: *
+		Disallow: /` 200
+	}
+	import def
+	import torloc geminiproxy
 }

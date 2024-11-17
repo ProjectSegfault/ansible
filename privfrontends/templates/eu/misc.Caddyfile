@@ -31,11 +31,11 @@ inv.bp.projectsegfau.lt, i.bp.psf.lt, invidious.projectsegfau.lt, inv.projectseg
 	rate_limit @ratelimit {remote.ip} 100r/m
 	@ratelimit_pubsub path /feed/webhook /feed/webhook/*
 	rate_limit @ratelimit_pubsub {remote.ip} 2r/s 404
-    log {
-            # This is temporarily required to monitor nitter traffic due to scrapers being more active, so we need to monitor and rate limit them at a later date.
-                    output file /var/log/caddy/ratelimiters.log
-                    format json
-            }
+	log {
+		# This is temporarily required to monitor nitter traffic due to scrapers being more active, so we need to monitor and rate limit them at a later date.
+		output file /var/log/caddy/ratelimiters.log
+		format json
+	}
 	import torloc invbp
 }
 piped.projectsegfau.lt proxy.piped.projectsegfau.lt api.piped.projectsegfau.lt {
@@ -74,19 +74,19 @@ ferrit.projectsegfau.lt snooddit.projectsegfau.lt {
 	import acmedns
 }
 www.midou.dev midou.dev {
-# reverse_proxy https://midou36o.github.io {
-# header_up Host {http.reverse_proxy.upstream.hostport} 
-# }
-#root * /var/www/midouwebsite
-reverse_proxy :3000
-# Apparently sveltekit built apps needs to have strict path tries.
-#try_files {path} {path}/index.html {path}.html =404
-#file_server
+	# reverse_proxy https://midou36o.github.io {
+	# header_up Host {http.reverse_proxy.upstream.hostport} 
+	# }
+	#root * /var/www/midouwebsite
+	reverse_proxy :3000
+	# Apparently sveltekit built apps needs to have strict path tries.
+	#try_files {path} {path}/index.html {path}.html =404
+	#file_server
 }
 file.midou.dev {
 	reverse_proxy :8986
 }
 fastdl.midou.dev {
- root * /srv/fastdl-tf2
- file_server browse
+	root * /srv/fastdl-tf2
+	file_server browse
 }

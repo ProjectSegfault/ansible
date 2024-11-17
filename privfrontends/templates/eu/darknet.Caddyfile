@@ -1,4 +1,4 @@
-http://www.pjsfkvpxlinjamtawaksbnnaqs2fc2mtvmozrzckxh7f3kis6yea25ad.onion  {
+http://www.pjsfkvpxlinjamtawaksbnnaqs2fc2mtvmozrzckxh7f3kis6yea25ad.onion {
 	reverse_proxy https://projectsegfau.lt {
 		header_up Host "projectsegfau.lt"
 	}
@@ -28,15 +28,15 @@ http://*.p.pjsfkvpxlinjamtawaksbnnaqs2fc2mtvmozrzckxh7f3kis6yea25ad.onion {
 }
 
 # Privacy Frontends
-http://lbry.pjsfkvpxlinjamtawaksbnnaqs2fc2mtvmozrzckxh7f3kis6yea25ad.onion  {
+http://lbry.pjsfkvpxlinjamtawaksbnnaqs2fc2mtvmozrzckxh7f3kis6yea25ad.onion {
 	import tor lbry
 	reverse_proxy :3550
 }
-http://nitter.pjsfkvpxlinjamtawaksbnnaqs2fc2mtvmozrzckxh7f3kis6yea25ad.onion  {
+http://nitter.pjsfkvpxlinjamtawaksbnnaqs2fc2mtvmozrzckxh7f3kis6yea25ad.onion {
 	reverse_proxy :8387
 	import tor nitter
 }
-http://libreddit.pjsfkvpxlinjamtawaksbnnaqs2fc2mtvmozrzckxh7f3kis6yea25ad.onion  {
+http://libreddit.pjsfkvpxlinjamtawaksbnnaqs2fc2mtvmozrzckxh7f3kis6yea25ad.onion {
 	import tor libreddit
 	reverse_proxy :6464
 }
@@ -44,13 +44,13 @@ http://teddit.pjsfkvpxlinjamtawaksbnnaqs2fc2mtvmozrzckxh7f3kis6yea25ad.onion {
 	import tor teddit
 	reverse_proxy :9061
 }
-http://inv.pjsfkvpxlinjamtawaksbnnaqs2fc2mtvmozrzckxh7f3kis6yea25ad.onion  {
+http://inv.pjsfkvpxlinjamtawaksbnnaqs2fc2mtvmozrzckxh7f3kis6yea25ad.onion {
 	import tor inv
 	reverse_proxy https://invidious.projectsegfau.lt {
 		header_up Host "invidious.projectsegfau.lt"
 	}
 }
-http://invbp.pjsfkvpxlinjamtawaksbnnaqs2fc2mtvmozrzckxh7f3kis6yea25ad.onion  {
+http://invbp.pjsfkvpxlinjamtawaksbnnaqs2fc2mtvmozrzckxh7f3kis6yea25ad.onion {
 	import tor invbp
 	reverse_proxy :7573
 }
@@ -78,13 +78,13 @@ http://rimgo.pjsfkvpxlinjamtawaksbnnaqs2fc2mtvmozrzckxh7f3kis6yea25ad.onion {
 		header_up Host "rimgo.projectsegfau.lt"
 	}
 }
-http://breezewiki.pjsfkvpxlinjamtawaksbnnaqs2fc2mtvmozrzckxh7f3kis6yea25ad.onion  {
+http://breezewiki.pjsfkvpxlinjamtawaksbnnaqs2fc2mtvmozrzckxh7f3kis6yea25ad.onion {
 	import tor breezewiki
 	reverse_proxy https://bw.projectsegfau.lt {
 		header_up Host "bw.projectsegfau.lt"
 	}
 }
-http://scribe.pjsfkvpxlinjamtawaksbnnaqs2fc2mtvmozrzckxh7f3kis6yea25ad.onion  {
+http://scribe.pjsfkvpxlinjamtawaksbnnaqs2fc2mtvmozrzckxh7f3kis6yea25ad.onion {
 	reverse_proxy https://scribe.projectsegfau.lt {
 		header_up Host "scribe.projectsegfau.lt"
 	}
@@ -102,20 +102,20 @@ http://safetwitch.pjsfkvpxlinjamtawaksbnnaqs2fc2mtvmozrzckxh7f3kis6yea25ad.onion
 	}
 	import tor safetwitch
 }
-http://search.pjsfkvpxlinjamtawaksbnnaqs2fc2mtvmozrzckxh7f3kis6yea25ad.onion  {
+http://search.pjsfkvpxlinjamtawaksbnnaqs2fc2mtvmozrzckxh7f3kis6yea25ad.onion {
 	import tor search
 	reverse_proxy https://search.projectsegfau.lt {
 		header_up Host "search.projectsegfau.lt"
 	}
 }
 
-http://git.pjsfkvpxlinjamtawaksbnnaqs2fc2mtvmozrzckxh7f3kis6yea25ad.onion  {
+http://git.pjsfkvpxlinjamtawaksbnnaqs2fc2mtvmozrzckxh7f3kis6yea25ad.onion {
 	import tor git
 	reverse_proxy https://git.projectsegfau.lt {
 		header_up Host "git.projectsegfau.lt"
 	}
 }
-http://todo.pjsfkvpxlinjamtawaksbnnaqs2fc2mtvmozrzckxh7f3kis6yea25ad.onion  {
+http://todo.pjsfkvpxlinjamtawaksbnnaqs2fc2mtvmozrzckxh7f3kis6yea25ad.onion {
 	import tor todo
 	reverse_proxy https://todo.projectsegfau.lt {
 		header_up Host "todo.projectsegfau.lt"
