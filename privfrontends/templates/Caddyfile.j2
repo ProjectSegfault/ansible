@@ -103,15 +103,35 @@ lbry.{{ server_prefix }}.projectsegfau.lt lbry.projectsegfau.lt {
 }
 # We need this inventory_hostname block since nitter is only going to be on EU from now on
 {% if inventory_hostname == 'eu' %}
-nitter.eu.projectsegfau.lt nitter.us.projectsegfau.lt nitter.in.projectsegfau.lt nitter.projectsegfau.lt n.psf.lt n.eu.psf.lt n.us.psf.lt n.in.psf.lt {
-	import def
-	import torloc nitter
+nitter.projectsegfau.lt n.psf.lt {
 	reverse_proxy :8387
-	basicauth {
-		{% for item in private_service_basicauth %}
-		{{ item }} 
-		{% endfor %}
+	import def
+	route {
+		reverse_proxy /outpost.goauthentik.io/* https://in.v.psf.lt:7444 {
+			header_up Host {http.reverse_proxy.upstream.hostport}
+			transport http {
+				tls_insecure_skip_verify
+			}
+		}
+		# Forward authentication requests to Authentik's outpost
+		forward_auth https://in.v.psf.lt:7444 {
+			transport http {
+				tls_insecure_skip_verify
+			}
+			uri /outpost.goauthentik.io/auth/caddy
+
+			# Ensure these headers are passed, using correct capitalization
+			copy_headers X-Authentik-Username X-Authentik-Groups X-Authentik-Email X-Authentik-Name
+			trusted_proxies private_ranges
+		}
 	}
+}
+nitter.eu.projectsegfau.lt nitter.us.projectsegfau.lt nitter.in.projectsegfau.lt {
+	redir https://nitter.projectsegfau.lt{uri}
+}
+
+n.eu.psf.lt n.us.psf.lt n.in.psf.lt {
+	redir https://n.psf.lt{uri}
 }
 {% endif %}
 libreddit.{{ server_prefix }}.projectsegfau.lt libreddit.projectsegfau.lt lr.psf.lt lr.{{ server_prefix }}.psf.lt {
