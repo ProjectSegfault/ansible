@@ -16,14 +16,6 @@ tnfiles.perso.in.projectsegfau.lt {
 mozhi.aryak.me {
 	reverse_proxy :5046
 }
-dhairya.aryak.me {
-	header /.well-known/matrix/* Content-Type application/json
-	header /.well-known/matrix/* Access-Control-Allow-Origin *
-	handle_path /.well-known/* {
-		root * /var/www/perso-well-known
-		file_server
-	}
-}
 http://*.tildevarsh.in https://tildevarsh.in {
 	respond `R.I.P ~varsh, you'll be missed. :q!
 	If you are a varsh user and want to get your data, email me@aryak.me with your username from your registered email address.

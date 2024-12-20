@@ -6,31 +6,6 @@ mail.projectsegfau.lt {
 	reverse_proxy :8082
 }
 
-# Website dev
-web.dev.projectsegfau.lt {
-	reverse_proxy :1339
-	import def
-}
-
-blog.projectsegfau.lt {
-	reverse_proxy :2368 {
-		header_up X-Forwarded-Proto https
-		header_up X-Real-IP {remote_host}
-	}
-	import def
-}
-
-# Headscale (tailscale control server)
-hs.projectsegfau.lt {
-	reverse_proxy /web* https://:9443 {
-		transport http {
-			tls_insecure_skip_verify
-		}
-	}
-	reverse_proxy * :8089
-	import def
-}
-
 # Caddy daily build (for ansible)
 cb.projectsegfau.lt {
 	root * /var/www/caddy-build
@@ -59,20 +34,6 @@ bitpuit.vpn.projectsegfau.lt b.v.psf.lt {
 	import def
 }
 
-bitpuit2.vpn.projectsegfau.lt b2.v.psf.lt {
-	import acmedns
-	reverse_proxy https://192.168.1.58:8006 {
-		transport http {
-			tls_insecure_skip_verify
-		}
-	}
-	import def
-}
-
-ansible.vpn.projectsegfau.lt a.v.psf.lt {
-	import acmedns
-	reverse_proxy :3527
-}
 grafana.vpn.projectsegfau.lt g.v.psf.lt {
 	import acmedns
 	reverse_proxy :3170
@@ -80,8 +41,4 @@ grafana.vpn.projectsegfau.lt g.v.psf.lt {
 prometheus.vpn.projectsegfau.lt {
 	import acmedns
 	reverse_proxy :9090
-}
-rabbitmq.vpn.projectsegfau.lt rq.v.psf.lt {
-	import acmedns
-	reverse_proxy 192.168.1.64:15672
 }
