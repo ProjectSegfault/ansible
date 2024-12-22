@@ -1,8 +1,14 @@
-http://www.pjsfkvpxlinjamtawaksbnnaqs2fc2mtvmozrzckxh7f3kis6yea25ad.onion {
+http://pjsfkvpxlinjamtawaksbnnaqs2fc2mtvmozrzckxh7f3kis6yea25ad.onion http://www.pjsfkvpxlinjamtawaksbnnaqs2fc2mtvmozrzckxh7f3kis6yea25ad.onion {
 	reverse_proxy https://projectsegfau.lt {
 		header_up Host "projectsegfau.lt"
 	}
 	import tor www
+}
+http://blog.pjsfkvpxlinjamtawaksbnnaqs2fc2mtvmozrzckxh7f3kis6yea25ad.onion {
+	reverse_proxy https://blog.projectsegfau.lt {
+		header_up Host "blog.projectsegfau.lt"
+	}
+	import tor blog
 }
 # PUBNIX
 http://geminiproxy.pjsfkvpxlinjamtawaksbnnaqs2fc2mtvmozrzckxh7f3kis6yea25ad.onion {
