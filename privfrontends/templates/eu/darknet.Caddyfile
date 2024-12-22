@@ -5,10 +5,10 @@ http://pjsfkvpxlinjamtawaksbnnaqs2fc2mtvmozrzckxh7f3kis6yea25ad.onion http://www
 	import tor www
 }
 http://blog.pjsfkvpxlinjamtawaksbnnaqs2fc2mtvmozrzckxh7f3kis6yea25ad.onion {
-	reverse_proxy https://blog.projectsegfau.lt {
-		header_up Host "blog.projectsegfau.lt"
-	}
-	import tor blog
+        import tor blog
+        reverse_proxy https://blog.projectsegfau.lt {
+                header_up Host "blog.projectsegfau.lt"
+		}
 }
 # PUBNIX
 http://geminiproxy.pjsfkvpxlinjamtawaksbnnaqs2fc2mtvmozrzckxh7f3kis6yea25ad.onion {
@@ -108,11 +108,30 @@ http://safetwitch.pjsfkvpxlinjamtawaksbnnaqs2fc2mtvmozrzckxh7f3kis6yea25ad.onion
 	}
 	import tor safetwitch
 }
+http://lace.pjsfkvpxlinjamtawaksbnnaqs2fc2mtvmozrzckxh7f3kis6yea25ad.onion {
+	reverse_proxy https://lace.projectsegfau.lt {
+		header_up Host "lace.projectsegfau.lt"
+	}
+	import tor lace
+}
+http://priviblur.pjsfkvpxlinjamtawaksbnnaqs2fc2mtvmozrzckxh7f3kis6yea25ad.onion {
+	reverse_proxy https://priviblur.projectsegfau.lt {
+		header_up Host "priviblur.projectsegfau.lt"
+	}
+	import tor priviblur
+}
 http://search.pjsfkvpxlinjamtawaksbnnaqs2fc2mtvmozrzckxh7f3kis6yea25ad.onion {
 	import tor search
 	reverse_proxy https://search.projectsegfau.lt {
 		header_up Host "search.projectsegfau.lt"
 	}
+}
+
+http://rssbridge.pjsfkvpxlinjamtawaksbnnaqs2fc2mtvmozrzckxh7f3kis6yea25ad.onion {
+	reverse_proxy https://rssbridge.projectsegfau.lt {
+		header_up Host "rssbridge.projectsegfau.lt"
+	}
+	import tor rssbridge
 }
 
 http://git.pjsfkvpxlinjamtawaksbnnaqs2fc2mtvmozrzckxh7f3kis6yea25ad.onion {
