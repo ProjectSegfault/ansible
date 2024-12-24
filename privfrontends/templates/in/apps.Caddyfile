@@ -295,3 +295,8 @@ timetagger.projectsegfau.lt tt.psf.lt {
 	}
 	reverse_proxy http://localhost:9900
 }
+
+ntfy.projectsegfau.lt {
+	import def
+	reverse_proxy :8099
+}
