@@ -5,7 +5,7 @@
     services:
       - breezewiki
       - anonymousoverflow
-      - mozhi
+      - gothub
       - redlib
       - teddit
       - nitter
