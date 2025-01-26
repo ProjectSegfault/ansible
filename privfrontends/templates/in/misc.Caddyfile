@@ -30,8 +30,16 @@ schfiles.aryak.me {
 }
 
 mirror.bom.albony.in {
-	reverse_proxy 192.168.1.59:80
+        reverse_proxy 192.168.1.59:80 {
+                header_up X-Real-IP {remote_host}
+                header_up X-Forwarded-For {remote_host}
+                header_up Host {upstream_hostport}
+        }
 }
 http://mirror.bom.albony.in {
-	reverse_proxy 192.168.1.59:80
+        reverse_proxy 192.168.1.59:80 {
+                header_up X-Real-IP {remote_host}
+                header_up X-Forwarded-For {remote_host}
+                header_up Host {upstream_hostport}
+        }
 }
