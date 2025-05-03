@@ -1,12 +1,12 @@
 # Reverse proxy all user sites
 *.p.projectsegfau.lt {
-	reverse_proxy 10.7.0.2:80
+	reverse_proxy 192.168.1.82:80
 	import acmedns
 }
 *.p.psf.lt {
 	@host header_regexp host Host ^([a-zA-Z0-9]+\-)?([A-Za-z0-9]+)\.p\.psf\.lt
 	handle @host {
-		reverse_proxy 10.7.0.2:80 {
+		reverse_proxy 192.168.1.82:80 {
 			header_up Host "{re.host.1}{re.host.2}.p.projectsegfau.lt"
 		}
 		import torloc {re.host.1}{re.host.2}.p
@@ -21,7 +21,7 @@ p.projectsegfau.lt p.psf.lt {
 
 # Cockpit
 cockpit.p.projectsegfau.lt {
-	reverse_proxy 10.7.0.2:9090 {
+	reverse_proxy 192.168.1.82:9090 {
 		transport http {
 			tls_insecure_skip_verify
 		}
@@ -32,11 +32,11 @@ cockpit.p.projectsegfau.lt {
 
 # PublAPI
 publapi.p.projectsegfau.lt {
-	reverse_proxy 10.7.0.2:3000
+	reverse_proxy 192.168.1.82:3000
 	import def
 }
 geminiproxy.projectsegfau.lt geminiproxy.p.projectsegfau.lt gp.p.psf.lt {
-	reverse_proxy 10.7.0.2:8000
+	reverse_proxy 192.168.1.82:8000
 	@robots path /robots.txt
 	handle @robots {
 		respond `User-agent: *
