@@ -36,33 +36,6 @@ chat.projectsegfau.lt el.psf.lt {
 	import def
 }
 
-# Gitea
-git.projectsegfau.lt {
-	reverse_proxy :3444
-	respond /metrics 403
-	import def
-	request_body {
-		max_size 500MB
-	}
-	header {
-		Content-Security-Policy "default-src 'self'; connect-src 'self'; font-src 'self' data:; form-action 'self'; img-src 'self' https: data:; manifest-src 'self' data:; object-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; worker-src 'self'; frame-ancestors 'self'; frame-src 'self';"
-	}
-	import torloc git
-}
-git.psf.lt {
-	reverse_proxy :3444 {
-		header_up Host "git.projectsegfau.lt"
-	}
-	respond /metrics 403
-	import def
-	request_body {
-		max_size 500MB
-	}
-	header {
-		Content-Security-Policy "default-src 'self'; connect-src 'self'; font-src 'self' data:; form-action 'self'; img-src 'self' https: data:; manifest-src 'self' data:; object-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; worker-src 'self'; frame-ancestors 'self'; frame-src 'self';"
-	}
-	import torloc git
-}
 # HedgeDoc
 doc.projectsegfau.lt {
 	reverse_proxy :2069 {
