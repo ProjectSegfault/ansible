@@ -35,7 +35,7 @@ apps:
             environment:
               APP_URL: https://overflow.projectsegfau.lt
               JWT_SIGNING_SECRET: "{{ anonymousoverflow_signing_secret }}"
-              FLARESOLVER: "flaresolverr:8191"
+              FLARESOLVER: "http://flaresolverr:8191"
           - name: flaresolverr
             image: ghcr.io/flaresolverr/flaresolverr:pr-1282
             environment:
