@@ -29,7 +29,7 @@ apps:
       docker_settings:
         services:
           - name: anonymousoverflow
-            image: ghcr.io/httpjamesm/anonymousoverflow:release
+            image: git.ngn.tf/ngn/anonymous_overflow:latest
             ports:
               - "8694:8080"
             environment:
