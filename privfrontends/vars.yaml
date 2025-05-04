@@ -35,6 +35,13 @@ apps:
             environment:
               APP_URL: https://overflow.projectsegfau.lt
               JWT_SIGNING_SECRET: "{{ anonymousoverflow_signing_secret }}"
+              FLARESOLVER: "flaresolverr:8191"
+          - name: flaresolverr
+            image: ghcr.io/flaresolverr/flaresolverr:pr-1282
+            environment:
+              LOG_LEVEL: "info"
+              TZ: "UTC"
+              LANG: "en_US"
     breezewiki:
       needs_configs_dir: true
       needs_data_dir: false
