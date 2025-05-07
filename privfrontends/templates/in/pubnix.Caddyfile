@@ -1,16 +1,21 @@
 # Reverse proxy all user sites
 *.p.projectsegfau.lt {
-	reverse_proxy 192.168.1.89:80
+    reverse_proxy 192.168.1.89:80 {
+            header_up X-Forwarded-For {remote_host}
+            header_up X-Real-IP {remote_host}
+    }
 	import acmedns
 }
 *.p.psf.lt {
 	@host header_regexp host Host ^([a-zA-Z0-9]+\-)?([A-Za-z0-9]+)\.p\.psf\.lt
-	handle @host {
-		reverse_proxy 192.168.1.89:80 {
-			header_up Host "{re.host.1}{re.host.2}.p.projectsegfau.lt"
-		}
-		import torloc {re.host.1}{re.host.2}.p
-	}
+    handle @host {
+            reverse_proxy 192.168.1.89:80 {
+                    header_up Host "{re.host.1}{re.host.2}.p.projectsegfau.lt"
+                    header_up X-Forwarded-For {remote_host}
+                    header_up X-Real-IP {remote_host}
+            }
+            import torloc {re.host.1}{re.host.2}.p
+    }
 	import acmedns
 }
 # Redirect base subdomain to the pubnix homepage
