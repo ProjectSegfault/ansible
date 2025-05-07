@@ -21,11 +21,19 @@ bkp_exclude_patterns:
   - /var/lib/docker/trust
   - /var/lib/postgresql
 bkp_postgresql_databases:
+  - name: authentik
+  - name: ejabberd
+  - name: ente
+  - name: freshrss
   - name: gitea
   - name: healthchecks
   - name: hedgedoc
-  - name: semaphore
-  - name: vaultwarden
-  - name: ejabberd
+  - name: invin
   - name: mailu
+  - name: piped
+  - name: postgres
   - name: roundcube
+  - name: semaphore
+  - name: synapse
+  - name: vaultwarden
+  - name: wikijs
