@@ -2,6 +2,7 @@
 bkp_source_directories:
   - /var
   - /home
+  - /opt/docker/minio/hdd
   - /boot
   - /usr
   - /root
